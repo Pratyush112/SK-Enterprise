@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useReactTable, getCoreRowModel, flexRender, getPaginationRowModel } from '@tanstack/react-table';
 import { useNavigation } from '../../hooks/useNavigation';
+import { getProducts } from '../../routers/APIs';
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -24,9 +25,23 @@ function createData(name, series, standard, mounting, sizes, sealing, water, lea
     return { name, series, standard, mounting, sizes, sealing, water, leakage_parameter, spacing_between_bars, single_piece_width, single_piece_height, materials_of_construction, application };
 }
 
-const ProductCards = ({ blog = [] }) => {
+const ProductCards = () => {
 
     const { goBack, redirectTo } = useNavigation();
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await getProducts();
+                setProducts(response.data);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
+        fetchProducts();
+    }, []);
+
     const columns = useMemo(() => [
         {
             header: 'Image',
@@ -99,17 +114,16 @@ const ProductCards = ({ blog = [] }) => {
     ], []);
 
     const table = useReactTable({
-        data: blog,
+        data: products,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
     });
 
-    console.log('Received blog data:', blog); // Debug log
 
     // Remove this check or modify it to be less strict
-    if (!blog) {
-        return <div className="text-center py-4">Loading products...</div>;
+    if (!products.length) {
+        return <div className="text-center py-4">Loading or No data available</div>;
     }
 
 
