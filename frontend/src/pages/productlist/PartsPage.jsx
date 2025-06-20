@@ -1,10 +1,11 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useReactTable, getCoreRowModel, getPaginationRowModel, flexRender } from '@tanstack/react-table';
 import { motion } from 'framer-motion';
 import { useNavigation } from '../../hooks/useNavigation';
+import { getParts } from '../../routers/APIs';
 
-const PartsPage = ({ part = [] }) => {
+const PartsPage = () => {
 
     const { goBack, redirectTo } = useNavigation();
 
@@ -12,6 +13,20 @@ const PartsPage = ({ part = [] }) => {
         pageIndex: 0,
         pageSize: 10,
     });
+
+    const [parts, setParts] = useState([]);
+
+   useEffect(() => {
+    const fetchParts = async () => {
+        try {
+            const response = await getParts();  // use imported getParts function
+            setParts(response.data);            // axios returns data under `.data`
+        } catch (error) {
+            console.error('Error fetching parts:', error);
+        }
+    };
+        fetchParts();
+    }, []);
 
     // Memoize columns definition
     const columns = useMemo(() => [{
@@ -50,7 +65,7 @@ const PartsPage = ({ part = [] }) => {
 
     // Simplified table instance
     const table = useReactTable({
-        data: part,
+        data: parts,
         columns,
         state: {
             pagination,
@@ -88,8 +103,8 @@ const PartsPage = ({ part = [] }) => {
         }
     };
 
-    if (!part || part.length === 0) {
-        return <div className="text-center py-4">No data available</div>;
+    if (!parts.length) {
+    return <div className="text-center py-4">Loading or No data available</div>;
     }
 
     return (
