@@ -4,6 +4,7 @@ import cors from "cors";
 import connectDB from "./db/db.js";
 import productRouter from "./routers/product.router.js";
 import partRouter from "./routers/part.router.js";
+import contactRouter from "./routers/contact.router.js";
 
 
 dotenv.config();
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 
 app.use("/products", productRouter);
 app.use("/parts", partRouter);
+app.use("/contact", contactRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
