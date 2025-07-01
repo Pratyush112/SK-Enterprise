@@ -15,7 +15,7 @@ const ContactUs = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        phone: '',
+        number: '',
         message: ''
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,7 +27,7 @@ const ContactUs = () => {
 
         // Add your form submission logic here
         try {
-            const response = await fetch('http://localhost:5000/api/contact', {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/contact`, {
                 method: 'POST',
                 headers: {
                     'content-Type': 'application/json'
@@ -187,8 +187,8 @@ const ContactUs = () => {
                                     type="tel"
                                     className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-blue-200/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     placeholder="Your phone number"
-                                    value={formData.phone}
-                                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                    value={formData.number}
+                                    onChange={(e) => setFormData({ ...formData, number: e.target.value })}
                                 />
                             </div>
                             <div>
