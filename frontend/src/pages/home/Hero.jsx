@@ -92,7 +92,7 @@ const Hero = () => {
               to="/products"
               className="group relative inline-flex items-center justify-center gap-1 xs:gap-2 px-6 xs:px-8 py-3 xs:py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-base xs:text-lg font-semibold rounded-lg xs:rounded-xl shadow-lg transition-all duration-300 hover:shadow-blue-500/50 dark:hover:shadow-blue-700/50 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
             >
-              See Products
+              See Sluice Gates
               <svg className="w-4 h-4 xs:w-5 xs:h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
@@ -101,7 +101,7 @@ const Hero = () => {
               to="/parts"
               className="group relative inline-flex items-center justify-center gap-3 xs:gap-4 px-6 xs:px-8 py-3 xs:py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-base xs:text-lg font-semibold rounded-lg xs:rounded-xl shadow-lg transition-all duration-300 hover:shadow-blue-500/50 dark:hover:shadow-blue-700/50 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
             >
-              See Spare Parts
+              See Nuts & Bolts
               <svg className="w-4 h-4 xs:w-5 xs:h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>

@@ -6,7 +6,7 @@ const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { pathname } = useLocation();
 
-    const navLinks = ['Home', 'About', 'Products', 'Parts', 'Contact Us'];
+    const navLinks = ['Home', 'About', 'Sluice Gates', 'Nuts & Bolts', 'Contact Us'];
 
     const isActive = (path) => {
         const target = path === 'Home' ? '/' : `/${path.toLowerCase().replace(/\s+/g, '')}`;

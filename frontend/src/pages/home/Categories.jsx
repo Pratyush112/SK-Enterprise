@@ -6,8 +6,8 @@ import { Link } from 'react-router-dom'
 
 const Categories = () => {
     const categories = [
-        {name:'Product List', path:'products', image: product_icon},
-        {name:'Spare Parts', path:'parts', image: part_icon},
+        {name:'Sluice Gates', path:'products', image: product_icon},
+        {name:'Bolts & Nuts', path:'parts', image: part_icon},
     ]
     return (
         <>
