@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
@@ -12,12 +13,16 @@ const Hero = () => {
             SK Enterprise moto is to deliver the clients nothing less that the best quality with not compromise, delivering quality that exceeds industry standards.
           </p>
           <div className="flex flex-wrap gap-4">
+            <Link to="/productcategories">
             <button className="bg-primary text-on-primary px-8 py-4 rounded-full font-bold text-lg hover:bg-primary-container transition-all hover:-translate-y-1 shadow-xl shadow-primary/25">
               Explore Products
             </button>
+            </Link>
+            <Link to="/contact">
             <button className="bg-secondary-container dark:bg-slate-800 text-on-secondary-container dark:text-slate-200 px-8 py-4 rounded-full font-bold text-lg hover:bg-surface-container-highest dark:hover:bg-slate-700 transition-all hover:-translate-y-1 border border-transparent dark:border-white/10">
               Get a Quote
             </button>
+            </Link>
           </div>
         </div>
         <div className="relative group">
