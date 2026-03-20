@@ -43,8 +43,8 @@ const Footer = () => {
                             </a>
                         </div>
                         <p className="mt-6 text-surface-variant/80 dark:text-slate-400 font-medium text-sm transition-colors duration-300">
-                            info@skenterprise.com <br/>
-                            +1 (555) 123-4567
+                            skenterprise2989@gmail.com <br/> saha.biswa2013@gmail.com  <br/>
+                            +91 8296631533 <br/> +91 9748028331
                         </p>
                     </div>
                 </div>
