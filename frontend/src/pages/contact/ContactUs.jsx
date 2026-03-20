@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, Home, ArrowLeft } from 'lucide-react';
 import { useNavigation } from '../../hooks/useNavigation';
+import SEO from '../../components/SEO';
 
 const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
@@ -63,8 +64,7 @@ const ContactUs = () => {
                 phone: '',
                 message: ''
             });
-            setSubmitStatus(null);
-            // Reset submitting state  
+            setTimeout(() => setSubmitStatus(null), 3000);
             setIsSubmitting(false);
         }
 
@@ -96,16 +96,21 @@ const ContactUs = () => {
         }
     ];
 
-
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900">
-
+        <div className="min-h-screen transition-colors duration-300">
+            <SEO 
+                title="Contact Us | SK Enterprise"
+                description="Get in touch with SK Enterprise for inquiries about our industrial valves, sluice gates, and services."
+                name="SK Enterprise"
+                type="website"
+                url="/contactus"
+            />
             {/* Navigation: Home (left) and Back (right) - responsive */}
-            <div className="absolute top-24 left-4 right-4 z-10 sm:z-50 flex items-center justify-between sm:top-24 sm:left-8 sm:right-8" aria-hidden="false">
+            {/* <div className="absolute top-24 left-4 right-4 z-10 sm:z-50 flex items-center justify-between sm:top-24 sm:left-8 sm:right-8" aria-hidden="false">
                 <button
                     onClick={() => redirectTo('/')}
                     aria-label="Home"
-                    className="flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 bg-green-600 text-white border-2 border-white/20 backdrop-blur-md rounded-full sm:rounded-lg hover:bg-transparent transition-all duration-300 shadow-sm sm:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                    className="flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 text-white border-2 border-white/20 backdrop-blur-md rounded-full sm:rounded-lg hover:bg-transparent transition-all duration-300 shadow-sm sm:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                 >
                     <Home className="w-5 h-5" />
                     <span className="hidden sm:inline">Home</span>
@@ -114,12 +119,12 @@ const ContactUs = () => {
                 <button
                     onClick={goBack}
                     aria-label="Back"
-                    className="flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 bg-indigo-600 text-white border-2 border-white/20 backdrop-blur-md rounded-full sm:rounded-lg hover:bg-transparent transition-all duration-300 shadow-sm sm:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                    className="flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 text-white border-2 border-white/20 backdrop-blur-md rounded-full sm:rounded-lg hover:bg-transparent transition-all duration-300 shadow-sm sm:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
                     <ArrowLeft className="w-5 h-5" />
                     <span className="hidden sm:inline">Back</span>
                 </button>
-            </div>
+            </div> */}
 
             {/* Hero Section */}
             <div className="relative py-32 mt-16 pb-12 overflow-hidden">
@@ -129,10 +134,10 @@ const ContactUs = () => {
                     transition={{ duration: 0.6 }}
                     className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
                 >
-                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-                        ContactUs Us
+                    <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6 transition-colors duration-300 tracking-tight">
+                        Contact Us
                     </h1>
-                    <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+                    <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto transition-colors duration-300 leading-relaxed font-medium">
                         Get in touch with us for any inquiries about our products and services
                     </p>
                 </motion.div>
@@ -141,62 +146,62 @@ const ContactUs = () => {
             {/* Main Content */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                    {/* ContactUs Form */}
+                    {/* Contact Form */}
                     <motion.div
                         variants={fadeInUp}
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true }}
-                        className="bg-white/10 backdrop-blur-md rounded-xl p-8 border border-white/20"
+                        className="bg-white dark:bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-outline/10 dark:border-white/10 shadow-sm transition-colors duration-300"
                     >
-                        <h2 className="text-2xl font-bold text-white mb-6">Send us a Message</h2>
+                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 transition-colors duration-300">Send us a Message</h2>
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
-                                <label className="block text-sm font-medium text-blue-100 mb-2">
+                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 transition-colors duration-300">
                                     Name
                                 </label>
                                 <input
                                     type="text"
                                     required
-                                    className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-blue-200/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-white/5 border border-outline/20 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-300"
                                     placeholder="Your name"
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-blue-100 mb-2">
+                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 transition-colors duration-300">
                                     Email
                                 </label>
                                 <input
                                     type="email"
                                     required
-                                    className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-blue-200/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-white/5 border border-outline/20 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-300"
                                     placeholder="your@email.com"
                                     value={formData.email}
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-blue-100 mb-2">
+                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 transition-colors duration-300">
                                     Phone Number
                                 </label>
                                 <input
                                     type="tel"
-                                    className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-blue-200/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-white/5 border border-outline/20 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-300"
                                     placeholder="Your phone number"
                                     value={formData.number}
                                     onChange={(e) => setFormData({ ...formData, number: e.target.value })}
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-blue-100 mb-2">
+                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 transition-colors duration-300">
                                     Message
                                 </label>
                                 <textarea
                                     required
                                     rows={4}
-                                    className="w-full px-4 py-2 rounded-lg bg-white/10 border border-white/20 text-white placeholder-blue-200/60 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-white/5 border border-outline/20 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-300"
                                     placeholder="Your message"
                                     value={formData.message}
                                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -205,19 +210,24 @@ const ContactUs = () => {
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="w-full px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-300 disabled:opacity-50"
+                                className="w-full px-6 py-3 bg-primary hover:bg-primary-fixed dark:hover:bg-primary/90 text-white font-bold rounded-lg transition-colors duration-300 disabled:opacity-50 shadow-md"
                             >
                                 {isSubmitting ? 'Sending...' : 'Send Message'}
                             </button>
                             {submitStatus === 'success' && (
-                                <p className="text-green-400 text-sm mt-2">
+                                <p className="text-green-600 dark:text-green-400 font-medium text-sm mt-2 transition-colors duration-300">
                                     Message sent successfully!
+                                </p>
+                            )}
+                            {submitStatus === 'error' && (
+                                <p className="text-red-500 font-medium text-sm mt-2 transition-colors duration-300">
+                                    Error sending message. Please try again.
                                 </p>
                             )}
                         </form>
                     </motion.div>
 
-                    {/* ContactUs Information */}
+                    {/* Contact Information Cards */}
                     <div className="space-y-6">
                         {contactInfo.map((info, index) => (
                             <motion.div
@@ -226,30 +236,30 @@ const ContactUs = () => {
                                 initial="hidden"
                                 whileInView="visible"
                                 viewport={{ once: true }}
-                                className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20"
+                                className="bg-white dark:bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-outline/10 dark:border-white/10 shadow-sm hover:shadow-md transition-all duration-300 group"
                             >
                                 <div className="flex items-start gap-4">
-                                    <div className="text-blue-400">
+                                    <div className="text-primary dark:text-blue-400 transform group-hover:scale-110 transition-transform duration-300">
                                         {info.icon}
                                     </div>
                                     <div>
-                                        <h3 className="text-lg font-semibold text-white mb-2">
+                                        <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2 transition-colors duration-300">
                                             {info.title}
                                         </h3>
                                         {Array.isArray(info.content) ? (
                                             info.content.map((item, i) => (
-                                                <p key={i} className="text-blue-100">
+                                                <p key={i} className="text-slate-600 dark:text-slate-300 transition-colors duration-300">
                                                     {info.link ? (
-                                                        <a href={info.link} className="hover:text-blue-400 transition-colors">
+                                                        <a href={info.link} className="hover:text-primary dark:hover:text-blue-400 transition-colors">
                                                             {item}
                                                         </a>
                                                     ) : item}
                                                 </p>
                                             ))
                                         ) : (
-                                            <p className="text-blue-100">
+                                            <p className="text-slate-600 dark:text-slate-300 transition-colors duration-300">
                                                 {info.link ? (
-                                                    <a href={info.link} className="hover:text-blue-400 transition-colors">
+                                                    <a href={info.link} className="hover:text-primary dark:hover:text-blue-400 transition-colors">
                                                         {info.content}
                                                     </a>
                                                 ) : info.content}

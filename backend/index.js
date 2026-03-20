@@ -5,6 +5,7 @@ import connectDB from "./db/db.js";
 import productRouter from "./routers/product.router.js";
 import partRouter from "./routers/part.router.js";
 import contactRouter from "./routers/contact.router.js";
+import sitemapRouter from "./routers/sitemap.router.js";
 
 dotenv.config();
 const app = express();
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 app.use("/products", productRouter);
 app.use("/parts", partRouter);
 app.use("/contact", contactRouter);
+app.use("/sitemap.xml", sitemapRouter);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

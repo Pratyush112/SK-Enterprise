@@ -5,6 +5,7 @@ import { useReactTable, getCoreRowModel, flexRender, getPaginationRowModel } fro
 import { Home, ArrowLeft } from 'lucide-react';
 import { useNavigation } from '../../hooks/useNavigation';
 import { getProducts } from '../../routers/APIs';
+import SEO from '../../components/SEO';
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -341,6 +342,13 @@ const ProductCards = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
         >
+            <SEO 
+                title="Sluice Gates & Products | SK Enterprise"
+                description="Explore our wide range of high-quality sluice gates and industrial valves manufactured by SK Enterprise."
+                name="SK Enterprise"
+                type="website"
+                url="/products"
+            />
             {/* Navigation: Home (left) and Back (right) - responsive */}
             <div className="absolute top-24 left-4 right-4 z-10 sm:z-50 flex items-center justify-between sm:top-24 sm:left-8 sm:right-8">
                     <motion.button

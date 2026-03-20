@@ -22,7 +22,7 @@ const router = createBrowserRouter([
             { path: "/sluicegates", element: <Suspense fallback={<div>Loading...</div>}><Product blog={getProducts}/></Suspense>},
             { path: "/parts", element: <Suspense fallback={<div>Loading...</div>}><PartsPage part={getParts}/></Suspense>}, 
             { path: "/Nuts&Bolts", element: <Suspense fallback={<div>Loading...</div>}><PartsPage part={getParts}/></Suspense>}, 
-            { path: "/about", element: <Suspense fallback={<div>Loading...</div>}><About/></Suspense>},
+            { path: "/aboutus", element: <Suspense fallback={<div>Loading...</div>}><About/></Suspense>},
             { path: "/contactus", element: <Suspense fallback={<div>Loading...</div>}><Contact/></Suspense>},
             { path: "/contact", element: <Suspense fallback={<div>Loading...</div>}><Contact/></Suspense>}   
    

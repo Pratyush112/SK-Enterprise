@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Home, ArrowLeft } from 'lucide-react';
 import { useNavigation } from '../../hooks/useNavigation';
 import { getParts } from '../../routers/APIs';
+import SEO from '../../components/SEO';
 
 const PartsPage = () => {
 
@@ -149,6 +150,13 @@ const PartsPage = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
         >
+            <SEO 
+                title="Parts & Accessories | SK Enterprise"
+                description="Explore our inventory of high-quality parts, including nuts, bolts, and various accessories for industrial valves."
+                name="SK Enterprise"
+                type="website"
+                url="/parts"
+            />
             {/* Navigation: Home (left) and Back (right) - responsive */}
             <div className="absolute top-24 left-4 right-4 z-10 sm:z-50 flex items-center justify-between sm:top-24 sm:left-8 sm:right-8" aria-hidden="false">
                 <motion.button

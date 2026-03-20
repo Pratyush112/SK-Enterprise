@@ -1,115 +1,45 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import logo from '../../assets/logo.jpg';
-import { motion } from 'framer-motion';
-
-const staggerContainer = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-};
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 40 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-};
-
-const slideLeft = {
-  hidden: { opacity: 0, x: -40 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-};
 
 const Hero = () => {
   return (
-    <>
-      <div className="h-16 xs:h-20 sm:h-24 md:h-32 lg:h-40"></div>
-      <motion.section
-        className="relative mx-3 xs:mx-4 sm:mx-6 lg:mx-12 xl:mx-auto max-w-7xl bg-white/30 dark:bg-gray-900/20 backdrop-blur-lg border border-white/40 dark:border-gray-700/40 rounded-2xl xs:rounded-3xl px-3 xs:px-4 sm:px-6 lg:px-12 py-12 xs:py-16 sm:py-20 lg:py-32 flex flex-col md:flex-row items-center gap-6 xs:gap-8 lg:gap-24 overflow-hidden"
-        variants={staggerContainer}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
-      >
-        {/* Animated Background Bubbles */}
-        <motion.div
-          className="absolute -top-16 -left-16 w-32 xs:w-40 sm:w-64 h-32 xs:h-40 sm:h-64 bg-gradient-to-br from-blue-300 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-full blur-3xl opacity-30 dark:opacity-20"
-          animate={{ y: [0, -15, 0], scale: [1, 1.05, 1] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute -bottom-16 -right-16 w-36 xs:w-48 sm:w-72 h-36 xs:h-48 sm:h-72 bg-gradient-to-tr from-orange-300 to-yellow-200 dark:from-orange-900 dark:to-yellow-800 rounded-full blur-3xl opacity-30 dark:opacity-20"
-          animate={{ y: [0, 15, 0], scale: [1, 1.1, 1] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        />
-
-        {/* Logo Section */}
-        <motion.div
-          className="flex flex-col items-center md:items-start z-10 w-full md:w-auto md:ml-12"
-          variants={fadeInUp}
-        >
-          <div className="relative group">
-            <div className="absolute -inset-1.5 bg-gradient-to-r from-blue-600 to-orange-400 rounded-2xl blur opacity-30 group-hover:opacity-50 transition duration-1000"></div>
-            <div className="relative">
-              <div className="absolute -top-3 xs:-top-4 -left-3 xs:-left-4 w-12 xs:w-16 sm:w-24 h-12 xs:h-16 sm:h-24 bg-gradient-to-r from-orange-400 to-yellow-300 rounded-full blur-xl opacity-60 animate-pulse"></div>
-              <img
-                src={logo}
-                alt="SK Enterprise Logo"
-                className="w-36 xs:w-44 sm:w-56 lg:w-64 h-36 xs:h-44 sm:h-56 lg:h-64 rounded-xl xs:rounded-2xl shadow-2xl border-2 xs:border-4 border-white dark:border-gray-800 object-cover relative z-10 transform transition-all duration-500 hover:shadow-orange-500/25 dark:hover:shadow-blue-500/25"
-              />
+    <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden transition-colors duration-300">
+      <div className="max-w-screen-2xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="z-10">
+          <h1 className="font-headline text-5xl md:text-7xl font-extrabold text-on-surface dark:text-white tracking-tight leading-[1.1] mb-8 transition-colors duration-300">
+            OUR <span className="text-primary">MOTO.</span>
+          </h1>
+          <p className="text-on-surface-variant dark:text-slate-300 text-xl leading-relaxed mb-10 max-w-xl transition-colors duration-300">
+            SK Enterprise moto is to deliver the clients nothing less that the best quality with not compromise, delivering quality that exceeds industry standards.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <button className="bg-primary text-on-primary px-8 py-4 rounded-full font-bold text-lg hover:bg-primary-container transition-all hover:-translate-y-1 shadow-xl shadow-primary/25">
+              Explore Products
+            </button>
+            <button className="bg-secondary-container dark:bg-slate-800 text-on-secondary-container dark:text-slate-200 px-8 py-4 rounded-full font-bold text-lg hover:bg-surface-container-highest dark:hover:bg-slate-700 transition-all hover:-translate-y-1 border border-transparent dark:border-white/10">
+              Get a Quote
+            </button>
+          </div>
+        </div>
+        <div className="relative group">
+          <div className="absolute -inset-4 bg-primary/5 dark:bg-primary/20 rounded-[2rem] blur-2xl group-hover:bg-primary/10 dark:group-hover:bg-primary/30 transition-colors duration-500"></div>
+          <div className="relative rounded-[1.5rem] overflow-hidden shadow-2xl border border-outline-variant/20 dark:border-white/10 transition-colors duration-300">
+            <img className="w-full h-full object-cover aspect-[4/3] transform group-hover:scale-105 transition-transform duration-700" alt="Close up of high precision industrial valve machinery" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxtsAiz2WiR5nGVn74m-WPu-psSBMTdGqKcmWe0r_EA-vfK8vbJEDHWrtUOjuJKGVAV3FRrI-YSwIalEY-4UwJcBx2Flx4PIHuWhLRwS37chrmx_SH9SKsVel8hp9krA4krgNEXZao8O-0z4MtyIGNDwCb8GvRmutNu3XE670dEAH1jTVzJzFdn-2ycjCJ4qldhI-Q3OV4Q9ELvQCebJCcZOdKYGNaizQBwT8V-m4AywfzvVIb28LNGJwpMohJWgxL-WzTV9-yiL-V"/>
+          </div>
+          {/* Blueprint Accent */}
+          <div className="absolute -bottom-6 -left-6 bg-surface-container-lowest dark:bg-slate-800 p-6 rounded-xl shadow-xl border border-outline-variant/10 dark:border-white/10 hidden md:block transition-colors duration-300">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-primary-fixed dark:bg-primary/20 flex items-center justify-center transition-colors duration-300">
+                <span className="material-symbols-outlined text-primary">settings</span>
+              </div>
+              <div>
+                <p className="text-xs font-bold text-on-surface-variant dark:text-slate-400 uppercase tracking-tighter transition-colors duration-300">Certified precision</p>
+                <p className="text-lg font-black font-headline text-primary leading-none transition-colors duration-300">ISO 9001:2015</p>
+              </div>
             </div>
           </div>
-        </motion.div>
-
-        {/* Content Section */}
-        <motion.div className="z-20 flex-1 text-center md:text-left" variants={staggerContainer}>
-          <motion.h1
-            className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-900 to-blue-600 dark:from-white dark:to-blue-300 mb-4 xs:mb-6 tracking-tight leading-tight"
-            variants={slideLeft}
-          >
-            Our Motto
-          </motion.h1>
-          <motion.p
-            className="text-sm xs:text-base sm:text-lg lg:text-xl text-gray-700 dark:text-gray-200 font-medium mb-6 xs:mb-8 sm:mb-10 max-w-xs xs:max-w-sm sm:max-w-2xl mx-auto md:mx-0 leading-relaxed"
-            variants={fadeInUp}
-          >
-            The company's motto is to deliver the clients with nothing less than{' '}
-            <span className="relative inline-block">
-              <span className="absolute inset-x-0 bottom-0 h-3 bg-blue-200 dark:bg-blue-900 opacity-30"></span>
-              <span className="relative text-blue-900 dark:text-blue-300 font-bold">best</span>
-            </span>{' '}
-            and{' '}
-            <span className="relative inline-block">
-              <span className="absolute inset-x-0 bottom-0 h-3 bg-orange-200 dark:bg-orange-900 opacity-30"></span>
-              <span className="relative text-blue-900 dark:text-blue-300 font-bold">quality</span>
-            </span>{' '}
-            is one such parameter when we make no compromises.
-          </motion.p>
-          <motion.div variants={fadeInUp} className="flex flex-row xs:flex-row gap-4 xs:gap-6">
-            <Link
-              to="/products"
-              className="group relative inline-flex items-center justify-center gap-1 xs:gap-2 px-6 xs:px-8 py-3 xs:py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-base xs:text-lg font-semibold rounded-lg xs:rounded-xl shadow-lg transition-all duration-300 hover:shadow-blue-500/50 dark:hover:shadow-blue-700/50 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-            >
-              See Sluice Gates
-              <svg className="w-4 h-4 xs:w-5 xs:h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </Link>
-            <Link
-              to="/parts"
-              className="group relative inline-flex items-center justify-center gap-3 xs:gap-4 px-6 xs:px-8 py-3 xs:py-4 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white text-base xs:text-lg font-semibold rounded-lg xs:rounded-xl shadow-lg transition-all duration-300 hover:shadow-blue-500/50 dark:hover:shadow-blue-700/50 transform hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
-            >
-              See Nuts & Bolts
-              <svg className="w-4 h-4 xs:w-5 xs:h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </Link>
-          </motion.div>
-        </motion.div>
-      </motion.section>
-    </>
+        </div>
+      </div>
+    </section>
   );
 };
 
