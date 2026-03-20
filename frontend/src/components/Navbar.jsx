@@ -56,7 +56,7 @@ const Navbar = () => {
                 </Link>
 
                 {/* Desktop Navigation - Pill Container */}
-                <div className="hidden lg:flex items-center backdrop-blur-xl transition-all bg-gray-100/80 dark:bg-white/5 p-1.5 rounded-full border border-gray-200/50 dark:border-white/10 transition-colors duration-300">
+                <div className="hidden lg:flex items-center backdrop-blur-xl bg-gray-100/80 dark:bg-white/5 p-1.5 rounded-full border border-gray-200/50 dark:border-white/10 transition-colors duration-300">
                     {navLinks.map((item) => {
                         const path = item === 'Home' ? '/' : `/${item.toLowerCase().replace(/\s+/g, '')}`;
                         const active = isActive(item);
