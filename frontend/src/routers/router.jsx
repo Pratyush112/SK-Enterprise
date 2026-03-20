@@ -4,6 +4,8 @@ import App from "../App";
 import Home from "../pages/home/Home";
 import { getProducts, getParts} from "./APIs";
 import ErrorPage from "../pages/errorpage/Error";
+import QualityAssurance from "../pages/home/QualityAssurance";
+import Features from "../pages/home/Features";
 
 // Lazy-load heavier pages to reduce initial bundle size (improves mobile performance)
 const PartsPage = lazy(() => import("../pages/productlist/PartsPage"));
@@ -24,7 +26,9 @@ const router = createBrowserRouter([
             { path: "/Nuts&Bolts", element: <Suspense fallback={<div>Loading...</div>}><PartsPage part={getParts}/></Suspense>}, 
             { path: "/aboutus", element: <Suspense fallback={<div>Loading...</div>}><About/></Suspense>},
             { path: "/contactus", element: <Suspense fallback={<div>Loading...</div>}><Contact/></Suspense>},
-            { path: "/contact", element: <Suspense fallback={<div>Loading...</div>}><Contact/></Suspense>}   
+            { path: "/contact", element: <Suspense fallback={<div>Loading...</div>}><Contact/></Suspense>},   
+            { path: "/quality", element: <Suspense fallback={<div>Loading...</div>}><QualityAssurance/></Suspense>},   
+            { path: "/WhyUs", element: <Suspense fallback={<div>Loading...</div>}><Features/></Suspense>}   
    
         ]
     }
