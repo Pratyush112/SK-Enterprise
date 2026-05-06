@@ -1,3 +1,7 @@
+<center>
+<img src="./frontend/public/logo.jpg" alt="SK Enterprise Logo" width="200" height="200">
+</center>
+
 # SK Enterprise — Industrial Valves & Gates
 
 A modern web application for **SK Enterprise**, specializing in manufacturing industrial valves and gates.
@@ -5,6 +9,7 @@ A modern web application for **SK Enterprise**, specializing in manufacturing in
 ---
 
 > [!CAUTION]
+>
 > ## ⚠️ COPYRIGHT NOTICE — DO NOT CLONE
 >
 > **This repository is proprietary and protected under copyright law.**
