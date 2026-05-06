@@ -32,7 +32,7 @@ S.K. Enterprise is a company specialized in manufacturing high-quality industria
 
 ## 🌐 Website
 
-Visit us at [www.skenterprize.com](https://www.skenterprize.com/)
+Visit us at [www.skenterprisesluicegate.com](https://www.skenterprisesluicegate.com/)
 
 ## ✨ Features
 
