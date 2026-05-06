@@ -1,6 +1,6 @@
-<center>
+<div align="center">
 <img src="./frontend/public/logo.jpg" alt="SK Enterprise Logo" width="200" height="200">
-</center>
+</div>
 
 # SK Enterprise — Industrial Valves & Gates
 
