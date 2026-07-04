@@ -283,7 +283,7 @@ const QuoteModal = ({ isOpen, onClose, initialItem = '' }) => {
 
                                 {/* Requirements / Message */}
                                 <div className="space-y-1.5">
-                                    <label htmlFor="quote-message" className="block text-xs font-semibold text-slate-300 uppercase tracking-wider flex justify-between items-center">
+                                    <label htmlFor="quote-message" className="block text-xs font-semibold text-slate-300 uppercase tracking-wider justify-between items-center">
                                         <span>Technical Requirements & Quantities <span className="text-red-400">*</span></span>
                                         <span className="text-slate-500 font-normal text-[11px]">Include dimensions, head pressure, or standards</span>
                                     </label>
