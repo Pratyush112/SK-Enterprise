@@ -1,93 +1,178 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import api from '../../services/api'; // Import your axios API instanc
+import api from '../../services/api';
+import { gsap } from '../../lib/gsap';
+import { ChevronDown, ShieldCheck, Award, MapPin } from 'lucide-react';
+import Preloader from '../../components/motion/Preloader';
+import StampBadge from '../../components/ui/StampBadge';
 
 const Hero = () => {
-
   const [heroImg, setHeroImg] = useState('https://storage.googleapis.com/sk-enterprise/Website-hero-image/Website%20Image.jpeg');
+  const [isPreloaderDone, setIsPreloaderDone] = useState(false);
+  const heroRef = useRef(null);
+  const bgRef = useRef(null);
+  const titleRef = useRef(null);
+  const contentRef = useRef(null);
 
   useEffect(() => {
-    const fetchHeroImageFromMongo = async() => {
-      try{
-       // Replace '/settings/hero' with your actual backend endpoint route
-        const response = await api.get('/settings/hero'); 
-        
-        // Assuming your backend sends JSON like: { heroImage: "https://storage.googleapis.com/..." }
+    const fetchHeroImageFromMongo = async () => {
+      try {
+        const response = await api.get('/settings/hero');
         if (response.data && response.data.heroImage) {
           setHeroImg(response.data.heroImage);
-        } 
+        }
       } catch (error) {
         console.error("Failed to fetch Hero image from MongoDB:", error);
-        // Will seamlessly fallback to the default image if API fails
       }
     };
     fetchHeroImageFromMongo();
   }, []);
 
+  // GSAP Cinematic Animations & Parallax
+  useEffect(() => {
+    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) return;
+
+    const ctx = gsap.context(() => {
+      // Background parallax on scroll
+      if (bgRef.current) {
+        gsap.to(bgRef.current, {
+          yPercent: 25,
+          scale: 1.08,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: heroRef.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          },
+        });
+      }
+
+      // Only trigger entrance animation after preloader completes or if disabled
+      if (isPreloaderDone || prefersReducedMotion) {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+
+        // Title lines reveal
+        if (titleRef.current) {
+          const lines = titleRef.current.querySelectorAll('.hero-line');
+          tl.fromTo(
+            lines,
+            { y: 80, opacity: 0 },
+            { y: 0, opacity: 1, duration: 1.1, stagger: 0.12, delay: 0.1 }
+          );
+        }
+
+        // Content reveal
+        if (contentRef.current) {
+          const items = contentRef.current.children;
+          tl.fromTo(
+            items,
+            { y: 25, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.8, stagger: 0.1 },
+            '-=0.6'
+          );
+        }
+      }
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, [heroImg, isPreloaderDone]);
+
   return (
-    <section className="relative pt-32 pb-20 md:pt-24 md:pb-24 overflow-hidden transition-colors duration-300">
-      <div className="max-w-screen-2xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <div className="z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-200/60 dark:border-blue-800/60 shadow-sm transition-all duration-300">
-            <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 animate-pulse"></span>
-            ISO 9001:2015 Certified Manufacturing
+    <>
+      <Preloader onComplete={() => setIsPreloaderDone(true)} />
+
+      <section 
+        ref={heroRef} 
+        className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-slate-50 pt-24 pb-20 px-6 sm:px-8 select-none"
+      >
+        {/* Background Parallax Layer with Contrast Scrim */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <div ref={bgRef} className="absolute inset-0 w-full h-[120%] -top-[10%]">
+            <img 
+              className="w-full h-full object-cover opacity-90 filter contrast-105 saturate-125 transition-opacity duration-1000" 
+              alt="SK Enterprise Industrial Valve Manufacturing Works" 
+              src={heroImg}
+            />
           </div>
-          <h1 className="font-headline text-5xl md:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tight leading-[1.1] mb-6 transition-colors duration-300">
-            PRECISION <span className="text-blue-600 dark:text-blue-400">FLOW CONTROL.</span>
-          </h1>
-          <p className="text-slate-600 dark:text-slate-300 text-lg sm:text-xl leading-relaxed mb-8 max-w-xl transition-colors duration-300 font-medium">
-            SK Enterprise (Est. 1990s) manufactures mission-critical Cast Iron Sluice Gates, Penstock Gates, and high-tensile industrial fasteners at our Howrah facility. Designed to exceed IS 3042, BS 7775, and AWWA C501 standards.
-          </p>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 mb-10 text-sm font-bold text-slate-800 dark:text-slate-200">
-            <li className="flex items-center gap-2.5"><span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0"></span>30+ Years Heritage (Est. 1990s)</li>
-            <li className="flex items-center gap-2.5"><span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0"></span>Howrah Works & GST Registered</li>
-            <li className="flex items-center gap-2.5"><span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0"></span>100% Hydrostatic Tested to IS:3042</li>
-            <li className="flex items-center gap-2.5"><span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0"></span>Cast Iron FG 200/260 & SS 316</li>
-            <li className="flex items-center gap-2.5"><span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0"></span>Proprietor: Mr. Biswajit Saha</li>
-            <li className="flex items-center gap-2.5"><span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0"></span>Rapid Spares & BOQ Tender Support</li>
-          </ul>
-          <div className="flex flex-wrap gap-4">
-            <Link to="/products" className="bg-blue-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-blue-500 transition-all hover:-translate-y-1 shadow-xl shadow-blue-600/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 min-h-[48px] flex items-center justify-center">
-              Explore Catalog
-            </Link>
-            <Link to="/contactus" className="bg-slate-200 dark:bg-slate-800 text-slate-900 dark:text-slate-200 px-8 py-4 rounded-full font-bold text-lg hover:bg-slate-300 dark:hover:bg-slate-700 transition-all hover:-translate-y-1 border border-transparent dark:border-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 min-h-[48px] flex items-center justify-center">
-              Request Technical Quote
-            </Link>
-          </div>
+          {/* Clean Cinematic Scrim - Guaranteeing Bright Typography is 100% Visible */}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/75 via-slate-900/65 to-slate-900/85 backdrop-blur-[1px]"></div>
         </div>
-        <div className="relative group">
-          <div className="absolute -inset-4 bg-primary/5 dark:bg-primary/20 rounded-[2rem] blur-2xl group-hover:bg-primary/10 dark:group-hover:bg-primary/30 transition-colors duration-500"></div>
-          <div className="relative rounded-[1.5rem] overflow-hidden shadow-2xl border border-outline-variant/20 dark:border-white/10 transition-colors duration-300">
-            <img className="w-full h-full object-cover aspect-[4/3] transform transition-transform duration-700" alt="hero image" src={heroImg}/>
+
+        {/* Floating AMES Stamp Badge */}
+        <div className="absolute top-28 right-8 z-20 hidden lg:block">
+          <StampBadge text="ISO 9001 : 2015 CERTIFIED CO. • IAS ACCREDITED MSCB-119 • S.K. ENTERPRISE • " />
+        </div>
+
+        {/* Main Hero Content - Centered Engineering Gravitas */}
+        <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center mt-8 sm:mt-12">
+          
+          {/* Eyebrow Badge */}
+          <div ref={contentRef} className="flex flex-col items-center w-full">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/80 border border-accent/40 text-accent font-mono text-xs font-bold uppercase tracking-widest mb-8 backdrop-blur-md shadow-lg">
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+              <span>ISO 9001 : 2015 Certified Co. • IAS ACCREDITED MSCB-119</span>
+            </div>
           </div>
-          {/* Blueprint Accent */}
-          <div className="absolute -bottom-6 -left-6 bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-2xl border border-slate-100 dark:border-slate-800 hidden md:block transition-all duration-300 backdrop-blur-md z-20">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-900/40 flex items-center justify-center border border-blue-100 dark:border-blue-800/50 shrink-0 transition-colors duration-300">
-                <span className="material-symbols-outlined text-blue-600 dark:text-blue-400 text-2xl">verified</span>
+
+          {/* Masked Headline Reveal - Bright White & Bright Cyan */}
+          <div ref={titleRef} className="flex flex-col items-center mb-8 font-headline">
+            <div className="overflow-hidden">
+              <h1 className="hero-line text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white tracking-tight leading-[1.05] uppercase">
+                S.K. ENTERPRISE
+              </h1>
+            </div>
+            <div className="overflow-hidden">
+              <h1 className="hero-line text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-accent tracking-tight leading-[1.05] uppercase">
+                VALVES | COCKS & FITTINGS
+              </h1>
+            </div>
+          </div>
+
+          {/* Subheadline & Trust Indicators */}
+          <div ref={contentRef} className="flex flex-col items-center max-w-3xl mx-auto">
+            <p className="text-slate-100 text-lg sm:text-xl md:text-2xl leading-relaxed mb-12 font-semibold max-w-3xl drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]">
+              Manufacturers of : C.I. | S.S. | G.M. | Valves | Cocks & Fittings. The company's motto is to deliver the clients with nothing less than best and quality is one such parameter where we make no compromises.
+            </p>
+
+            {/* Industrial Trust Badges */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-4xl pt-8 border-t border-slate-700/60 text-left">
+              <div className="p-5 rounded-industrial-md bg-slate-900/85 border border-slate-700/60 flex items-start gap-3.5 backdrop-blur-md shadow-xl hover:border-accent transition-all group">
+                <Award className="w-6 h-6 text-accent shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs font-mono text-slate-400 uppercase tracking-wider">Certification</p>
+                  <p className="text-base font-bold text-white group-hover:text-accent transition-colors">ISO 9001 : 2015 Certified Co.</p>
+                </div>
               </div>
-              <div>
-                <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1 transition-colors duration-300">Certified precision</p>
-                <p className="text-lg font-black font-headline text-blue-600 dark:text-blue-400 leading-none transition-colors duration-300">ISO 9001:2015</p>
+
+              <div className="p-5 rounded-industrial-md bg-slate-900/85 border border-slate-700/60 flex items-start gap-3.5 backdrop-blur-md shadow-xl hover:border-accent transition-all group">
+                <ShieldCheck className="w-6 h-6 text-accent shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs font-mono text-slate-400 uppercase tracking-wider">Accreditation</p>
+                  <p className="text-base font-bold text-white group-hover:text-accent transition-colors">IAS ACCREDITED MSCB-119</p>
+                </div>
+              </div>
+
+              <div className="p-5 rounded-industrial-md bg-slate-900/85 border border-slate-700/60 flex items-start gap-3.5 backdrop-blur-md shadow-xl hover:border-accent transition-all group">
+                <MapPin className="w-6 h-6 text-accent shrink-0 mt-0.5" />
+                <div>
+                  <p className="text-xs font-mono text-slate-400 uppercase tracking-wider">Products</p>
+                  <p className="text-base font-bold text-white group-hover:text-accent transition-colors">Valves | Cocks & Fittings</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Trust Strip */}
-      {/* <div className="max-w-screen-2xl mx-auto px-8 mt-20 pt-10 border-t border-outline/10 dark:border-white/10">
-        <p className="text-center text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-6">
-          Trusted by Municipal Corporations, EPC Contractors & Industrial Water Authorities Across India
-        </p>
-        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-75 grayscale hover:grayscale-0 transition-all duration-300">
-          <span className="font-headline font-black text-lg md:text-xl text-slate-600 dark:text-slate-400">WATER BOARDS</span>
-          <span className="font-headline font-black text-lg md:text-xl text-slate-600 dark:text-slate-400">EPC PROJECTS</span>
-          <span className="font-headline font-black text-lg md:text-xl text-slate-600 dark:text-slate-400">HEAVY INDUSTRY</span>
-          <span className="font-headline font-black text-lg md:text-xl text-slate-600 dark:text-slate-400">MUNICIPAL CORP</span>
+        {/* Cargokite Scroll Cue */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 opacity-80 hover:opacity-100 transition-opacity">
+          {/* <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-slate-500">Scroll to explore</span> */}
+          {/* 
+          */}
         </div>
-      </div> */}
-    </section>
+      </section>
+    </>
   );
 };
 

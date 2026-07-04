@@ -2,35 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-
-@keyframes fade-in {
-  0% {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
+@layer base {
+  :root {
+    --color-bg-dark: #ffffff;
+    --color-bg-light: #f8fafc;
+    --color-bg-paper: #f1f5f9;
+    --color-text-dark-bg: #0f172a;
+    --color-text-light-bg: #0f172a;
+    --color-muted: #64748b;
+    --color-accent: #00b4d8;
+    --color-accent-ochre: #b5622b;
+    --border-dark: rgba(0, 0, 0, 0.08);
+    --border-light: rgba(0, 0, 0, 0.08);
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+
+  body {
+    @apply bg-white text-slate-900 font-body antialiased transition-colors duration-300;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .font-headline, .hero-line {
+    font-family: 'Archia', 'Archia Regular', sans-serif;
+    font-weight: 800;
   }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.5s ease-out forwards;
+/* Lenis Smooth Scroll Recommended Styles */
+html.lenis {
+  height: auto;
 }
 
-@keyframes shimmer {
-  0% {
-    background-position: 200% center;
-  }
-  100% {
-    background-position: -200% center;
-  }
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
 }
 
-.hover\\:animate-shimmer:hover {
-  animation: shimmer 2.5s linear infinite;
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }
 
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Reusable Animation & Industrial Layout Utilities */
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -38,5 +56,47 @@
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  .text-reveal-wrapper {
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .text-reveal-content {
+    display: inline-block;
+    will-change: transform, opacity;
+  }
+
+  .border-industrial {
+    border-color: var(--border-light);
+  }
+  
+  .dark .border-industrial {
+    border-color: var(--border-light);
+  }
+
+  .font-tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .stamp-badge {
+    transform-origin: center center;
+    will-change: transform, opacity;
+  }
+
+  .editorial-border {
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* Reduced motion overrides */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

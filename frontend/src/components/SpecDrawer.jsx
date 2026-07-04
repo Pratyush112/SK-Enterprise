@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { X, ExternalLink, FileText, ShieldCheck, Check, Layers, Gauge, Maximize2, Wrench, ArrowRight, Info, Download, Award } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -128,154 +127,145 @@ const SpecDrawer = ({ isOpen, onClose, item, type = 'product', onRequestQuote })
     };
 
     return (
-        <AnimatePresence>
-            <div className="fixed inset-0 z-50 flex justify-end overflow-hidden">
-                {/* Backdrop */}
-                <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    onClick={onClose}
-                    className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity"
-                    aria-hidden="true"
-                />
+        <div className="fixed inset-0 z-50 flex justify-end overflow-hidden">
+            {/* Backdrop */}
+            <div 
+                onClick={onClose}
+                className="fixed inset-0 bg-slate-900/60 backdrop-blur-md transition-opacity duration-300 animate-fadeIn"
+                aria-hidden="true"
+            />
 
-                {/* Slide-over panel */}
-                <motion.div 
-                    initial={{ x: '100%' }}
-                    animate={{ x: 0 }}
-                    exit={{ x: '100%' }}
-                    transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                    className="relative w-full max-w-xl bg-slate-900 border-l border-slate-800 shadow-2xl overflow-y-auto z-10 text-slate-100 flex flex-col justify-between"
-                    role="dialog"
-                    aria-modal="true"
-                    aria-labelledby="spec-drawer-title"
-                >
-                    {/* Header */}
-                    <div>
-                        <div className="sticky top-0 z-20 flex items-center justify-between px-6 py-5 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
-                            <div className="flex items-center gap-3">
-                                <span className="px-2.5 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-md border border-blue-500/30 uppercase tracking-wider">
-                                    {type === 'product' ? 'Sluice Gate Spec' : 'Valve Part Spec'}
-                                </span>
-                                <h3 id="spec-drawer-title" className="text-lg font-bold text-white truncate max-w-[240px] sm:max-w-xs">
-                                    {title}
-                                </h3>
+            {/* Slide-over panel */}
+            <div 
+                className="relative w-full max-w-xl bg-white border-l border-slate-200 shadow-2xl overflow-y-auto z-10 text-slate-900 flex flex-col justify-between transition-transform duration-300 transform translate-x-0 animate-slideLeft"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="spec-drawer-title"
+            >
+                {/* Header */}
+                <div>
+                    <div className="sticky top-0 z-20 flex items-center justify-between px-6 sm:px-8 py-5 bg-slate-50/95 backdrop-blur-md border-b border-slate-200 shadow-2xs">
+                        <div className="flex items-center gap-3">
+                            <span className="px-2.5 py-1 bg-white text-accent text-[11px] font-mono font-bold rounded-full border border-slate-200 uppercase tracking-wider shadow-2xs">
+                                {type === 'product' ? 'Sluice Gate Spec' : 'Valve Part Spec'}
+                            </span>
+                            <h3 id="spec-drawer-title" className="text-lg font-headline font-black text-slate-900 truncate max-w-[240px] sm:max-w-xs uppercase">
+                                {title}
+                            </h3>
+                        </div>
+                        <button 
+                            onClick={onClose}
+                            className="p-2 text-slate-400 hover:text-slate-900 hover:bg-slate-100 rounded-industrial-md transition-colors focus:outline-none focus:ring-2 focus:ring-accent min-h-[44px] min-w-[44px] flex items-center justify-center"
+                            aria-label="Close panel"
+                        >
+                            <X className="w-5 h-5" />
+                        </button>
+                    </div>
+
+                    {/* Image Preview */}
+                    <div className="p-6 bg-slate-50 border-b border-slate-200 flex flex-col items-center justify-center gap-4">
+                        {image ? (
+                            <div className="relative group max-w-sm w-full h-56 bg-white rounded-industrial-md p-4 border border-slate-200 flex items-center justify-center overflow-hidden shadow-xs">
+                                <img 
+                                    src={image} 
+                                    alt={title} 
+                                    className="max-h-full max-w-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300" 
+                                />
                             </div>
-                            <button 
-                                onClick={onClose}
-                                className="p-2 text-slate-400 hover:text-white hover:bg-slate-800/80 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[44px] min-w-[44px] flex items-center justify-center"
-                                aria-label="Close panel"
-                            >
-                                <X className="w-5 h-5" />
-                            </button>
+                        ) : (
+                            <div className="w-full h-40 bg-white rounded-industrial-md border border-slate-200 flex items-center justify-center text-slate-400 font-mono text-xs shadow-xs">
+                                No image preview available
+                            </div>
+                        )}
+
+                        {/* Compliance Badges */}
+                        <div className="flex flex-wrap items-center justify-center gap-2 w-full">
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200 text-accent font-mono text-[11px] font-bold shadow-2xs">
+                                <Award className="w-3 h-3" />
+                                <span>IS:3042 / BS:5143</span>
+                            </span>
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200 text-slate-700 font-mono text-[11px] font-bold shadow-2xs">
+                                <ShieldCheck className="w-3 h-3 text-accent" />
+                                <span>AWWA C501 Standard</span>
+                            </span>
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200 text-slate-700 font-mono text-[11px] font-bold shadow-2xs">
+                                <Check className="w-3 h-3 text-accent" />
+                                <span>Hydrostatic Tested</span>
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* Specs List */}
+                    <div className="p-6 sm:p-8 space-y-4 bg-white">
+                        <div className="flex items-center justify-between">
+                            <h4 className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">
+                                Technical Data Sheet
+                            </h4>
+                            <span className="text-xs text-accent font-mono font-bold">
+                                SK-REF-{id.slice(-6).toUpperCase() || 'STD'}
+                            </span>
                         </div>
 
-                        {/* Image Preview */}
-                        <div className="p-6 bg-gradient-to-b from-slate-950/80 to-slate-900 border-b border-slate-800/80 flex flex-col items-center justify-center gap-4">
-                            {image ? (
-                                <div className="relative group max-w-sm w-full h-56 bg-slate-950/50 rounded-xl p-4 border border-slate-800 flex items-center justify-center overflow-hidden">
-                                    <img 
-                                        src={image} 
-                                        alt={title} 
-                                        className="max-h-full max-w-full object-contain drop-shadow-lg group-hover:scale-105 transition-transform duration-300" 
-                                    />
-                                </div>
+                        <div className="bg-slate-50 rounded-industrial-md border border-slate-200 divide-y divide-slate-200 overflow-hidden shadow-xs">
+                            {validSpecs.length > 0 ? (
+                                validSpecs.map((spec, index) => {
+                                    const Icon = spec.icon || Info;
+                                    return (
+                                        <div key={index} className="p-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4 hover:bg-white transition-colors">
+                                            <div className="flex items-center gap-2.5 text-slate-600 text-xs sm:text-sm font-mono shrink-0 font-medium">
+                                                <Icon className="w-4 h-4 text-accent shrink-0" />
+                                                <span>{spec.label}</span>
+                                            </div>
+                                            <div className="text-sm font-bold text-slate-900 sm:text-right font-mono break-words pl-6 sm:pl-0">
+                                                {spec.value}
+                                            </div>
+                                        </div>
+                                    );
+                                })
                             ) : (
-                                <div className="w-full h-40 bg-slate-950/50 rounded-xl border border-slate-800 flex items-center justify-center text-slate-500 text-sm">
-                                    No image preview available
+                                <div className="p-8 text-center text-slate-500 font-mono text-xs">
+                                    No detailed technical parameters listed for this item. Please contact engineering for full drawings.
                                 </div>
                             )}
-
-                            {/* Compliance Badges */}
-                            <div className="flex flex-wrap items-center justify-center gap-2 w-full">
-                                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[11px] font-semibold">
-                                    <Award className="w-3 h-3" />
-                                    <span>IS:3042 / BS:5143</span>
-                                </span>
-                                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-[11px] font-semibold">
-                                    <ShieldCheck className="w-3 h-3" />
-                                    <span>AWWA C501 Standard</span>
-                                </span>
-                                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-[11px] font-semibold">
-                                    <Check className="w-3 h-3" />
-                                    <span>Hydrostatic Tested</span>
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* Specs List */}
-                        <div className="p-6 space-y-4">
-                            <div className="flex items-center justify-between">
-                                <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
-                                    Technical Data Sheet
-                                </h4>
-                                <span className="text-xs text-blue-400 font-mono">
-                                    SK-REF-{id.slice(-6).toUpperCase() || 'STD'}
-                                </span>
-                            </div>
-
-                            <div className="bg-slate-950/60 rounded-xl border border-slate-800/80 divide-y divide-slate-800/60 overflow-hidden">
-                                {validSpecs.length > 0 ? (
-                                    validSpecs.map((spec, index) => {
-                                        const Icon = spec.icon || Info;
-                                        return (
-                                            <div key={index} className="p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 sm:gap-4 hover:bg-slate-800/30 transition-colors">
-                                                <div className="flex items-center gap-2.5 text-slate-400 text-xs sm:text-sm font-medium shrink-0">
-                                                    <Icon className="w-4 h-4 text-blue-400/80 shrink-0" />
-                                                    <span>{spec.label}</span>
-                                                </div>
-                                                <div className="text-sm font-semibold text-slate-100 sm:text-right font-mono break-words pl-6 sm:pl-0">
-                                                    {spec.value}
-                                                </div>
-                                            </div>
-                                        );
-                                    })
-                                ) : (
-                                    <div className="p-8 text-center text-slate-500 text-sm">
-                                        No detailed technical parameters listed for this item. Please contact engineering for full drawings.
-                                    </div>
-                                )}
-                            </div>
                         </div>
                     </div>
+                </div>
 
-                    {/* Footer Actions */}
-                    <div className="sticky bottom-0 z-20 p-6 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 flex flex-col sm:flex-row gap-3">
-                        <button 
-                            onClick={handleDownloadDatasheet}
-                            className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-800 hover:bg-slate-700 text-blue-400 hover:text-blue-300 font-semibold text-sm rounded-xl border border-slate-700 transition-all min-h-[44px]"
-                            title="Download PDF Datasheet"
+                {/* Footer Actions */}
+                <div className="sticky bottom-0 z-20 p-6 sm:p-8 bg-slate-50/95 backdrop-blur-md border-t border-slate-200 flex flex-col sm:flex-row gap-3 shadow-lg">
+                    <button 
+                        onClick={handleDownloadDatasheet}
+                        className="flex items-center justify-center gap-2 px-5 py-3 bg-white hover:bg-slate-100 text-slate-700 hover:text-slate-900 font-bold text-xs uppercase tracking-wider rounded-full border border-slate-200 transition-all min-h-[44px] shadow-xs"
+                        title="Download PDF Datasheet"
+                    >
+                        <Download className="w-4 h-4 text-accent" />
+                        <span className="hidden sm:inline">Datasheet</span>
+                    </button>
+
+                    <button 
+                        onClick={() => {
+                            onClose();
+                            if (onRequestQuote) onRequestQuote(title);
+                        }}
+                        className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-accent hover:bg-accent-hover text-white font-bold text-xs uppercase tracking-wider rounded-full shadow-lg shadow-accent/25 transition-all min-h-[44px]"
+                    >
+                        <FileText className="w-4 h-4" />
+                        <span>Request Formal Quote</span>
+                    </button>
+
+                    {id && (
+                        <Link 
+                            to={type === 'product' ? `/products/${id}` : `/parts/${id}`}
+                            onClick={onClose}
+                            className="flex items-center justify-center gap-2 px-5 py-3 bg-white hover:bg-slate-100 text-slate-700 hover:text-slate-900 font-bold text-xs uppercase tracking-wider rounded-full border border-slate-200 transition-colors min-h-[44px] shadow-xs"
                         >
-                            <Download className="w-4 h-4" />
-                            <span className="hidden sm:inline">Datasheet</span>
-                        </button>
-
-                        <button 
-                            onClick={() => {
-                                onClose();
-                                if (onRequestQuote) onRequestQuote(title);
-                            }}
-                            className="flex-1 flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-sm rounded-xl shadow-lg shadow-blue-600/25 transition-all min-h-[44px]"
-                        >
-                            <FileText className="w-4 h-4" />
-                            <span>Request Formal Quote</span>
-                        </button>
-
-                        {id && (
-                            <Link 
-                                to={type === 'product' ? `/products/${id}` : `/parts/${id}`}
-                                onClick={onClose}
-                                className="flex items-center justify-center gap-2 px-5 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-sm rounded-xl border border-slate-700 transition-colors min-h-[44px]"
-                            >
-                                <span>Full Details</span>
-                                <ExternalLink className="w-4 h-4" />
-                            </Link>
-                        )}
-                    </div>
-                </motion.div>
+                            <span>Full Details</span>
+                            <ExternalLink className="w-4 h-4" />
+                        </Link>
+                    )}
+                </div>
             </div>
-        </AnimatePresence>
+        </div>
     );
 };
 

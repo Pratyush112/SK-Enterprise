@@ -12,7 +12,7 @@ const Home = () => {
 
   const {goBack, redirectTo} = useNavigation();
   return (
-    <div className="min-h-screen relative bg-surface dark:bg-slate-950 font-body text-on-surface dark:text-white antialiased transition-colors duration-300">
+    <div className="min-h-screen relative bg-surface dark:bg-bg-dark font-body text-on-surface dark:text-white antialiased transition-colors duration-300">
       <SEO 
         title="Home | SK Enterprise - Industrial Valves & Gates"
         description="SK Enterprise manufactures high-quality industrial valves and gates including sluice gates, penstock gates, and related components. Contact us for customized solutions."

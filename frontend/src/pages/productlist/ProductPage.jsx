@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { Link, useParams } from 'react-router-dom';
+import RevealOnScroll from '../../components/motion/RevealOnScroll';
 import { 
     Home, ChevronRight, Search, Filter, Grid, Table as TableIcon, FileText, Eye, 
     ShieldCheck, CheckCircle2, Award, Wrench, RefreshCw, ChevronLeft, X, SlidersHorizontal 
@@ -12,6 +12,7 @@ import SpecDrawer from '../../components/SpecDrawer';
 import { generateCatalogSchema } from '../../utils/schemaGenerators';
 
 const ProductCards = () => {
+    const { id } = useParams();
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     
@@ -77,6 +78,15 @@ const ProductCards = () => {
         fetchProducts();
     }, []);
 
+    useEffect(() => {
+        if (id && products.length > 0) {
+            const found = products.find(p => p._id === id || p.id === id);
+            if (found) {
+                setSelectedSpecItem(found);
+            }
+        }
+    }, [id, products]);
+
     // Derive unique series for filter pills
     const seriesList = useMemo(() => {
         const list = products.map(p => p.Series).filter(Boolean);
@@ -121,7 +131,7 @@ const ProductCards = () => {
     }, [filteredProducts, currentPage]);
 
     return (
-        <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
+        <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-accent selection:text-white">
             <SEO 
                 title="Sluice Gates & Valves Catalog | SK Enterprise"
                 description="Explore SK Enterprise's production-grade catalog of Cast Iron Sluice Gates, MS/SS Penstocks, Flap Gates, and Industrial Valves manufactured to AWWA, IS, and BS standards."
@@ -132,28 +142,28 @@ const ProductCards = () => {
             />
 
             {/* Hero Header & Breadcrumb */}
-            <header className="relative bg-gradient-to-b from-slate-900 to-slate-950 border-b border-slate-800/80 py-8 sm:py-12 px-4 sm:px-8">
+            <header className="relative bg-slate-50 border-b border-slate-200 pt-24 pb-12 md:pt-32 md:pb-16 px-4 sm:px-8">
                 <div className="max-w-7xl mx-auto space-y-6">
                     {/* Breadcrumbs */}
-                    <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-medium text-slate-400">
-                        <Link to="/" className="hover:text-blue-400 flex items-center gap-1 transition-colors">
+                    <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-slate-500">
+                        <Link to="/" className="hover:text-accent flex items-center gap-1 transition-colors">
                             <Home className="w-3.5 h-3.5" />
                             <span>Home</span>
                         </Link>
-                        <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
-                        <span className="text-slate-200 font-semibold">Products Catalog</span>
+                        <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+                        <span className="text-slate-900 font-bold uppercase">Products Catalog</span>
                     </nav>
 
                     <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
                         <div className="max-w-3xl space-y-3">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-wider">
+                            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-300 text-accent text-xs font-mono font-bold uppercase tracking-wider shadow-sm">
                                 <Award className="w-3.5 h-3.5" />
-                                <span>AWWA & IS Certified Manufacturer</span>
+                                <span>AWWA & IS CERTIFIED MANUFACTURER</span>
                             </div>
-                            <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight font-headline">
-                                Industrial Sluice Gates & Valves Catalog
+                            <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight font-headline uppercase">
+                                INDUSTRIAL SLUICE GATES & VALVES CATALOG.
                             </h1>
-                            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                            <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
                                 Precision-engineered water control equipment designed for water treatment plants, irrigation works, sewage facilities, and flood control infrastructures.
                             </p>
                         </div>
@@ -163,7 +173,7 @@ const ProductCards = () => {
                                 setQuoteItem('');
                                 setIsQuoteOpen(true);
                             }}
-                            className="shrink-0 inline-flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-blue-600/25 transition-all self-start lg:self-auto"
+                            className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-accent hover:bg-accent-hover text-white text-xs font-bold uppercase tracking-wider rounded-industrial-md shadow-lg shadow-accent/25 transition-all self-start lg:self-auto hover:-translate-y-0.5"
                         >
                             <FileText className="w-4 h-4" />
                             <span>Request Custom Quote</span>
@@ -171,36 +181,36 @@ const ProductCards = () => {
                     </div>
 
                     {/* Trust Badges */}
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-slate-800/80">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-slate-200 font-mono text-xs">
                         <div className="flex items-center gap-2.5">
-                            <ShieldCheck className="w-4 h-4 text-blue-400 shrink-0" />
-                            <span className="text-xs font-medium text-slate-300">ISO 9001:2015 Quality</span>
+                            <ShieldCheck className="w-4 h-4 text-accent shrink-0" />
+                            <span className="font-bold text-slate-700">ISO 9001:2015 Quality</span>
                         </div>
                         <div className="flex items-center gap-2.5">
-                            <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-                            <span className="text-xs font-medium text-slate-300">100% Hydrostatic Tested</span>
+                            <CheckCircle2 className="w-4 h-4 text-accent shrink-0" />
+                            <span className="font-bold text-slate-700">100% Hydrostatic Tested</span>
                         </div>
                         <div className="flex items-center gap-2.5">
-                            <Wrench className="w-4 h-4 text-indigo-400 shrink-0" />
-                            <span className="text-xs font-medium text-slate-300">Custom Dimensions</span>
+                            <Wrench className="w-4 h-4 text-accent shrink-0" />
+                            <span className="font-bold text-slate-700">Custom Dimensions</span>
                         </div>
                         <div className="flex items-center gap-2.5">
-                            <Award className="w-4 h-4 text-amber-400 shrink-0" />
-                            <span className="text-xs font-medium text-slate-300">IS 3042 / BS 7775 Standard</span>
+                            <Award className="w-4 h-4 text-accent shrink-0" />
+                            <span className="font-bold text-slate-700">IS 3042 / BS 7775 Standard</span>
                         </div>
                     </div>
                 </div>
             </header>
 
             {/* Production-Grade Responsive Sticky Toolbar */}
-            <section className="bg-slate-950/95 border-b border-slate-800/90 px-4 sm:px-8 py-3.5 sticky top-16 sm:top-20 z-30 backdrop-blur-2xl shadow-xl transition-all">
+            <section className="bg-white/95 border-b border-slate-200 px-4 sm:px-8 py-3.5 sticky top-[60px] sm:top-16 z-30 backdrop-blur-2xl shadow-md transition-all">
                 <div className="max-w-7xl mx-auto space-y-3">
                     {/* Row 1: Search Bar & View Controls */}
                     <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
                         {/* Search Input Box */}
                         <div className="relative w-full sm:w-80 md:w-96 shrink-0">
                             <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                                <Search className="w-4 h-4 text-blue-400" />
+                                <Search className="w-4 h-4 text-accent" />
                             </div>
                             <input
                                 ref={searchInputRef}
@@ -208,19 +218,19 @@ const ProductCards = () => {
                                 placeholder="Search products, series, standards..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full pl-10 pr-14 py-2.5 bg-slate-900 border border-slate-800 hover:border-slate-700 focus:border-blue-500 rounded-xl text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 transition-all shadow-inner"
+                                className="w-full pl-10 pr-14 py-2.5 bg-slate-50 border border-slate-300 hover:border-slate-400 focus:border-accent focus:bg-white rounded-industrial-md text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 transition-all shadow-sm"
                             />
                             <div className="absolute inset-y-0 right-0 pr-3 flex items-center gap-1.5">
                                 {searchQuery ? (
                                     <button 
                                         onClick={() => setSearchQuery('')}
-                                        className="p-1 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                                        className="p-1 rounded-md text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors"
                                         title="Clear search"
                                     >
                                         <X className="w-4 h-4" />
                                     </button>
                                 ) : (
-                                    <kbd className="hidden sm:inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-mono font-semibold text-slate-400 bg-slate-950 border border-slate-800 rounded">
+                                    <kbd className="hidden sm:inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-mono font-bold text-slate-500 bg-white border border-slate-300 rounded shadow-2xs">
                                         /
                                     </kbd>
                                 )}
@@ -229,14 +239,14 @@ const ProductCards = () => {
 
                         {/* View Switcher & Counter */}
                         <div className="flex items-center justify-between sm:justify-end gap-3">
-                            <div className="text-xs text-slate-400 font-medium">
-                                Showing <strong className="text-white font-mono">{filteredProducts.length}</strong> of <strong className="text-slate-300 font-mono">{products.length}</strong> Products
+                            <div className="text-xs text-slate-500 font-mono font-bold">
+                                SHOWING <strong className="text-slate-900 font-tabular">{filteredProducts.length}</strong> OF <strong className="text-slate-700 font-tabular">{products.length}</strong> PRODUCTS
                             </div>
-                            <div className="flex items-center gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800">
+                            <div className="flex items-center gap-1 bg-slate-50 p-1 rounded-industrial-md border border-slate-200 shadow-xs">
                                 <button
                                     onClick={() => setViewMode('grid')}
-                                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                                        viewMode === 'grid' ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/30' : 'text-slate-400 hover:text-slate-200'
+                                    className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all flex items-center gap-1.5 uppercase ${
+                                        viewMode === 'grid' ? 'bg-accent text-white shadow-sm' : 'text-slate-500 hover:text-slate-900'
                                     }`}
                                     title="Grid View"
                                 >
@@ -245,8 +255,8 @@ const ProductCards = () => {
                                 </button>
                                 <button
                                     onClick={() => setViewMode('table')}
-                                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                                        viewMode === 'table' ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/30' : 'text-slate-400 hover:text-slate-200'
+                                    className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all flex items-center gap-1.5 uppercase ${
+                                        viewMode === 'table' ? 'bg-accent text-white shadow-sm' : 'text-slate-500 hover:text-slate-900'
                                     }`}
                                     title="Table View"
                                 >
@@ -258,16 +268,16 @@ const ProductCards = () => {
                     </div>
 
                     {/* Row 2: Series Filter Pills */}
-                    <div className="flex items-center gap-2 pt-1 border-t border-slate-800/60">
-                        <div className="flex items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider shrink-0 mr-1">
-                            <SlidersHorizontal className="w-3.5 h-3.5 text-blue-400" />
-                            <span className="hidden xs:inline">Series:</span>
+                    <div className="flex items-center gap-2 pt-1 border-t border-slate-200">
+                        <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-accent uppercase tracking-wider shrink-0 mr-1">
+                            <SlidersHorizontal className="w-3.5 h-3.5 text-accent" />
+                            <span className="hidden xs:inline">SERIES:</span>
                         </div>
 
                         {/* Left Scroll Button */}
                         <button
                             onClick={() => scrollFilter('left')}
-                            className="hidden md:flex items-center justify-center w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 shrink-0 transition-colors"
+                            className="hidden md:flex items-center justify-center w-7 h-7 rounded-md bg-slate-50 border border-slate-200 text-slate-500 hover:text-slate-900 hover:border-slate-300 shrink-0 transition-colors shadow-xs"
                             aria-label="Scroll left"
                         >
                             <ChevronLeft className="w-4 h-4" />
@@ -283,10 +293,10 @@ const ProductCards = () => {
                                     key={series}
                                     onClick={() => setSelectedSeries(series)}
                                     title={series}
-                                    className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all shrink-0 max-w-[200px] truncate ${
+                                    className={`px-3.5 py-1.5 rounded-industrial-md text-xs font-mono transition-all shrink-0 max-w-[200px] truncate uppercase ${
                                         selectedSeries === series
-                                            ? 'bg-blue-600 text-white shadow-md shadow-blue-600/25 font-semibold border border-blue-500'
-                                            : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 hover:border-slate-700'
+                                            ? 'bg-accent text-white shadow-md font-bold border border-accent'
+                                            : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 hover:border-slate-300 shadow-xs'
                                     }`}
                                 >
                                     {series}
@@ -297,7 +307,7 @@ const ProductCards = () => {
                         {/* Right Scroll Button */}
                         <button
                             onClick={() => scrollFilter('right')}
-                            className="hidden md:flex items-center justify-center w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 shrink-0 transition-colors"
+                            className="hidden md:flex items-center justify-center w-7 h-7 rounded-md bg-slate-50 border border-slate-200 text-slate-500 hover:text-slate-900 hover:border-slate-300 shrink-0 transition-colors shadow-xs"
                             aria-label="Scroll right"
                         >
                             <ChevronRight className="w-4 h-4" />
@@ -312,25 +322,25 @@ const ProductCards = () => {
                     /* Loading Skeleton */
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {[...Array(6)].map((_, i) => (
-                            <div key={i} className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4 animate-pulse">
-                                <div className="w-full h-52 bg-slate-800 rounded-xl" />
-                                <div className="h-6 bg-slate-800 rounded w-3/4" />
-                                <div className="h-4 bg-slate-800 rounded w-1/2" />
-                                <div className="pt-4 border-t border-slate-800 flex justify-between">
-                                    <div className="h-9 bg-slate-800 rounded-xl w-24" />
-                                    <div className="h-9 bg-slate-800 rounded-xl w-28" />
+                            <div key={i} className="bg-white border border-slate-200 rounded-2xl p-5 space-y-4 animate-pulse shadow-sm">
+                                <div className="w-full h-52 bg-slate-100 rounded-xl" />
+                                <div className="h-6 bg-slate-100 rounded w-3/4" />
+                                <div className="h-4 bg-slate-100 rounded w-1/2" />
+                                <div className="pt-4 border-t border-slate-200 flex justify-between">
+                                    <div className="h-9 bg-slate-100 rounded-xl w-24" />
+                                    <div className="h-9 bg-slate-100 rounded-xl w-28" />
                                 </div>
                             </div>
                         ))}
                     </div>
                 ) : filteredProducts.length === 0 ? (
                     /* Empty State */
-                    <div className="text-center py-20 bg-slate-900/40 border border-slate-800 rounded-2xl max-w-2xl mx-auto p-8 space-y-4">
-                        <div className="w-16 h-16 bg-slate-800/80 rounded-full flex items-center justify-center mx-auto text-slate-500">
+                    <div className="text-center py-20 bg-slate-50 border border-slate-200 rounded-2xl max-w-2xl mx-auto p-8 space-y-4 shadow-sm">
+                        <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400">
                             <Search className="w-8 h-8" />
                         </div>
-                        <h3 className="text-xl font-bold text-white">No products found</h3>
-                        <p className="text-slate-400 text-sm max-w-md mx-auto">
+                        <h3 className="text-xl font-bold text-slate-900">No products found</h3>
+                        <p className="text-slate-600 text-sm max-w-md mx-auto">
                             We couldn't find any sluice gates or valves matching "{searchQuery}" under the selected category.
                         </p>
                         <button
@@ -338,7 +348,7 @@ const ProductCards = () => {
                                 setSearchQuery('');
                                 setSelectedSeries('All');
                             }}
-                            className="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium rounded-xl border border-slate-700 transition-colors inline-flex items-center gap-2"
+                            className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium rounded-xl border border-slate-900 transition-colors inline-flex items-center gap-2 shadow-sm"
                         >
                             <RefreshCw className="w-4 h-4" />
                             <span>Reset Filters</span>
@@ -349,26 +359,21 @@ const ProductCards = () => {
                     <div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {paginatedProducts.map((product) => (
-                                <motion.div
-                                    key={product._id}
-                                    initial={{ opacity: 0, y: 15 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.3 }}
-                                    className="bg-slate-900 border border-slate-800/80 hover:border-blue-500/40 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-blue-500/5 transition-all flex flex-col justify-between group"
-                                >
+                                <RevealOnScroll key={product._id}>
+                                            <div className="bg-white border border-slate-200 hover:border-accent rounded-industrial-lg overflow-hidden shadow-lg hover:shadow-xl transition-all flex flex-col justify-between group h-full">
                                     <div>
                                         {/* Image Box */}
-                                        <div className="relative w-full h-56 bg-slate-950 p-6 flex items-center justify-center border-b border-slate-800/80 overflow-hidden">
+                                        <div className="relative w-full h-56 bg-slate-50 p-6 flex items-center justify-center border-b border-slate-200 overflow-hidden shadow-xs">
                                             <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start">
                                                 {product.Series && (
-                                                    <span className="px-2.5 py-1 bg-slate-900/90 backdrop-blur-md border border-slate-700/80 text-blue-400 font-semibold text-[11px] rounded-lg shadow-sm">
+                                                    <span className="px-2.5 py-1 bg-white/90 backdrop-blur-md border border-slate-200 text-accent font-mono font-bold text-[11px] rounded-md shadow-xs">
                                                         {product.Series}
                                                     </span>
                                                 )}
                                             </div>
                                             {product.Standard && (
                                                 <div className="absolute top-3 right-3 z-10">
-                                                    <span className="px-2 py-1 bg-slate-900/90 backdrop-blur-md border border-slate-700/80 text-slate-300 font-mono text-[11px] rounded-lg shadow-sm">
+                                                    <span className="px-2 py-1 bg-white/90 backdrop-blur-md border border-slate-200 text-slate-700 font-mono text-[11px] rounded-md shadow-xs">
                                                         {product.Standard}
                                                     </span>
                                                 </div>
@@ -381,32 +386,32 @@ const ProductCards = () => {
                                                     loading="lazy"
                                                 />
                                             ) : (
-                                                <div className="text-slate-600 text-xs font-mono">No Image Available</div>
+                                                <div className="text-slate-500 text-xs font-mono">No Image Available</div>
                                             )}
                                         </div>
 
                                         {/* Card Body */}
                                         <div className="p-5 space-y-3">
                                             <div>
-                                                <h3 className="font-bold text-lg text-white group-hover:text-blue-400 transition-colors line-clamp-1">
+                                                <h3 className="font-bold text-lg text-slate-900 group-hover:text-accent transition-colors line-clamp-1 font-headline uppercase">
                                                     <Link to={`/products/${product._id}`}>{product.Name}</Link>
                                                 </h3>
-                                                <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                                                <p className="text-xs text-slate-600 mt-1 line-clamp-2 leading-relaxed font-normal">
                                                     {product.Application || 'Precision-engineered water control equipment designed for seating/unseating head pressure isolation in water treatment plants, sewage works, and flood control infrastructures. Cast Iron IS:210 Grade FG 200/260 & SS 316 metallurgy available.'}
                                                 </p>
                                             </div>
 
                                             {/* Quick Specs Grid */}
-                                            <div className="grid grid-cols-2 gap-2 pt-2 text-xs bg-slate-950/60 p-3 rounded-xl border border-slate-800/60">
+                                            <div className="grid grid-cols-2 gap-2 pt-2 text-xs bg-slate-50 p-3 rounded-industrial-md border border-slate-200 shadow-2xs">
                                                 <div>
-                                                    <span className="text-slate-500 block text-[10px] uppercase font-semibold">Water Head</span>
-                                                    <span className="text-slate-200 font-medium font-mono truncate block">
+                                                    <span className="text-slate-500 block text-[10px] font-mono uppercase font-bold">Water Head</span>
+                                                    <span className="text-slate-900 font-bold font-mono truncate block">
                                                         {product.Water || product.Water_Head || '5m - 15m Seating / Unseating'}
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <span className="text-slate-500 block text-[10px] uppercase font-semibold">Sealing</span>
-                                                    <span className="text-slate-200 font-medium truncate block">
+                                                    <span className="text-slate-500 block text-[10px] font-mono uppercase font-bold">Sealing</span>
+                                                    <span className="text-slate-900 font-bold font-mono truncate block">
                                                         {product.Sealing || 'Metallic / EPDM to IS 3042'}
                                                     </span>
                                                 </div>
@@ -418,9 +423,9 @@ const ProductCards = () => {
                                     <div className="p-5 pt-0 flex items-center gap-2.5">
                                         <button
                                             onClick={() => setSelectedSpecItem(product)}
-                                            className="flex-1 px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-medium text-xs rounded-xl border border-slate-700/80 transition-all flex items-center justify-center gap-1.5 min-h-[44px]"
+                                            className="flex-1 px-3.5 py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-700 hover:text-slate-900 font-bold text-xs uppercase tracking-wider rounded-industrial-md border border-slate-200 transition-all flex items-center justify-center gap-1.5 min-h-[44px] shadow-xs"
                                         >
-                                            <Eye className="w-3.5 h-3.5 text-blue-400" />
+                                            <Eye className="w-3.5 h-3.5 text-accent" />
                                             <span>View Specs</span>
                                         </button>
                                         <button
@@ -428,27 +433,28 @@ const ProductCards = () => {
                                                 setQuoteItem(product.Name);
                                                 setIsQuoteOpen(true);
                                             }}
-                                            className="flex-1 px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded-xl shadow-md shadow-blue-600/20 hover:shadow-blue-500/30 transition-all flex items-center justify-center gap-1.5 min-h-[44px]"
+                                            className="flex-1 px-3.5 py-2.5 bg-accent hover:bg-accent-hover text-white font-bold text-xs uppercase tracking-wider rounded-industrial-md shadow-md shadow-accent/20 transition-all flex items-center justify-center gap-1.5 min-h-[44px]"
                                         >
                                             <FileText className="w-3.5 h-3.5" />
                                             <span>Request Quote</span>
                                         </button>
                                     </div>
-                                </motion.div>
+                                    </div>
+                                </RevealOnScroll>
                             ))}
                         </div>
 
                         {/* Grid Pagination */}
                         {totalPages > 1 && (
-                            <div className="mt-8 flex items-center justify-between p-4 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-400">
+                            <div className="mt-8 flex items-center justify-between p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600 shadow-sm">
                                 <div>
-                                    Page <strong className="text-white">{currentPage}</strong> of <strong className="text-white">{totalPages}</strong>
+                                    Page <strong className="text-slate-900">{currentPage}</strong> of <strong className="text-slate-900">{totalPages}</strong>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <button
                                         onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                                         disabled={currentPage === 1}
-                                        className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1"
+                                        className="px-3.5 py-1.5 bg-white hover:bg-slate-100 text-slate-900 rounded-lg border border-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1 shadow-xs"
                                     >
                                         <ChevronLeft className="w-4 h-4" />
                                         <span>Previous</span>
@@ -456,7 +462,7 @@ const ProductCards = () => {
                                     <button
                                         onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                                         disabled={currentPage === totalPages}
-                                        className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1"
+                                        className="px-3.5 py-1.5 bg-white hover:bg-slate-100 text-slate-900 rounded-lg border border-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1 shadow-xs"
                                     >
                                         <span>Next</span>
                                         <ChevronRight className="w-4 h-4" />
@@ -467,11 +473,11 @@ const ProductCards = () => {
                     </div>
                 ) : (
                     /* Table View */
-                    <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+                    <div className="bg-white border border-slate-200 rounded-industrial-lg overflow-hidden shadow-lg">
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="bg-slate-950/80 border-b border-slate-800 text-slate-400 text-xs uppercase font-semibold tracking-wider">
+                                    <tr className="bg-slate-50 border-b border-slate-200 text-slate-700 text-xs font-mono uppercase font-bold tracking-wider">
                                         <th className="p-4 whitespace-nowrap">Image</th>
                                         <th className="p-4 whitespace-nowrap">Product Name</th>
                                         <th className="p-4 whitespace-nowrap">Standard</th>
@@ -482,11 +488,11 @@ const ProductCards = () => {
                                         <th className="p-4 whitespace-nowrap">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-slate-800/60 text-sm">
+                                <tbody className="divide-y divide-slate-200 text-sm font-normal">
                                     {paginatedProducts.map(product => (
-                                        <tr key={product._id} className="hover:bg-slate-800/30 transition-colors">
+                                        <tr key={product._id} className="hover:bg-slate-50 transition-colors">
                                             <td className="p-4 whitespace-nowrap">
-                                                <div className="w-16 h-16 bg-slate-900 rounded-lg p-1 border border-slate-800 flex items-center justify-center shrink-0">
+                                                <div className="w-16 h-16 bg-slate-50 rounded-md p-1 border border-slate-200 flex items-center justify-center shrink-0">
                                                     <img
                                                         src={product.Image || '/og-image.png'}
                                                         alt={product.Name}
@@ -497,27 +503,27 @@ const ProductCards = () => {
                                             </td>
                                             <td className="p-4 whitespace-nowrap">
                                                 <div>
-                                                    <div className="font-bold text-white text-sm hover:text-blue-400 transition-colors">
+                                                    <div className="font-bold text-slate-900 text-sm hover:text-accent transition-colors uppercase font-headline">
                                                         <Link to={`/products/${product._id}`}>{product.Name || '—'}</Link>
                                                     </div>
-                                                    <div className="text-xs text-slate-400 mt-0.5">{product.Series || '—'}</div>
+                                                    <div className="text-xs font-mono text-accent mt-0.5">{product.Series || '—'}</div>
                                                 </div>
                                             </td>
                                             <td className="p-4 whitespace-nowrap">
-                                                <span className="text-xs font-mono bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">{product.Standard || '—'}</span>
+                                                <span className="text-xs font-mono bg-slate-50 text-slate-700 px-2.5 py-1 rounded border border-slate-200 font-bold">{product.Standard || '—'}</span>
                                             </td>
-                                            <td className="p-4 whitespace-nowrap text-xs text-slate-300">{product.Sizes || '—'}</td>
-                                            <td className="p-4 whitespace-nowrap text-xs text-slate-300">{product.Water || product.Water_Head || '—'}</td>
-                                            <td className="p-4 whitespace-nowrap text-xs text-slate-300">{product.Sealing || '—'}</td>
-                                            <td className="p-4 whitespace-nowrap text-xs text-slate-400 max-w-xs truncate">{product.Materials_of_construction || product.Materials || '—'}</td>
+                                            <td className="p-4 whitespace-nowrap text-xs font-mono text-slate-600 font-medium">{product.Sizes || '—'}</td>
+                                            <td className="p-4 whitespace-nowrap text-xs font-mono text-slate-600 font-medium">{product.Water || product.Water_Head || '—'}</td>
+                                            <td className="p-4 whitespace-nowrap text-xs text-slate-600 font-medium">{product.Sealing || '—'}</td>
+                                            <td className="p-4 whitespace-nowrap text-xs text-slate-600 font-medium max-w-xs truncate">{product.Materials_of_construction || product.Materials || '—'}</td>
                                             <td className="p-4 whitespace-nowrap">
                                                 <div className="flex items-center gap-2">
                                                     <button 
                                                         onClick={() => setSelectedSpecItem(product)}
-                                                        className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg transition-colors text-xs flex items-center gap-1.5"
+                                                        className="p-2 bg-slate-50 hover:bg-slate-100 text-slate-700 hover:text-slate-900 rounded-md border border-slate-200 transition-colors text-xs flex items-center gap-1.5 font-bold uppercase shadow-2xs"
                                                         title="View Specifications"
                                                     >
-                                                        <Eye className="w-3.5 h-3.5 text-blue-400" />
+                                                        <Eye className="w-3.5 h-3.5 text-accent" />
                                                         <span className="hidden xl:inline">Specs</span>
                                                     </button>
                                                     <button 
@@ -525,7 +531,7 @@ const ProductCards = () => {
                                                             setQuoteItem(product.Name);
                                                             setIsQuoteOpen(true);
                                                         }}
-                                                        className="p-2 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 hover:text-blue-300 border border-blue-500/30 rounded-lg transition-colors text-xs flex items-center gap-1.5 font-medium"
+                                                        className="p-2 bg-accent hover:bg-accent-hover text-white rounded-md transition-colors text-xs flex items-center gap-1.5 font-bold uppercase shadow-sm"
                                                         title="Request Quote"
                                                     >
                                                         <FileText className="w-3.5 h-3.5" />
@@ -540,15 +546,15 @@ const ProductCards = () => {
                         </div>
 
                         {/* Pagination Controls */}
-                        <div className="p-4 bg-slate-950/60 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+                        <div className="p-4 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-600">
                             <div>
-                                Page <strong className="text-white">{currentPage}</strong> of <strong className="text-white">{totalPages}</strong>
+                                Page <strong className="text-slate-900">{currentPage}</strong> of <strong className="text-slate-900">{totalPages}</strong>
                             </div>
                             <div className="flex items-center gap-2">
                                 <button
                                     onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                                     disabled={currentPage === 1}
-                                    className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1"
+                                    className="px-3.5 py-1.5 bg-white hover:bg-slate-100 text-slate-900 rounded-lg border border-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1 shadow-xs"
                                 >
                                     <ChevronLeft className="w-4 h-4" />
                                     <span>Previous</span>
@@ -556,7 +562,7 @@ const ProductCards = () => {
                                 <button
                                     onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                                     disabled={currentPage === totalPages}
-                                    className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1"
+                                    className="px-3.5 py-1.5 bg-white hover:bg-slate-100 text-slate-900 rounded-lg border border-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1 shadow-xs"
                                 >
                                     <span>Next</span>
                                     <ChevronRight className="w-4 h-4" />

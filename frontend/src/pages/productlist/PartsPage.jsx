@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { Link, useParams } from 'react-router-dom';
+import RevealOnScroll from '../../components/motion/RevealOnScroll';
 import { 
     Home, ChevronRight, Search, Filter, Grid, Table as TableIcon, FileText, Eye, 
     ShieldCheck, CheckCircle2, Award, Wrench, RefreshCw, ChevronLeft, X, SlidersHorizontal 
@@ -12,6 +12,7 @@ import SpecDrawer from '../../components/SpecDrawer';
 import { generateCatalogSchema } from '../../utils/schemaGenerators';
 
 const PartsCards = () => {
+    const { id } = useParams();
     const [parts, setParts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     
@@ -86,6 +87,15 @@ const PartsCards = () => {
         fetchParts();
     }, []);
 
+    useEffect(() => {
+        if (id && parts.length > 0) {
+            const found = parts.find(p => p._id === id || p.id === id);
+            if (found) {
+                setSelectedSpecItem(found);
+            }
+        }
+    }, [id, parts]);
+
     // Derive unique grades for filter pills
     const gradeList = useMemo(() => {
         const list = parts.map(p => p.Grade).filter(Boolean);
@@ -129,7 +139,7 @@ const PartsCards = () => {
     }, [filteredParts, currentPage]);
 
     return (
-        <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
+        <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-accent selection:text-white">
             <SEO 
                 title="Industrial Fasteners & Spares Catalog | SK Enterprise"
                 description="Explore SK Enterprise's high-tensile fasteners, Anchor Studs, Spindle Rods, and Replacement Spares engineered for heavy infrastructure."
@@ -140,28 +150,28 @@ const PartsCards = () => {
             />
 
             {/* Hero Header & Breadcrumbs */}
-            <header className="relative bg-gradient-to-b from-slate-900 to-slate-950 border-b border-slate-800/80 py-8 sm:py-12 px-4 sm:px-8">
+            <header className="relative bg-slate-50 border-b border-slate-200 pt-24 pb-12 md:pt-32 md:pb-16 px-4 sm:px-8">
                 <div className="max-w-7xl mx-auto space-y-6">
                     {/* Breadcrumbs */}
-                    <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-medium text-slate-400">
-                        <Link to="/" className="hover:text-blue-400 flex items-center gap-1 transition-colors">
+                    <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-slate-500">
+                        <Link to="/" className="hover:text-accent flex items-center gap-1 transition-colors">
                             <Home className="w-3.5 h-3.5" />
                             <span>Home</span>
                         </Link>
-                        <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
-                        <span className="text-slate-200 font-semibold">Parts & Fasteners</span>
+                        <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+                        <span className="text-slate-900 font-bold uppercase">Parts & Fasteners</span>
                     </nav>
 
                     <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
                         <div className="max-w-3xl space-y-3">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-wider">
+                            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-300 text-accent text-xs font-mono font-bold uppercase tracking-wider shadow-sm">
                                 <Award className="w-3.5 h-3.5" />
-                                <span>High-Tensile Fasteners & Spares</span>
+                                <span>HIGH-TENSILE FASTENERS & SPARES</span>
                             </div>
-                            <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight font-headline">
-                                Industrial Fasteners & Gate Components
+                            <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight font-headline uppercase">
+                                INDUSTRIAL FASTENERS & GATE COMPONENTS.
                             </h1>
-                            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                            <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
                                 Heavy-duty SS 304, SS 316, and High-Tensile Anchor Bolts, Spindles, Extension Rods, and Replacement Seals manufactured to ASTM & DIN standards.
                             </p>
                         </div>
@@ -171,7 +181,7 @@ const PartsCards = () => {
                                 setQuoteItem('');
                                 setIsQuoteOpen(true);
                             }}
-                            className="shrink-0 inline-flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-blue-600/25 transition-all self-start lg:self-auto"
+                            className="shrink-0 inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-accent hover:bg-accent-hover text-white text-xs font-bold uppercase tracking-wider rounded-industrial-md shadow-lg shadow-accent/25 transition-all self-start lg:self-auto hover:-translate-y-0.5"
                         >
                             <FileText className="w-4 h-4" />
                             <span>Request Bulk Quote</span>
@@ -179,36 +189,36 @@ const PartsCards = () => {
                     </div>
 
                     {/* Trust Badges */}
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-slate-800/80">
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-slate-200 font-mono text-xs">
                         <div className="flex items-center gap-2.5">
-                            <ShieldCheck className="w-4 h-4 text-blue-400 shrink-0" />
-                            <span className="text-xs font-medium text-slate-300">Grade 8.8 / SS316 Alloy</span>
+                            <ShieldCheck className="w-4 h-4 text-accent shrink-0" />
+                            <span className="font-bold text-slate-700">Grade 8.8 / SS316 Alloy</span>
                         </div>
                         <div className="flex items-center gap-2.5">
-                            <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-                            <span className="text-xs font-medium text-slate-300">Corrosion Resistant Coating</span>
+                            <CheckCircle2 className="w-4 h-4 text-accent shrink-0" />
+                            <span className="font-bold text-slate-700">Corrosion Resistant Coating</span>
                         </div>
                         <div className="flex items-center gap-2.5">
-                            <Wrench className="w-4 h-4 text-indigo-400 shrink-0" />
-                            <span className="text-xs font-medium text-slate-300">Custom Thread Pitch & Length</span>
+                            <Wrench className="w-4 h-4 text-accent shrink-0" />
+                            <span className="font-bold text-slate-700">Custom Thread Pitch & Length</span>
                         </div>
                         <div className="flex items-center gap-2.5">
-                            <Award className="w-4 h-4 text-amber-400 shrink-0" />
-                            <span className="text-xs font-medium text-slate-300">ASTM A193 / DIN 933</span>
+                            <Award className="w-4 h-4 text-accent shrink-0" />
+                            <span className="font-bold text-slate-700">ASTM A193 / DIN 933</span>
                         </div>
                     </div>
                 </div>
             </header>
 
             {/* Production-Grade Responsive Sticky Toolbar */}
-            <section className="bg-slate-950/95 border-b border-slate-800/90 px-4 sm:px-8 py-3.5 sticky top-16 sm:top-20 z-30 backdrop-blur-2xl shadow-xl transition-all">
+            <section className="bg-white/95 border-b border-slate-200 px-4 sm:px-8 py-3.5 sticky top-[60px] sm:top-16 z-30 backdrop-blur-2xl shadow-md transition-all">
                 <div className="max-w-7xl mx-auto space-y-3">
                     {/* Row 1: Search Bar & View Controls */}
                     <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
                         {/* Search Input Box */}
                         <div className="relative w-full sm:w-80 md:w-96 shrink-0">
                             <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                                <Search className="w-4 h-4 text-blue-400" />
+                                <Search className="w-4 h-4 text-accent" />
                             </div>
                             <input
                                 ref={searchInputRef}
@@ -216,19 +226,19 @@ const PartsCards = () => {
                                 placeholder="Search fasteners, grades, standards..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="w-full pl-10 pr-14 py-2.5 bg-slate-900 border border-slate-800 hover:border-slate-700 focus:border-blue-500 rounded-xl text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 transition-all shadow-inner"
+                                className="w-full pl-10 pr-14 py-2.5 bg-slate-50 border border-slate-300 hover:border-slate-400 focus:border-accent focus:bg-white rounded-industrial-md text-slate-900 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-accent/40 transition-all shadow-sm"
                             />
                             <div className="absolute inset-y-0 right-0 pr-3 flex items-center gap-1.5">
                                 {searchQuery ? (
                                     <button 
                                         onClick={() => setSearchQuery('')}
-                                        className="p-1 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                                        className="p-1 rounded-md text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-colors"
                                         title="Clear search"
                                     >
                                         <X className="w-4 h-4" />
                                     </button>
                                 ) : (
-                                    <kbd className="hidden sm:inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-mono font-semibold text-slate-400 bg-slate-950 border border-slate-800 rounded">
+                                    <kbd className="hidden sm:inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-mono font-bold text-slate-500 bg-white border border-slate-300 rounded shadow-2xs">
                                         /
                                     </kbd>
                                 )}
@@ -237,14 +247,14 @@ const PartsCards = () => {
 
                         {/* View Switcher & Counter */}
                         <div className="flex items-center justify-between sm:justify-end gap-3">
-                            <div className="text-xs text-slate-400 font-medium">
-                                Showing <strong className="text-white font-mono">{filteredParts.length}</strong> of <strong className="text-slate-300 font-mono">{parts.length}</strong> Components
+                            <div className="text-xs text-slate-500 font-mono font-bold">
+                                SHOWING <strong className="text-slate-900 font-tabular">{filteredParts.length}</strong> OF <strong className="text-slate-700 font-tabular">{parts.length}</strong> COMPONENTS
                             </div>
-                            <div className="flex items-center gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800">
+                            <div className="flex items-center gap-1 bg-slate-50 p-1 rounded-industrial-md border border-slate-200 shadow-xs">
                                 <button
                                     onClick={() => setViewMode('grid')}
-                                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                                        viewMode === 'grid' ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/30' : 'text-slate-400 hover:text-slate-200'
+                                    className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all flex items-center gap-1.5 uppercase ${
+                                        viewMode === 'grid' ? 'bg-accent text-white shadow-sm' : 'text-slate-500 hover:text-slate-900'
                                     }`}
                                     title="Grid View"
                                 >
@@ -253,8 +263,8 @@ const PartsCards = () => {
                                 </button>
                                 <button
                                     onClick={() => setViewMode('table')}
-                                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                                        viewMode === 'table' ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/30' : 'text-slate-400 hover:text-slate-200'
+                                    className={`px-3 py-1.5 rounded-md text-xs font-bold transition-all flex items-center gap-1.5 uppercase ${
+                                        viewMode === 'table' ? 'bg-accent text-white shadow-sm' : 'text-slate-500 hover:text-slate-900'
                                     }`}
                                     title="Table View"
                                 >
@@ -266,16 +276,16 @@ const PartsCards = () => {
                     </div>
 
                     {/* Row 2: Grade Filter Pills */}
-                    <div className="flex items-center gap-2 pt-1 border-t border-slate-800/60">
-                        <div className="flex items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider shrink-0 mr-1">
-                            <SlidersHorizontal className="w-3.5 h-3.5 text-blue-400" />
-                            <span className="hidden xs:inline">Grade:</span>
+                    <div className="flex items-center gap-2 pt-1 border-t border-slate-200">
+                        <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-accent uppercase tracking-wider shrink-0 mr-1">
+                            <SlidersHorizontal className="w-3.5 h-3.5 text-accent" />
+                            <span className="hidden xs:inline">GRADE:</span>
                         </div>
 
                         {/* Left Scroll Button */}
                         <button
                             onClick={() => scrollFilter('left')}
-                            className="hidden md:flex items-center justify-center w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 shrink-0 transition-colors"
+                            className="hidden md:flex items-center justify-center w-7 h-7 rounded-md bg-slate-50 border border-slate-200 text-slate-500 hover:text-slate-900 hover:border-slate-300 shrink-0 transition-colors shadow-xs"
                             aria-label="Scroll left"
                         >
                             <ChevronLeft className="w-4 h-4" />
@@ -291,10 +301,10 @@ const PartsCards = () => {
                                     key={grade}
                                     onClick={() => setSelectedGrade(grade)}
                                     title={grade}
-                                    className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all shrink-0 max-w-[200px] truncate ${
+                                    className={`px-3.5 py-1.5 rounded-industrial-md text-xs font-mono transition-all shrink-0 max-w-[200px] truncate uppercase ${
                                         selectedGrade === grade
-                                            ? 'bg-blue-600 text-white shadow-md shadow-blue-600/25 font-semibold border border-blue-500'
-                                            : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 hover:border-slate-700'
+                                            ? 'bg-accent text-white shadow-md font-bold border border-accent'
+                                            : 'bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 hover:border-slate-300 shadow-xs'
                                     }`}
                                 >
                                     {grade}
@@ -305,7 +315,7 @@ const PartsCards = () => {
                         {/* Right Scroll Button */}
                         <button
                             onClick={() => scrollFilter('right')}
-                            className="hidden md:flex items-center justify-center w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 shrink-0 transition-colors"
+                            className="hidden md:flex items-center justify-center w-7 h-7 rounded-md bg-slate-50 border border-slate-200 text-slate-500 hover:text-slate-900 hover:border-slate-300 shrink-0 transition-colors shadow-xs"
                             aria-label="Scroll right"
                         >
                             <ChevronRight className="w-4 h-4" />
@@ -320,25 +330,25 @@ const PartsCards = () => {
                     /* Loading Skeleton */
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         {[...Array(6)].map((_, i) => (
-                            <div key={i} className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4 animate-pulse">
-                                <div className="w-full h-52 bg-slate-800 rounded-xl" />
-                                <div className="h-6 bg-slate-800 rounded w-3/4" />
-                                <div className="h-4 bg-slate-800 rounded w-1/2" />
-                                <div className="pt-4 border-t border-slate-800 flex justify-between">
-                                    <div className="h-9 bg-slate-800 rounded-xl w-24" />
-                                    <div className="h-9 bg-slate-800 rounded-xl w-28" />
+                            <div key={i} className="bg-white border border-slate-200 rounded-2xl p-5 space-y-4 animate-pulse shadow-sm">
+                                <div className="w-full h-52 bg-slate-100 rounded-xl" />
+                                <div className="h-6 bg-slate-100 rounded w-3/4" />
+                                <div className="h-4 bg-slate-100 rounded w-1/2" />
+                                <div className="pt-4 border-t border-slate-200 flex justify-between">
+                                    <div className="h-9 bg-slate-100 rounded-xl w-24" />
+                                    <div className="h-9 bg-slate-100 rounded-xl w-28" />
                                 </div>
                             </div>
                         ))}
                     </div>
                 ) : filteredParts.length === 0 ? (
                     /* Empty State */
-                    <div className="text-center py-20 bg-slate-900/40 border border-slate-800 rounded-2xl max-w-2xl mx-auto p-8 space-y-4">
-                        <div className="w-16 h-16 bg-slate-800/80 rounded-full flex items-center justify-center mx-auto text-slate-500">
+                    <div className="text-center py-20 bg-slate-50 border border-slate-200 rounded-2xl max-w-2xl mx-auto p-8 space-y-4 shadow-sm">
+                        <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400">
                             <Search className="w-8 h-8" />
                         </div>
-                        <h3 className="text-xl font-bold text-white">No parts found</h3>
-                        <p className="text-slate-400 text-sm max-w-md mx-auto">
+                        <h3 className="text-xl font-bold text-slate-900">No parts found</h3>
+                        <p className="text-slate-600 text-sm max-w-md mx-auto">
                             We couldn't find any components or fasteners matching "{searchQuery}" under the selected grade.
                         </p>
                         <button
@@ -346,7 +356,7 @@ const PartsCards = () => {
                                 setSearchQuery('');
                                 setSelectedGrade('All');
                             }}
-                            className="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium rounded-xl border border-slate-700 transition-colors inline-flex items-center gap-2"
+                            className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium rounded-xl border border-slate-900 transition-colors inline-flex items-center gap-2 shadow-sm"
                         >
                             <RefreshCw className="w-4 h-4" />
                             <span>Reset Filters</span>
@@ -357,26 +367,21 @@ const PartsCards = () => {
                     <div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {paginatedParts.map((part) => (
-                                <motion.div
-                                    key={part._id}
-                                    initial={{ opacity: 0, y: 15 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.3 }}
-                                    className="bg-slate-900 border border-slate-800/80 hover:border-blue-500/40 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-blue-500/5 transition-all flex flex-col justify-between group"
-                                >
+                                <RevealOnScroll key={part._id}>
+                                    <div className="bg-white border border-slate-200 hover:border-accent rounded-industrial-lg overflow-hidden shadow-lg hover:shadow-xl transition-all flex flex-col justify-between group h-full">
                                     <div>
                                         {/* Image Box */}
-                                        <div className="relative w-full h-56 bg-slate-950 p-6 flex items-center justify-center border-b border-slate-800/80 overflow-hidden">
+                                        <div className="relative w-full h-56 bg-slate-50 p-6 flex items-center justify-center border-b border-slate-200 overflow-hidden shadow-xs">
                                             <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start">
                                                 {part.Grade && (
-                                                    <span className="px-2.5 py-1 bg-slate-900/90 backdrop-blur-md border border-slate-700/80 text-blue-400 font-semibold text-[11px] rounded-lg shadow-sm">
+                                                    <span className="px-2.5 py-1 bg-white/90 backdrop-blur-md border border-slate-200 text-accent font-mono font-bold text-[11px] rounded-md shadow-xs">
                                                         {part.Grade}
                                                     </span>
                                                 )}
                                             </div>
                                             {(part.IS || part.BS || part.ASTM || part.DIN || part.ISO || part.Standard) && (
                                                 <div className="absolute top-3 right-3 z-10">
-                                                    <span className="px-2 py-1 bg-slate-900/90 backdrop-blur-md border border-slate-700/80 text-slate-300 font-mono text-[11px] rounded-lg shadow-sm">
+                                                    <span className="px-2 py-1 bg-white/90 backdrop-blur-md border border-slate-200 text-slate-700 font-mono text-[11px] rounded-md shadow-xs">
                                                         {part.IS || part.BS || part.ASTM || part.DIN || part.ISO || part.Standard}
                                                     </span>
                                                 </div>
@@ -394,7 +399,7 @@ const PartsCards = () => {
                                                 />
                                             ) : null}
                                             <div 
-                                                className="text-slate-600 text-xs font-mono text-center" 
+                                                className="text-slate-500 text-xs font-mono text-center" 
                                                 style={{ display: part.Image ? 'none' : 'block' }}
                                             >
                                                 No Image Available
@@ -404,25 +409,25 @@ const PartsCards = () => {
                                         {/* Card Body */}
                                         <div className="p-5 space-y-3">
                                             <div>
-                                                <h3 className="font-bold text-lg text-white group-hover:text-blue-400 transition-colors line-clamp-1">
+                                                <h3 className="font-bold text-lg text-slate-900 group-hover:text-accent transition-colors line-clamp-1 font-headline uppercase">
                                                     <Link to={`/parts/${part._id}`}>{part.Name}</Link>
                                                 </h3>
-                                                <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                                                <p className="text-xs text-slate-600 mt-1 line-clamp-2 leading-relaxed font-normal">
                                                     {part.Description || part.Material || 'Heavy-duty SS 304, SS 316, and Grade 8.8 High-Tensile Anchor Bolts, Spindles, Extension Rods, and Replacement Seals manufactured to ASTM A193 & DIN 933 standards.'}
                                                 </p>
                                             </div>
 
                                             {/* Quick Specs Grid */}
-                                            <div className="grid grid-cols-2 gap-2 pt-2 text-xs bg-slate-950/60 p-3 rounded-xl border border-slate-800/60">
+                                            <div className="grid grid-cols-2 gap-2 pt-2 text-xs bg-slate-50 p-3 rounded-industrial-md border border-slate-200 shadow-2xs">
                                                 <div>
-                                                    <span className="text-slate-500 block text-[10px] uppercase font-semibold">Material Grade</span>
-                                                    <span className="text-slate-200 font-medium truncate block">
+                                                    <span className="text-slate-500 block text-[10px] font-mono uppercase font-bold">Material Grade</span>
+                                                    <span className="text-slate-900 font-bold font-mono truncate block">
                                                         {part.Grade || 'SS 316 / Grade 8.8'}
                                                     </span>
                                                 </div>
                                                 <div>
-                                                    <span className="text-slate-500 block text-[10px] uppercase font-semibold">Size Range</span>
-                                                    <span className="text-slate-200 font-medium font-mono truncate block">
+                                                    <span className="text-slate-500 block text-[10px] font-mono uppercase font-bold">Size Range</span>
+                                                    <span className="text-slate-900 font-bold font-mono truncate block">
                                                         {part.Sizes || 'M12 - M48 Custom'}
                                                     </span>
                                                 </div>
@@ -434,9 +439,9 @@ const PartsCards = () => {
                                     <div className="p-5 pt-0 flex items-center gap-2.5">
                                         <button
                                             onClick={() => setSelectedSpecItem(part)}
-                                            className="flex-1 px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-medium text-xs rounded-xl border border-slate-700/80 transition-all flex items-center justify-center gap-1.5 min-h-[44px]"
+                                            className="flex-1 px-3.5 py-2.5 bg-slate-50 hover:bg-slate-100 text-slate-700 hover:text-slate-900 font-bold text-xs uppercase tracking-wider rounded-industrial-md border border-slate-200 transition-all flex items-center justify-center gap-1.5 min-h-[44px] shadow-xs"
                                         >
-                                            <Eye className="w-3.5 h-3.5 text-blue-400" />
+                                            <Eye className="w-3.5 h-3.5 text-accent" />
                                             <span>View Specs</span>
                                         </button>
                                         <button
@@ -444,27 +449,28 @@ const PartsCards = () => {
                                                 setQuoteItem(part.Name);
                                                 setIsQuoteOpen(true);
                                             }}
-                                            className="flex-1 px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded-xl shadow-md shadow-blue-600/20 hover:shadow-blue-500/30 transition-all flex items-center justify-center gap-1.5 min-h-[44px]"
+                                            className="flex-1 px-3.5 py-2.5 bg-accent hover:bg-accent-hover text-white font-bold text-xs uppercase tracking-wider rounded-industrial-md shadow-md shadow-accent/20 transition-all flex items-center justify-center gap-1.5 min-h-[44px]"
                                         >
                                             <FileText className="w-3.5 h-3.5" />
                                             <span>Request Quote</span>
                                         </button>
                                     </div>
-                                </motion.div>
+                                    </div>
+                                </RevealOnScroll>
                             ))}
                         </div>
 
                         {/* Grid Pagination */}
                         {totalPages > 1 && (
-                            <div className="mt-8 flex items-center justify-between p-4 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-400">
+                            <div className="mt-8 flex items-center justify-between p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-600 shadow-sm">
                                 <div>
-                                    Page <strong className="text-white">{currentPage}</strong> of <strong className="text-white">{totalPages}</strong>
+                                    Page <strong className="text-slate-900">{currentPage}</strong> of <strong className="text-slate-900">{totalPages}</strong>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <button
                                         onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                                         disabled={currentPage === 1}
-                                        className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1"
+                                        className="px-3.5 py-1.5 bg-white hover:bg-slate-100 text-slate-900 rounded-lg border border-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1 shadow-xs"
                                     >
                                         <ChevronLeft className="w-4 h-4" />
                                         <span>Previous</span>
@@ -472,7 +478,7 @@ const PartsCards = () => {
                                     <button
                                         onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                                         disabled={currentPage === totalPages}
-                                        className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1"
+                                        className="px-3.5 py-1.5 bg-white hover:bg-slate-100 text-slate-900 rounded-lg border border-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1 shadow-xs"
                                     >
                                         <span>Next</span>
                                         <ChevronRight className="w-4 h-4" />
@@ -483,11 +489,11 @@ const PartsCards = () => {
                     </div>
                 ) : (
                     /* Table View */
-                    <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+                    <div className="bg-white border border-slate-200 rounded-industrial-lg overflow-hidden shadow-lg">
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="bg-slate-950/80 border-b border-slate-800 text-slate-400 text-xs uppercase font-semibold tracking-wider">
+                                    <tr className="bg-slate-50 border-b border-slate-200 text-slate-700 text-xs font-mono uppercase font-bold tracking-wider">
                                         <th className="p-4 whitespace-nowrap">Image</th>
                                         <th className="p-4 whitespace-nowrap">Part Name</th>
                                         <th className="p-4 whitespace-nowrap">Grade / Alloy</th>
@@ -497,11 +503,11 @@ const PartsCards = () => {
                                         <th className="p-4 whitespace-nowrap">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-slate-800/60 text-sm">
+                                <tbody className="divide-y divide-slate-200 text-sm font-normal">
                                     {paginatedParts.map(part => (
-                                        <tr key={part._id} className="hover:bg-slate-800/30 transition-colors">
+                                        <tr key={part._id} className="hover:bg-slate-50 transition-colors">
                                             <td className="p-4 whitespace-nowrap">
-                                                <div className="w-16 h-16 bg-slate-900 rounded-lg p-1 border border-slate-800 flex items-center justify-center shrink-0">
+                                                <div className="w-16 h-16 bg-slate-50 rounded-md p-1 border border-slate-200 flex items-center justify-center shrink-0">
                                                     <img
                                                         src={part.Image || '/og-image.png'}
                                                         alt={part.Name}
@@ -512,25 +518,25 @@ const PartsCards = () => {
                                             </td>
                                             <td className="p-4 whitespace-nowrap">
                                                 <div>
-                                                    <div className="font-bold text-white text-sm hover:text-blue-400 transition-colors">
+                                                    <div className="font-bold text-slate-900 text-sm hover:text-accent transition-colors uppercase font-headline">
                                                         <Link to={`/parts/${part._id}`}>{part.Name || '—'}</Link>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td className="p-4 whitespace-nowrap">
-                                                <span className="text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-md">{part.Grade || '—'}</span>
+                                                <span className="text-xs font-mono font-bold bg-slate-50 text-slate-700 border border-slate-200 px-2.5 py-1 rounded">{part.Grade || '—'}</span>
                                             </td>
-                                            <td className="p-4 whitespace-nowrap text-xs font-mono text-slate-300">{part.IS || part.BS || part.ASTM || part.DIN || part.ISO || '—'}</td>
-                                            <td className="p-4 whitespace-nowrap text-xs text-slate-300">{part.Material || '—'}</td>
-                                            <td className="p-4 whitespace-nowrap text-xs text-slate-300">{part.Sizes || '—'}</td>
+                                            <td className="p-4 whitespace-nowrap text-xs font-mono text-slate-600 font-medium">{part.IS || part.BS || part.ASTM || part.DIN || part.ISO || '—'}</td>
+                                            <td className="p-4 whitespace-nowrap text-xs text-slate-600 font-medium">{part.Material || '—'}</td>
+                                            <td className="p-4 whitespace-nowrap text-xs font-mono text-slate-600 font-medium">{part.Sizes || '—'}</td>
                                             <td className="p-4 whitespace-nowrap">
                                                 <div className="flex items-center gap-2">
                                                     <button 
                                                         onClick={() => setSelectedSpecItem(part)}
-                                                        className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg transition-colors text-xs flex items-center gap-1.5"
+                                                        className="p-2 bg-slate-50 hover:bg-slate-100 text-slate-700 hover:text-slate-900 rounded-md border border-slate-200 transition-colors text-xs flex items-center gap-1.5 font-bold uppercase shadow-2xs"
                                                         title="View Specifications"
                                                     >
-                                                        <Eye className="w-3.5 h-3.5 text-blue-400" />
+                                                        <Eye className="w-3.5 h-3.5 text-accent" />
                                                         <span className="hidden xl:inline">Specs</span>
                                                     </button>
                                                     <button 
@@ -538,7 +544,7 @@ const PartsCards = () => {
                                                             setQuoteItem(part.Name);
                                                             setIsQuoteOpen(true);
                                                         }}
-                                                        className="p-2 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 hover:text-blue-300 border border-blue-500/30 rounded-lg transition-colors text-xs flex items-center gap-1.5 font-medium"
+                                                        className="p-2 bg-accent hover:bg-accent-hover text-white rounded-md transition-colors text-xs flex items-center gap-1.5 font-bold uppercase shadow-sm"
                                                         title="Request Quote"
                                                     >
                                                         <FileText className="w-3.5 h-3.5" />
@@ -553,15 +559,15 @@ const PartsCards = () => {
                         </div>
 
                         {/* Pagination Controls */}
-                        <div className="p-4 bg-slate-950/60 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+                        <div className="p-4 bg-slate-50 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-600">
                             <div>
-                                Page <strong className="text-white">{currentPage}</strong> of <strong className="text-white">{totalPages}</strong>
+                                Page <strong className="text-slate-900">{currentPage}</strong> of <strong className="text-slate-900">{totalPages}</strong>
                             </div>
                             <div className="flex items-center gap-2">
                                 <button
                                     onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                                     disabled={currentPage === 1}
-                                    className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1"
+                                    className="px-3.5 py-1.5 bg-white hover:bg-slate-100 text-slate-900 rounded-lg border border-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1 shadow-xs"
                                 >
                                     <ChevronLeft className="w-4 h-4" />
                                     <span>Previous</span>
@@ -569,7 +575,7 @@ const PartsCards = () => {
                                 <button
                                     onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                                     disabled={currentPage === totalPages}
-                                    className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1"
+                                    className="px-3.5 py-1.5 bg-white hover:bg-slate-100 text-slate-900 rounded-lg border border-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1 shadow-xs"
                                 >
                                     <span>Next</span>
                                     <ChevronRight className="w-4 h-4" />

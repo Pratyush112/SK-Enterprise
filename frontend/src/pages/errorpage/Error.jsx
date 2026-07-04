@@ -1,97 +1,74 @@
 import React from 'react';
 import { Link, useRouteError } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, ArrowLeft, Home, ShieldAlert } from 'lucide-react';
+import SEO from '../../components/SEO';
 
 const ErrorPage = () => {
     const error = useRouteError();
 
     return (
-        <motion.div
-            className="min-h-screen flex flex-col justify-center items-center px-6 text-center relative overflow-hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-        >
-            {/* Animated Background */}
-            <div className="fixed inset-0 bg-gradient-to-br from-blue-50 via-white to-blue-100">
-                <motion.div
-                    className="absolute top-20 -left-20 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-2xl opacity-70"
-                    animate={{
-                        scale: [1, 1.2, 1],
-                        x: [0, 10, 0],
-                    }}
-                    transition={{ duration: 8, repeat: Infinity }}
-                />
-                <motion.div
-                    className="absolute bottom-20 -right-20 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-2xl opacity-70"
-                    animate={{
-                        scale: [1, 1.2, 1],
-                        x: [0, -10, 0],
-                    }}
-                    transition={{ duration: 8, repeat: Infinity }}
-                />
-            </div>
+        <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col justify-center items-center px-6 text-center relative overflow-hidden font-sans selection:bg-accent selection:text-white">
+            <SEO 
+                title="System Alert | SK Enterprise"
+                description="The requested industrial page or technical document could not be located."
+                name="SK Enterprise"
+                type="website"
+                url="/error"
+            />
 
-            {/* Content Container */}
-            <div className="relative z-10">
-                {/* Icon with enhanced animation */}
-                <motion.div
-                    className="flex justify-center items-center bg-gradient-to-br from-red-100 to-red-50 p-4 rounded-xl mb-6 shadow-md"
-                    initial={{ scale: 0, rotate: -180 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    transition={{ type: 'spring', stiffness: 200, damping: 15 }}
-                >
-                    <AlertTriangle className=" text-red-500 w-12 items-center h-12 animate-pulse" />
-                </motion.div>
+            {/* Industrial background accent */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,rgba(0,180,216,0.1),transparent)] pointer-events-none" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-500/5 rounded-full blur-3xl pointer-events-none" />
 
-                {/* Enhanced Heading */}
-                <motion.h1
-                    className="text-5xl sm:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 mb-4"
-                    initial={{ y: -50, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.2, type: 'spring' }}
-                >
-                    {error?.status === 404 ? '404' : 'Oops!'}
-                </motion.h1>
+            {/* Content Card */}
+            <div className="relative z-10 bg-white p-8 sm:p-12 rounded-3xl border border-slate-200 max-w-lg w-full shadow-xl space-y-6 animate-in fade-in zoom-in-95 duration-500">
+                {/* Alert Icon */}
+                <div className="w-16 h-16 rounded-2xl bg-red-50 border border-red-200 flex items-center justify-center mx-auto text-red-600 shadow-2xs">
+                    <AlertTriangle className="w-8 h-8 animate-pulse text-red-500" />
+                </div>
 
-                {/* Error Message */}
-                <motion.p
-                    className="text-xl text-gray-600 max-w-xl mb-12 font-medium"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4 }}
-                >
+                {/* Status Badge */}
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-700 font-mono text-xs font-bold tracking-widest uppercase shadow-2xs">
+                    <ShieldAlert className="w-3.5 h-3.5 text-red-500" />
+                    <span>SYSTEM EXCEPTION : {error?.status || '404'}</span>
+                </div>
+
+                {/* Heading */}
+                <h1 className="text-4xl sm:text-5xl font-black text-slate-900 tracking-tight font-headline">
+                    {error?.status === 404 ? 'Page Not Located' : 'System Interruption'}
+                </h1>
+
+                {/* Error Description */}
+                <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
                     {error?.status === 404
-                        ? "We couldn't find the page you're looking for"
-                        : error?.message || error?.statusText || 'An unexpected error occurred'}
-                </motion.p>
+                        ? "The requested industrial valve specification, catalog page, or BOQ document could not be found in our database."
+                        : error?.message || error?.statusText || 'An unexpected technical exception occurred while processing your request.'}
+                </p>
 
-                {/* Enhanced Button */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 }}
-                >
+                {/* Action Buttons */}
+                <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
                     <Link
                         to="/"
-                        className="group relative inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-lg font-semibold rounded-xl shadow-lg hover:shadow-blue-500/30 transition-all duration-300 hover:-translate-y-1 hover:scale-105"
+                        className="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-blue-600 to-accent hover:from-blue-500 hover:to-accent text-white text-xs font-bold uppercase tracking-wider rounded-xl shadow-lg shadow-accent/20 hover:shadow-accent/40 transition-all flex items-center justify-center gap-2"
                     >
-                        <span>Back to Home</span>
-                        <motion.svg
-                            className="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                            animate={{ x: [0, 5, 0] }}
-                            transition={{ duration: 1.5, repeat: Infinity }}
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                        </motion.svg>
+                        <Home className="w-4 h-4" />
+                        <span>Return to Homepage</span>
                     </Link>
-                </motion.div>
+                    <button
+                        onClick={() => window.history.back()}
+                        className="w-full sm:w-auto px-6 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 text-xs font-bold uppercase tracking-wider rounded-xl border border-slate-200 transition-all flex items-center justify-center gap-2 shadow-2xs"
+                    >
+                        <ArrowLeft className="w-4 h-4" />
+                        <span>Go Back</span>
+                    </button>
+                </div>
             </div>
-        </motion.div>
+
+            {/* Footer note */}
+            <div className="mt-8 text-xs font-mono text-slate-500">
+                SK ENTERPRISE INDUSTRIAL VALVE PLATFORM • HOWRAH, WEST BENGAL
+            </div>
+        </div>
     );
 };
 

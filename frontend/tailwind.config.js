@@ -4,73 +4,87 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class', // Keep dual light and dark mode support
   theme: {
     extend: {
       maxWidth: {
-        'screen-2xl': '1600px', 
-        'custom-1200': '1200px', 
-        'custom-900': '900px', 
+        'screen-2xl': '1600px',
+        'container-max': '1280px',
+        'custom-1200': '1200px',
+        'custom-900': '900px',
       },
       colors: {
-        'primary': '#0040e0',
-        'primary-container': '#2e5bff',
+        // Cargokite / AMES Industrial Palette (Bright & Light Theme)
+        'bg-dark': '#ffffff',      // Remapped: Bright pure white surface
+        'bg-light': '#f8fafc',     // Clean slate-50 architectural background
+        'bg-paper': '#f1f5f9',     // Slate-100 secondary container
+        'accent': '#00b4d8',       // Bright eye-appealing Cargokite cyan
+        'accent-hover': '#0096c7',
+        'accent-bright': '#0088cc', // Deep cyan highlight
+        'accent-ochre': '#b5622b', // AMES safari-khaki / ochre
+        'muted': '#64748b',        // Slate-500 readable muted text
+        
+        // Re-mapped semantic tokens for bright light theme
+        'primary': '#00b4d8',
+        'primary-container': '#e0f2fe',
         'on-primary': '#ffffff',
-        'primary-fixed': '#dde1ff',
-        'on-primary-fixed': '#001356',
-        'secondary': '#545f73',
-        'secondary-container': '#d5e0f8',
-        'on-secondary-container': '#111c2d',
-        'surface': '#f7f9fb',
-        'on-surface': '#191c1e',
-        'surface-variant': '#e1e2ec',
-        'on-surface-variant': '#44474f',
-        'surface-container': '#eceef0',
-        'surface-container-high': '#e6e8ea',
-        'surface-container-highest': '#e0e3e5',
-        'outline': '#737686',
-        'outline-variant': '#c3c6d7',
-        'error': '#ba1a1a',
-        'error-container': '#ffdad6',
-        'on-error': '#ffffff',
-        'background': '#f7f9fb',
-        'on-background': '#191c1e',
-        'text-dark': '#0f172a',
-        'text-light': '#64748b',
-        'extra-light': '#f8fafc'
+        'primary-fixed': '#bae6fd',
+        'on-primary-fixed': '#0369a1',
+        'secondary': '#64748b',
+        'secondary-container': '#f1f5f9',
+        'on-secondary-container': '#0f172a',
+        'surface': '#ffffff',
+        'on-surface': '#0f172a',
+        'surface-dark': '#ffffff',
+        'on-surface-dark': '#0f172a',
+        'text-dark-bg': '#0f172a',
+        'text-light-bg': '#0f172a',
+        'surface-card': '#ffffff',
+        'surface-card-dark': '#ffffff',
+        'surface-variant': '#f1f5f9',
+        'on-surface-variant': '#334155',
+        'outline': '#cbd5e1',
+        'outline-variant': '#e2e8f0',
+        'error': '#ef4444',
       },
       fontFamily: {
-        "headline": ["Manrope", "sans-serif"],
-        "body": ["Inter", "sans-serif"],
-        "label": ["Inter", "sans-serif"],
-        "manrope": ["Manrope", "sans-serif"],
+        "headline": ["'Archia'", "'Archia Regular'", "sans-serif"],
+        "body": ["'Plus Jakarta Sans'", "sans-serif"],
+        "sans": ["'Plus Jakarta Sans'", "sans-serif"],
+        "serif": ["'Lora'", "serif"],
+        "subheadline": ["'Lora'", "serif"],
+        "accent": ["'Lora'", "serif"],
+        "label": ["'Plus Jakarta Sans'", "sans-serif"],
+        "manrope": ["'Plus Jakarta Sans'", "sans-serif"],
+        "mono": ["JetBrains Mono", "monospace"],
       },
-      keyframes:{
-        fadeUp:{
-          '0%': { opacity: 0, transform: 'translateY(20px)' },
-          '100%': { opacity: 1, transform: 'translateY(0)' },
-        },
-        zoomIn:{
-          '0%': { opacity: 0, transform: 'scale(0.8)' },
-          '100%': { opacity: 1, transform: 'scale(1)' },
-        },
-        slideLeft:{
-          '0%': { opacity: 0, transform: 'translateX(-40px)' },
-          '100%': { opacity: 1, transform: 'translateX(0)' },
-        },
-        shimmer:{
+      spacing: {
+        'section-sm': '4rem',      // 64px mobile
+        'section-md': '5rem',      // 80px tablet
+        'section-lg': '8rem',      // 128px desktop
+        'section-xl': '10rem',     // 160px large desktop
+      },
+      borderRadius: {
+        'industrial-sm': '6px',
+        'industrial-md': '12px',
+        'industrial-lg': '20px',
+      },
+      transitionTimingFunction: {
+        'out-cubic': 'cubic-bezier(0.33, 1, 0.68, 1)',
+        'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
+        'out-back': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+      },
+      keyframes: {
+        shimmer: {
           '0%': { backgroundPosition: '200% center' },
           '100%': { backgroundPosition: '-200% center' },
         }
       },
-      animation:{
-        fadeUp: 'fadeUp 0.8s ease-out forwards',
-        zoomIn: 'zoomIn 0.6s ease-out forwards',
-        slideLeft: 'slideLeft 0.6s ease-out forwards',
+      animation: {
         shimmer: 'shimmer 2.5s linear infinite',
       }
     },
   },
   plugins: [],
-  darkMode: 'class', //Enable class-based dark mode
 }
 

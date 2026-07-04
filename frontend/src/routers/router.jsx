@@ -20,16 +20,18 @@ const router = createBrowserRouter([
         element: <App />,
         children: [
             { path: "/", element: <Home /> },
-            { path: "/products", element: <Suspense fallback={<div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">Loading Catalog...</div>}><Product /></Suspense> },
+            { path: "/products", element: <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-900 font-mono text-sm font-bold tracking-wider uppercase">Loading Catalog...</div>}><Product /></Suspense> },
+            { path: "/products/:id", element: <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-900 font-mono text-sm font-bold tracking-wider uppercase">Loading Catalog...</div>}><Product /></Suspense> },
             { path: "/sluicegates", element: <Navigate to="/products" replace /> },
-            { path: "/parts", element: <Suspense fallback={<div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">Loading Parts...</div>}><PartsPage /></Suspense> }, 
+            { path: "/parts", element: <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-900 font-mono text-sm font-bold tracking-wider uppercase">Loading Parts...</div>}><PartsPage /></Suspense> }, 
+            { path: "/parts/:id", element: <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-900 font-mono text-sm font-bold tracking-wider uppercase">Loading Parts...</div>}><PartsPage /></Suspense> }, 
             { path: "/Nuts&Bolts", element: <Navigate to="/parts" replace /> }, 
-            { path: "/aboutus", element: <Suspense fallback={<div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">Loading About Us...</div>}><About /></Suspense> },
-            { path: "/contactus", element: <Suspense fallback={<div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">Loading Contact...</div>}><Contact /></Suspense> },
+            { path: "/aboutus", element: <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-900 font-mono text-sm font-bold tracking-wider uppercase">Loading About Us...</div>}><About /></Suspense> },
+            { path: "/contactus", element: <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-900 font-mono text-sm font-bold tracking-wider uppercase">Loading Contact...</div>}><Contact /></Suspense> },
             { path: "/contact", element: <Navigate to="/contactus" replace /> },   
-            { path: "/quality", element: <Suspense fallback={<div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">Loading Quality Assurance...</div>}><QualityAssurance /></Suspense> },   
-            { path: "/WhyUs", element: <Suspense fallback={<div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">Loading Features...</div>}><Features /></Suspense> },   
-            { path: "/productcategories", element: <Suspense fallback={<div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">Loading Categories...</div>}><ProductCategories /></Suspense> }   
+            { path: "/quality", element: <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-900 font-mono text-sm font-bold tracking-wider uppercase">Loading Quality Assurance...</div>}><QualityAssurance /></Suspense> },   
+            { path: "/WhyUs", element: <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-900 font-mono text-sm font-bold tracking-wider uppercase">Loading Features...</div>}><Features /></Suspense> },   
+            { path: "/productcategories", element: <Suspense fallback={<div className="min-h-screen bg-white flex items-center justify-center text-slate-900 font-mono text-sm font-bold tracking-wider uppercase">Loading Categories...</div>}><ProductCategories /></Suspense> }   
         ]
     }
 ]);

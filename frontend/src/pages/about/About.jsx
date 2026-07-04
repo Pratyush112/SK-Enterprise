@@ -1,165 +1,205 @@
 import React from "react";
-import { motion } from "framer-motion";
-import { Cog, Award, HardHat, Truck, Headphones, Factory, Home, ArrowLeft } from "lucide-react";
-import { useNavigation } from "../../hooks/useNavigation";
+import { Cog, Award, HardHat, Truck, Headphones, Factory, ShieldCheck, CheckCircle2, Wrench, Globe } from "lucide-react";
 import SEO from "../../components/SEO";
-
-const fadeInUp = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0 },
-};
-
-const staggerContainer = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
+import RevealOnScroll from "../../components/motion/RevealOnScroll";
 
 const features = [
   {
-    icon: <Cog className="w-8 h-8" />,
+    icon: <Cog className="w-7 h-7 text-accent" />,
     title: "Precision Manufacturing",
-    description:
-      "State-of-the-art manufacturing facilities ensuring highest quality standards",
+    description: "State-of-the-art CNC machining and assembly facilities ensuring zero-defect mechanical tolerances.",
+    spec: "TOLERANCE: ±0.05MM"
   },
   {
-    icon: <Award className="w-8 h-8" />,
+    icon: <Award className="w-7 h-7 text-accent" />,
     title: "Quality Certification",
-    description:
-      "ISO certified processes and international standard compliance",
+    description: "ISO 9001:2015 certified production workflows with rigorous hydrostatic and seat leakage testing.",
+    spec: "STANDARD: IS 3042 / BS 7775"
   },
   {
-    icon: <HardHat className="w-8 h-8" />,
-    title: "Technology & Expertise",
-    description: "Professional Valve Engineers with deep industry knowledge",
+    icon: <HardHat className="w-7 h-7 text-accent" />,
+    title: "Valve Engineering Expertise",
+    description: "35+ years of specialized hydraulic engineering and fluid isolation control knowledge.",
+    spec: "METALLURGY: CI / CAST STEEL / SS316"
   },
   {
-    icon: <Truck className="w-8 h-8" />,
-    title: "Reliable Delivery",
-    description: "On-time delivery with careful handling and packaging",
+    icon: <Truck className="w-7 h-7 text-accent" />,
+    title: "Pan-India & Global Delivery",
+    description: "Robust logistics network ensuring rapid dispatch of heavy infrastructure equipment and emergency spares.",
+    spec: "DISPATCH: 24/7 EMERGENCY SPARES"
   },
   {
-    icon: <Headphones className="w-8 h-8" />,
-    title: "Documentation & Support",
-    description: "All available documentation and excellent customer support",
+    icon: <Headphones className="w-7 h-7 text-accent" />,
+    title: "Technical Documentation",
+    description: "Complete GAD drawings, QAP test certificates, and tender BOQ compliance support for project engineers.",
+    spec: "SUPPORT: FULL QAP / EN 10204 3.1"
   },
   {
-    icon: <Factory className="w-8 h-8" />,
-    title: "Tailor Made",
-    description: "Tailor made solutions to meet specific industry needs",
+    icon: <Factory className="w-7 h-7 text-accent" />,
+    title: "Tailor-Made Fabrication",
+    description: "Custom head pressure ratings, non-standard dimensions, and motorized/manual actuator adaptations.",
+    spec: "CUSTOM: UP TO 3000MM X 3000MM"
   },
 ];
 
+const stats = [
+  { label: "YEARS OF EXCELLENCE", value: "35+" },
+  { label: "PROJECTS SUPPLIED", value: "1,200+" },
+  { label: "HYDROSTATIC TEST RATING", value: "100%" },
+  { label: "INDUSTRIAL STANDARDS", value: "IS / BS / AWWA" }
+];
+
 const About = () => {
-  const { goBack, redirectTo } = useNavigation();
   return (
-    <div className="min-h-screen transition-colors duration-300">
+    <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-accent selection:text-white overflow-x-hidden">
       <SEO
-        title="About Us | SK Enterprise"
-        description="Learn about SK Enterprise, a leading manufacturer of industrial valves and gates with a commitment to quality and innovation."
+        title="About Us | SK Enterprise - Industrial Valve Engineering"
+        description="Learn about SK Enterprise, a leading manufacturer of industrial cast iron sluice gates, penstocks, and heavy-duty water control valves established in 1989."
         name="SK Enterprise"
         type="website"
         url="/about"
       />
-      {/* Navigation: Home (left) and Back (right) - responsive */}
-      {/* <div className="absolute top-24 left-4 right-4 z-10 sm:z-50 flex items-center justify-between sm:top-24 sm:left-8 sm:right-8">
-        <button
-          onClick={() => redirectTo("/")}
-          aria-label="Home"
-          className="flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 bg-white/80 dark:bg-white/10 border border-outline/10 dark:border-white/20 text-slate-700 dark:text-white backdrop-blur-md rounded-full sm:rounded-lg hover:bg-gray-100 dark:hover:bg-white/20 transition-all duration-300 shadow-sm focus:outline-none"
-        >
-          <Home className="w-5 h-5" />
-          <span className="hidden sm:inline font-medium">Home</span>
-        </button>
-
-        <button
-          onClick={goBack}
-          aria-label="Back"
-          className="flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 bg-white/80 dark:bg-white/10 border border-outline/10 dark:border-white/20 text-slate-700 dark:text-white backdrop-blur-md rounded-full sm:rounded-lg hover:bg-gray-100 dark:hover:bg-white/20 transition-all duration-300 shadow-sm focus:outline-none"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          <span className="hidden sm:inline font-medium">Back</span>
-        </button>
-      </div> */}
       
-      {/* Hero Section - Reduced bottom padding */}
-      <div className="relative py-12 mt-12 pb-12 overflow-hidden">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
-        >
-          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6 transition-colors duration-300 tracking-tight">
-            About SK Enterprise
-          </h1>
-          <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto transition-colors duration-300 leading-relaxed font-medium">
-            Leading manufacturer of industrial valves and gates, committed to
-            excellence and innovation since establishment
-          </p>
-        </motion.div>
-      </div>
+      {/* Hero Header Section */}
+      <section className="relative pt-24 pb-16 md:pt-32 md:pb-20 bg-slate-50 border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-6">
+          <RevealOnScroll direction="down" duration={0.6}>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-300 text-accent font-mono text-xs font-bold tracking-widest uppercase shadow-sm">
+              <ShieldCheck className="w-4 h-4" />
+              <span>ISO 9001 : 2015 CERTIFIED CO. • IAS ACCREDITED MSCB-119</span>
+            </div>
+          </RevealOnScroll>
 
-      {/* Features Grid - Reduced top padding */}
-      <motion.div
-        variants={staggerContainer}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              variants={fadeInUp}
-              className="bg-white dark:bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-outline/10 dark:border-white/10 hover:shadow-xl dark:hover:bg-white/10 transition-all duration-300 shadow-sm group"
-            >
-              <div className="text-primary dark:text-blue-400 mb-6 transform group-hover:scale-110 transition-transform duration-300 origin-left">
-                {feature.icon}
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 transition-colors duration-300">
-                {feature.title}
-              </h3>
-              <p className="text-slate-600 dark:text-slate-300 transition-colors duration-300 leading-relaxed">
-                {feature.description}
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </motion.div>
+          <RevealOnScroll delay={0.1} duration={0.7}>
+            <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-slate-900 tracking-tight leading-tight font-headline uppercase">
+              S.K. ENTERPRISE <br className="hidden sm:inline" />
+              <span className="text-2xl sm:text-4xl md:text-5xl text-accent">VALVES | COCKS & FITTINGS.</span>
+            </h1>
+          </RevealOnScroll>
 
-      {/* Company Overview */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20"
-      >
-        <div className="bg-white dark:bg-white/5 backdrop-blur-md rounded-3xl p-8 md:p-14 border border-outline/10 dark:border-white/10 shadow-sm transition-colors duration-300">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white mb-8 transition-colors duration-300 tracking-tight">
-            Our Journey
-          </h2>
-          <div className="text-lg text-slate-600 dark:text-slate-300 transition-colors duration-300 leading-relaxed space-y-6 font-medium">
-            <p>
-              SK Enterprise has been at the forefront of industrial valve
-              manufacturing, specializing in Sluice Gate Valves and Penstock
-              Gate Valves. Our commitment to quality and innovation has made us
-              a trusted partner for industries worldwide.
+          <RevealOnScroll delay={0.2} duration={0.7}>
+            <p className="text-base sm:text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium">
+              Manufacturers of : C.I. | S.S. | G.M. | Valves | Cocks & Fittings. The company's motto is to deliver the clients with nothing less than best and quality is one such parameter where we make no compromises.
             </p>
-            <p>
-              With state-of-the-art manufacturing facilities and a team of
-              experienced engineers, we continue to deliver products that meet
-              the highest standards of quality and reliability. Our focus on
-              research and development ensures that we stay ahead of industry
-              trends and requirements.
+          </RevealOnScroll>
+
+          {/* Key Stats Bar */}
+          <RevealOnScroll delay={0.3} duration={0.8}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 max-w-5xl mx-auto">
+              {stats.map((stat, idx) => (
+                <div key={idx} className="bg-white p-6 rounded-industrial-lg border border-slate-200 text-center hover:border-accent transition-all duration-300 shadow-md hover:shadow-lg">
+                  <div className="font-tabular text-2xl sm:text-4xl font-black text-slate-900 font-headline tracking-tight">{stat.value}</div>
+                  <div className="text-[11px] font-mono font-bold text-accent uppercase tracking-wider mt-1">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </RevealOnScroll>
+        </div>
+      </section>
+
+      {/* Core Capabilities Grid */}
+      <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <RevealOnScroll>
+          <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
+            <h2 className="text-xs font-mono font-bold text-accent uppercase tracking-widest">
+              WHY CHOOSE S.K. ENTERPRISE
+            </h2>
+            <p className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight font-headline uppercase">
+              OUR MOTTO & QUALITY CONTROL.
+            </p>
+            <p className="text-slate-600 text-sm sm:text-base font-medium">
+              S.K. Enterprise's Quality Goal: Continuous improvement & Zero defect, Meeting and even exceeding the quality and service needs of customers.
             </p>
           </div>
+        </RevealOnScroll>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {features.map((feature, index) => (
+            <RevealOnScroll key={index} delay={index * 0.1}>
+              <div className="bg-white p-8 rounded-industrial-lg border border-slate-200 hover:border-accent transition-all duration-300 flex flex-col justify-between h-full group shadow-lg hover:shadow-xl">
+                <div>
+                  <div className="w-12 h-12 rounded-industrial-md bg-slate-50 border border-slate-200 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-accent transition-all duration-300 shadow-sm">
+                    {feature.icon}
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900 mb-3 font-headline group-hover:text-accent transition-colors">
+                    {feature.title}
+                  </h3>
+                  <p className="text-slate-600 text-sm leading-relaxed mb-6 font-normal">
+                    {feature.description}
+                  </p>
+                </div>
+                <div className="pt-4 border-t border-slate-200 flex items-center justify-between text-[11px] font-mono font-bold text-slate-500">
+                  <span className="text-accent">{feature.spec}</span>
+                  <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                </div>
+              </div>
+            </RevealOnScroll>
+          ))}
         </div>
-      </motion.div>
+      </section>
+
+      {/* Company Journey & Technical Overview */}
+      <section className="py-20 bg-slate-50 border-t border-slate-200 relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <RevealOnScroll>
+            <div className="bg-white rounded-industrial-lg p-8 sm:p-14 border border-slate-200 shadow-xl relative overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+                <div className="lg:col-span-7 space-y-6">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-accent text-xs font-mono font-bold uppercase tracking-wider">
+                    <Wrench className="w-3.5 h-3.5" />
+                    <span>QUALITY CONTROL & APPLICATION MARKET</span>
+                  </div>
+                  <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight font-headline leading-tight">
+                    S.K. Enterprise Quality Assurance and Quality Control Program
+                  </h2>
+                  <div className="text-slate-600 text-base leading-relaxed space-y-4 font-normal">
+                    <p>
+                      We own interior quality assurance system, implementing overall quality management in the whole process. Every and each valve has a unique heat number to achieve traceability. All raw materials must carry on the material composition and mechanical performance review before entering the factory, to completely eradicate unqualified materials.
+                    </p>
+                    <p>
+                      Non-destructive testing for valve pipes is necessary before and during raw material processing. Valves should pass valve body strength test, hydraulic pressure seal test and gas seal test one by one before leaving factory. Besides, valves for specific application need more tests, to guarantee all products are all qualified before delivery.
+                    </p>
+                    <p>
+                      Except internal severe work system and workflow, there are also the third-party certification authority and customer approval to ensure quality. S.K. Enterprise offer many kind of industrial valve utilized in the several application environment against high temperature, high pressure, high corrosive and low temperature or cryogenic application market range from water treatment, power generation, mining, petrochemical, oil and gas with onshore and offshore working condition.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Technical Highlights Box */}
+                <div className="lg:col-span-5 bg-slate-50 p-8 rounded-2xl border border-slate-200 space-y-6 shadow-sm">
+                  <h3 className="text-sm font-mono font-bold text-slate-900 uppercase tracking-wider border-b border-slate-200 pb-3 flex items-center gap-2">
+                    <Globe className="w-4 h-4 text-accent" />
+                    <span>S.K. Enterprise Specifications</span>
+                  </h3>
+                  
+                  <ul className="space-y-4 text-xs sm:text-sm text-slate-700 font-mono">
+                    <li className="flex items-start justify-between pb-2 border-b border-slate-200">
+                      <span className="text-slate-500 font-bold">Certification:</span>
+                      <span className="text-slate-900 font-bold text-right">ISO 9001 : 2015 Certified Co.</span>
+                    </li>
+                    <li className="flex items-start justify-between pb-2 border-b border-slate-200">
+                      <span className="text-slate-500 font-bold">Accreditation:</span>
+                      <span className="text-slate-900 font-bold text-right">IAS ACCREDITED MSCB-119</span>
+                    </li>
+                    <li className="flex items-start justify-between pb-2 border-b border-slate-200">
+                      <span className="text-slate-500 font-bold">Manufacturers of:</span>
+                      <span className="text-slate-900 font-bold text-right">Valves | Cocks & Fittings</span>
+                    </li>
+                    <li className="flex items-start justify-between pb-2 border-b border-slate-200">
+                      <span className="text-slate-500 font-bold">Materials:</span>
+                      <span className="text-slate-900 font-bold text-right">C.I. | S.S. | G.M.</span>
+                    </li>
+                    <li className="flex items-start justify-between">
+                      <span className="text-slate-500 font-bold">Quality Goal:</span>
+                      <span className="text-slate-900 font-bold text-right">Zero Defect & Continuous Improvement</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </RevealOnScroll>
+        </div>
+      </section>
     </div>
   );
 };

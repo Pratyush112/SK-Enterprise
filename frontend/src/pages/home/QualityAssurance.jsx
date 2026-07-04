@@ -1,46 +1,89 @@
 import React from 'react';
+import RevealOnScroll from '../../components/motion/RevealOnScroll';
+import PinnedScrubSection from '../../components/motion/PinnedScrubSection';
+import { ShieldCheck, Activity, Shield } from 'lucide-react';
+
+const stats = [
+  { value: "Zero", label: "Defect Goal", sub: "CONTINUOUS IMPROVEMENT" },
+  { value: "100%", label: "Quality Assurance", sub: "OVERALL MANAGEMENT" },
+  { value: "1 by 1", label: "Tested Valves", sub: "STRENGTH & SEAL TEST" },
+  { value: "ISO", label: "9001 : 2015 Co.", sub: "CERTIFIED PROGRAM" }
+];
 
 const QualityAssurance = () => {
   return (
-    <section className="py-24 bg-surface dark:bg-slate-950 transition-colors duration-300">
-      <div className="max-w-screen-2xl mx-auto px-8">
-        <div className="bg-slate-900 dark:bg-slate-950 rounded-[2rem] overflow-hidden relative min-h-[500px] flex items-center border border-slate-800 dark:border-white/10 shadow-2xl transition-colors duration-300">
-          <div className="absolute inset-0 opacity-40 dark:opacity-30 mix-blend-overlay">
-            <img className="w-full h-full object-cover" alt="Technician performing quality inspection on industrial hardware" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmqwCLfLKzsOLB3qUVx2fNL_NMsxlw4MVzJkH3-HQKtgYBUSqcPFSIjb5-prxkbEatt9t1aLZb8fxWa2RDvX6RfhOFuRoxxmFTens06b8RQhYqv4ZFKTQerKh6xLkLFEAp_w55fv9qGz4BuPNbcfeLG3d1QXY82hi6qo578oq1ju0TZJX2QJw8HxKlrcfcaoqMG0g_d_qL4819PkJZrIxYF29BN_RPqg_9tTvLw3cye9vAgkWGmwOx2dtXIma3uex9QlF5zErP9Jrz"/>
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-900 dark:from-slate-950 via-slate-900/90 dark:via-slate-950/90 to-slate-900/40 dark:to-transparent"></div>
-          <div className="relative z-10 p-12 md:p-24">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              <div className="flex flex-col justify-center md:pr-8">
-                <span className="text-blue-400 font-bold tracking-[0.2em] uppercase text-sm mb-6 block">Our Commitment</span>
-                <h2 className="font-headline text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight">Certified Quality Assurance</h2>
-              </div>
-              <div className="md:pl-8 flex flex-col justify-center">
-                <p className="text-slate-200 dark:text-slate-300 text-xl leading-relaxed mb-8">
-                  Our proprietary &quot;interior quality assurance system&quot; integrates rigorous testing protocols at every stage of fabrication, ensuring our &quot;zero defects&quot; goal is achieved for every client.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="flex gap-4">
-                    <div className="w-1 bg-blue-500 h-full"></div>
-                    <div>
-                      <p className="text-white font-bold text-lg">Zero Defects</p>
-                      <p className="text-slate-300 dark:text-slate-400 text-sm transition-colors duration-300">Targeted precision through automated inspection.</p>
-                    </div>
-                  </div>
-                  <div className="flex gap-4">
-                    <div className="w-1 bg-blue-500 h-full"></div>
-                    <div>
-                      <p className="text-white font-bold text-lg">Global Compliance</p>
-                      <p className="text-slate-300 dark:text-slate-400 text-sm transition-colors duration-300">Meeting international ASTM, IS, and ISO specifications.</p>
-                    </div>
-                  </div>
+    <div className="bg-white">
+      {/* Top Stat Counters Section */}
+      <section className="py-20 md:py-28 bg-white text-slate-900 relative border-t border-slate-200">
+        <div className="max-w-container-max mx-auto px-6 sm:px-8">
+          
+          {/* Section Header */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16 border-b border-slate-200 pb-12">
+            <div className="lg:col-span-7">
+              <RevealOnScroll direction="up" delay={0}>
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-accent font-mono text-xs font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-sm">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>maintains a fully implemented certified Quality Assurance and Quality Control</span>
                 </div>
-              </div>
+                <h2 className="font-headline text-3xl sm:text-5xl md:text-6xl font-black tracking-tight uppercase leading-[1.08] text-slate-900">
+                  Quality <br />
+                  <span className="text-accent">Control</span>.
+                </h2>
+              </RevealOnScroll>
+            </div>
+
+            <div className="lg:col-span-5">
+              <RevealOnScroll direction="up" delay={0.15}>
+                <p className="text-slate-600 text-base sm:text-lg leading-relaxed border-l-2 border-accent pl-6 font-medium">
+                  S.K. Enterprise's Quality Goal: Continuous improvement & Zero defect, Meeting and even exceeding the quality and service needs of customers.
+                </p>
+              </RevealOnScroll>
             </div>
           </div>
+
+          {/* Industrial Stat Counters - Bright & Crisp */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            {stats.map((stat, idx) => (
+              <RevealOnScroll
+                key={stat.label}
+                direction="up"
+                delay={0.1 * idx}
+              >
+                <div className="p-8 rounded-industrial-lg bg-white border border-slate-200 hover:border-accent transition-all group flex flex-col justify-between h-full shadow-lg hover:shadow-xl">
+                  <div>
+                    <span className="font-tabular font-headline text-4xl sm:text-5xl md:text-6xl font-black text-slate-900 group-hover:text-accent transition-colors block mb-3">
+                      {stat.value}
+                    </span>
+                    <span className="font-bold text-base text-slate-900 block mb-2">
+                      {stat.label}
+                    </span>
+                  </div>
+                  <span className="font-mono text-xs text-accent pt-4 border-t border-slate-200 block mt-6 font-bold">
+                    {stat.sub}
+                  </span>
+                </div>
+              </RevealOnScroll>
+            ))}
+          </div>
+
+          {/* Exact PDF Page 4 Paragraphs */}
+          <RevealOnScroll direction="up" delay={0.2}>
+            <div className="bg-slate-50 p-8 sm:p-12 rounded-industrial-lg border border-slate-200 space-y-6 text-slate-700 leading-relaxed font-normal shadow-md">
+              <p className="text-base sm:text-lg">
+                We own interior quality assurance system, implementing overall quality management in the whole process. Every and each valve has a unique heat number to achieve traceability. All raw materials must carry on the material composition and mechanical performance review before entering the factory, to completely eradicate unqualified materials. Non-destructive testing for valve pipes is necessary before and during raw material processing. Valves should pass valve body strength test, hydraulic pressure seal test and gas seal test one by one before leaving factory. Besides, valves for specific application need more tests, to guarantee all products are all qualified before delivery
+              </p>
+              <p className="text-base sm:text-lg border-t border-slate-200 pt-6 font-semibold text-slate-900">
+                Except internal severe work system and workflow, there are also the third-party certification authority and customer approval to ensure quality. S.K. Enterprise
+              </p>
+            </div>
+          </RevealOnScroll>
+
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* AMES Pinned Scrollytelling Section */}
+      {/* <PinnedScrubSection /> */}
+    </div>
   );
 };
 
