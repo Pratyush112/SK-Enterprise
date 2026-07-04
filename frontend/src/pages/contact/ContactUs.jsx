@@ -31,12 +31,17 @@ const ContactUs = () => {
         setSubmitStatus(null);
 
         try {
+            // Send both `phone` and `number` for backward compatibility with deployed backend
+            const submitData = {
+                ...formData,
+                number: formData.phone || 'Not provided' // Deployed backend expects `number`
+            };
             const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL || "https://sk-enterprise.onrender.com"}/contact`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(submitData)
             });
 
             const data = await response.json();

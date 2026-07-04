@@ -7,6 +7,10 @@ const faqs = [
     answer: "All our Sluice Gates and Penstock Gates are engineered and manufactured in strict compliance with IS 3042, BS 7775, and AWWA C560 standards. We provide complete Quality Assurance Plan (QAP) compliance logs and hydrostatic test certificates with every order."
   },
   {
+    question: "How do you test and rate seating vs unseating head pressure for sluice gates?",
+    answer: "Our sluice gates are engineered for both seating and unseating head conditions up to 15 meters. Each gate undergoes 100% hydrostatic pressure testing at our Howrah facility in accordance with IS 3042 and AWWA C501 standards. Resilient EPDM/neoprene or precision metallic bronze faces ensure zero-leakage or Class VI tight shut-off under maximum operating head."
+  },
+  {
     question: "Can you provide custom metallurgy or non-standard dimensions for specific projects?",
     answer: "Yes. We specialize in custom-engineered flow control solutions. We fabricate gates in Cast Iron (IS 210 Grade FG 200/260), Ductile Iron (SG Iron), Ni-Resist, Stainless Steel (SS 304 / SS 316 / SS 316L), and Super Duplex alloys depending on water corrosivity and project requirements."
   },

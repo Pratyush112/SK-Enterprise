@@ -63,12 +63,12 @@ const Navbar = () => {
     const isActive = (path) => pathname === path;
 
     return (
-        <header className="sticky top-0 z-50 w-full bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 transition-colors duration-300 pt-[env(safe-area-inset-top)]">
-            <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between font-sans">
+        <header role="banner" className="sticky top-0 z-50 w-full bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 transition-colors duration-300 pt-[env(safe-area-inset-top)]">
+            <nav role="navigation" aria-label="Main Navigation" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between font-sans">
                 {/* Logo & Brand Title */}
                 <Link
                     to="/"
-                    className="flex items-center gap-3 shrink-0 group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-xl py-1 px-1.5 transition-all"
+                    className="flex items-center gap-3 shrink-0 group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-xl py-1 px-1.5 transition-all min-h-[44px]"
                     aria-label="SK Enterprise Home"
                 >
                     <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-slate-900 border border-slate-800 p-1 flex items-center justify-center shadow-md group-hover:border-blue-500/50 transition-colors">
@@ -96,7 +96,7 @@ const Navbar = () => {
                             <Link
                                 key={item.label}
                                 to={item.path}
-                                className={`px-5 py-2 rounded-full font-semibold text-xs transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+                                className={`px-5 py-2 rounded-full font-semibold text-xs transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 min-h-[44px] inline-flex items-center justify-center ${
                                     active
                                         ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
                                         : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
@@ -113,7 +113,7 @@ const Navbar = () => {
                     <button
                         onClick={toggleTheme}
                         aria-label="Toggle Theme"
-                        className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                        className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                         title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
                     >
                         {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-300" />}
@@ -121,7 +121,7 @@ const Navbar = () => {
 
                     <Link
                         to="/contactus"
-                        className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-lg shadow-blue-600/25 hover:shadow-blue-500/35 transition-all flex items-center gap-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                        className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-lg shadow-blue-600/25 hover:shadow-blue-500/35 transition-all flex items-center justify-center gap-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 min-h-[44px]"
                     >
                         <span>Get a Quote</span>
                         <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -133,7 +133,7 @@ const Navbar = () => {
                     <button
                         onClick={toggleTheme}
                         aria-label="Toggle Theme"
-                        className="w-9 h-9 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                        className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-lg bg-slate-900 border border-slate-800 text-slate-300 flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
                     >
                         {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-300" />}
                     </button>

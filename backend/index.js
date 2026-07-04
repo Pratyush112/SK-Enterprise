@@ -50,7 +50,7 @@ app.use(globalLimiter);
 // Stricter Rate Limiting for Contact Form
 const contactLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: 10, // limit each IP to 10 contact submissions per hour
+  max: 30, // limit each IP to 30 contact submissions per hour
   message: { error: "Too many contact inquiries from this IP, please try again later" }
 });
 

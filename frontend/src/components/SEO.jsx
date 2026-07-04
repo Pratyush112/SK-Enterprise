@@ -39,7 +39,11 @@ export default function SEO({ title, description, name, type = 'website', image,
       {/* Dynamic JSON-LD Schema injection */}
       {schema && (
         <script type="application/ld+json">
-          {JSON.stringify(schema)}
+          {JSON.stringify(
+            Array.isArray(schema) 
+              ? { "@context": "https://schema.org", "@graph": schema } 
+              : schema
+          )}
         </script>
       )}
     </Helmet>

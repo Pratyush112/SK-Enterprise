@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
-        <footer className="bg-on-background dark:bg-black text-white pt-24 pb-12 border-t border-white/5 font-body transition-colors duration-300">
+        <footer role="contentinfo" aria-label="Site Footer" className="bg-on-background dark:bg-black text-white pt-24 pb-12 border-t border-white/5 font-body transition-colors duration-300">
             <div className="max-w-screen-2xl mx-auto px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
                     <div className="space-y-6">
@@ -21,21 +21,21 @@ const Footer = () => {
 
                     <div>
                         <h5 className="font-headline font-bold text-lg mb-6 text-white tracking-widest uppercase">Products</h5>
-                        <ul className="space-y-4">
-                            <li><Link to="/products" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">Sluice Gates</Link></li>
-                            <li><Link to="/products" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">Penstock Gates</Link></li>
-                            <li><Link to="/parts" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">Industrial Fasteners</Link></li>
-                            <li><Link to="/parts" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">Custom Stud Bolts</Link></li>
+                        <ul className="space-y-2">
+                            <li><Link to="/products" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide min-h-[44px] inline-flex items-center">Sluice Gates</Link></li>
+                            <li><Link to="/products" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide min-h-[44px] inline-flex items-center">Penstock Gates</Link></li>
+                            <li><Link to="/parts" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide min-h-[44px] inline-flex items-center">Industrial Fasteners</Link></li>
+                            <li><Link to="/parts" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide min-h-[44px] inline-flex items-center">Custom Stud Bolts</Link></li>
                         </ul>
                     </div>
 
                     <div>
                         <h5 className="font-headline font-bold text-lg mb-6 text-white tracking-widest uppercase">Company</h5>
-                        <ul className="space-y-4">
-                            <li><Link to="/aboutus" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">About Us</Link></li>
-                            <li><Link to="/quality" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">Quality Assurance</Link></li>
-                            <li><Link to="/contactus" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">Technical Helpdesk</Link></li>
-                            <li><Link to="/WhyUs" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">Why Choose Us</Link></li>
+                        <ul className="space-y-2">
+                            <li><Link to="/aboutus" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide min-h-[44px] inline-flex items-center">About Us</Link></li>
+                            <li><Link to="/quality" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide min-h-[44px] inline-flex items-center">Quality Assurance</Link></li>
+                            <li><Link to="/contactus" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide min-h-[44px] inline-flex items-center">Technical Helpdesk</Link></li>
+                            <li><Link to="/WhyUs" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide min-h-[44px] inline-flex items-center">Why Choose Us</Link></li>
                         </ul>
                     </div>
 
@@ -47,11 +47,11 @@ const Footer = () => {
                                 <div className="w-12 h-12 bg-white/5 dark:bg-white/10 group-hover:bg-primary-fixed text-white group-hover:text-on-primary-fixed rounded-full flex items-center justify-center shrink-0 transition-all duration-300 shadow-sm">
                                     <span className="material-symbols-outlined text-[22px]">mail</span>
                                 </div>
-                                <div className="flex flex-col gap-2 pt-1.5">
-                                    <a href="mailto:skenterprise2989@gmail.com" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300">
+                                <div className="flex flex-col gap-1 pt-1.5">
+                                    <a href="mailto:skenterprise2989@gmail.com" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 min-h-[32px] inline-flex items-center">
                                         skenterprise2989@gmail.com
                                     </a>
-                                    <a href="mailto:saha.biswa2013@gmail.com" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300">
+                                    <a href="mailto:saha.biswa2013@gmail.com" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 min-h-[32px] inline-flex items-center">
                                         saha.biswa2013@gmail.com
                                     </a>
                                 </div>
@@ -62,11 +62,11 @@ const Footer = () => {
                                 <div className="w-12 h-12 bg-white/5 dark:bg-white/10 group-hover:bg-primary-fixed text-white group-hover:text-on-primary-fixed rounded-full flex items-center justify-center shrink-0 transition-all duration-300 shadow-sm">
                                     <span className="material-symbols-outlined text-[22px]">call</span>
                                 </div>
-                                <div className="flex flex-col gap-2 pt-1.5">
-                                    <a href="tel:+918296631533" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300">
+                                <div className="flex flex-col gap-1 pt-1.5">
+                                    <a href="tel:+918296631533" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 min-h-[32px] inline-flex items-center">
                                         +91 82966 31533
                                     </a>
-                                    <a href="tel:+919748028331" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300">
+                                    <a href="tel:+919748028331" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 min-h-[32px] inline-flex items-center">
                                         +91 97480 28331
                                     </a>
                                 </div>

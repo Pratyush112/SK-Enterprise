@@ -2,7 +2,7 @@ import axios from "axios";
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_BACKEND_BASE_URL || "https://sk-enterprise.onrender.com",
-    timeout: 10000,
+    timeout: 30000, // 30s timeout to accommodate Render free-tier cold starts
     headers: {
         "Content-Type": "application/json",
     }

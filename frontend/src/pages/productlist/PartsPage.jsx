@@ -9,6 +9,7 @@ import { getParts } from '../../services/api';
 import SEO from '../../components/SEO';
 import QuoteModal from '../../components/QuoteModal';
 import SpecDrawer from '../../components/SpecDrawer';
+import { generateCatalogSchema } from '../../utils/schemaGenerators';
 
 const PartsCards = () => {
     const [parts, setParts] = useState([]);
@@ -135,6 +136,7 @@ const PartsCards = () => {
                 name="SK Enterprise"
                 type="website"
                 url="/parts"
+                schema={generateCatalogSchema(parts, "Industrial Fasteners & Spares Catalog", "/parts")}
             />
 
             {/* Hero Header & Breadcrumbs */}
@@ -406,7 +408,7 @@ const PartsCards = () => {
                                                     <Link to={`/parts/${part._id}`}>{part.Name}</Link>
                                                 </h3>
                                                 <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
-                                                    {part.Description || part.Material || 'Engineered high-tensile industrial component.'}
+                                                    {part.Description || part.Material || 'Heavy-duty SS 304, SS 316, and Grade 8.8 High-Tensile Anchor Bolts, Spindles, Extension Rods, and Replacement Seals manufactured to ASTM A193 & DIN 933 standards.'}
                                                 </p>
                                             </div>
 
@@ -415,13 +417,13 @@ const PartsCards = () => {
                                                 <div>
                                                     <span className="text-slate-500 block text-[10px] uppercase font-semibold">Material Grade</span>
                                                     <span className="text-slate-200 font-medium truncate block">
-                                                        {part.Grade || 'Stainless Steel'}
+                                                        {part.Grade || 'SS 316 / Grade 8.8'}
                                                     </span>
                                                 </div>
                                                 <div>
                                                     <span className="text-slate-500 block text-[10px] uppercase font-semibold">Size Range</span>
                                                     <span className="text-slate-200 font-medium font-mono truncate block">
-                                                        {part.Sizes || 'Custom'}
+                                                        {part.Sizes || 'M12 - M48 Custom'}
                                                     </span>
                                                 </div>
                                             </div>
@@ -432,7 +434,7 @@ const PartsCards = () => {
                                     <div className="p-5 pt-0 flex items-center gap-2.5">
                                         <button
                                             onClick={() => setSelectedSpecItem(part)}
-                                            className="flex-1 px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-medium text-xs rounded-xl border border-slate-700/80 transition-all flex items-center justify-center gap-1.5"
+                                            className="flex-1 px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-medium text-xs rounded-xl border border-slate-700/80 transition-all flex items-center justify-center gap-1.5 min-h-[44px]"
                                         >
                                             <Eye className="w-3.5 h-3.5 text-blue-400" />
                                             <span>View Specs</span>
@@ -442,7 +444,7 @@ const PartsCards = () => {
                                                 setQuoteItem(part.Name);
                                                 setIsQuoteOpen(true);
                                             }}
-                                            className="flex-1 px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded-xl shadow-md shadow-blue-600/20 hover:shadow-blue-500/30 transition-all flex items-center justify-center gap-1.5"
+                                            className="flex-1 px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded-xl shadow-md shadow-blue-600/20 hover:shadow-blue-500/30 transition-all flex items-center justify-center gap-1.5 min-h-[44px]"
                                         >
                                             <FileText className="w-3.5 h-3.5" />
                                             <span>Request Quote</span>

@@ -25,14 +25,14 @@ const QuoteModal = ({ isOpen, onClose, initialItem = '' }) => {
             setFormData(prev => ({
                 ...prev,
                 subject: `Quote Request: ${initialItem}`,
-                message: `I would like to request a formal quotation and delivery timeframe for the following item:\n\nItem: ${initialItem}\nQuantity Needed: [Please specify]\nTarget Delivery / Project Location: [Please specify]\n\nAdditional Requirements / Technical Specifications:\n`
+                message: `I would like to request a formal quotation and delivery timeframe for the following item:\n\nItem: ${initialItem}\nQuantity Needed: [Please specify]\nTarget Delivery / Project Location: [Please specify]\n\nTechnical Parameters:\n- Seating vs Unseating Head Pressure: [e.g., 5m / 10m]\n- Spindle Type: [Rising / Non-Rising Spindle]\n- Metallurgy / Casting Grade: [e.g., Cast Iron IS:210 FG 200/260 or SS 316]\n- Sealing Type: [EPDM / Metallic / Neoprene]\n\nAttached Tender BOQ / Notes:\n`
             }));
             setStatus({ loading: false, success: false, error: null });
         } else if (isOpen && !initialItem) {
             setFormData(prev => ({
                 ...prev,
                 subject: 'General Quote Request',
-                message: 'I would like to request a quotation for industrial sluice gates / valve components.\n\nProject Details & Specifications:\n'
+                message: `I would like to request a quotation for industrial sluice gates / valve components.\n\nProject Details & Technical Parameters:\n- Gate Type / SKU: [e.g., Cast Iron Sluice Gate / MS Penstock / Flap Gate]\n- Quantity & Dimensions: [Please specify width x height]\n- Seating vs Unseating Head Pressure: [e.g., 5m / 10m]\n- Spindle Type: [Rising / Non-Rising Spindle]\n- Metallurgy / Casting Grade: [e.g., Cast Iron IS:210 FG 200/260 or SS 316]\n- Sealing Type: [EPDM / Metallic / Neoprene]\n\nAttached Tender BOQ / Notes:\n`
             }));
             setStatus({ loading: false, success: false, error: null });
         }
@@ -62,10 +62,13 @@ const QuoteModal = ({ isOpen, onClose, initialItem = '' }) => {
 
         try {
             // Format payload to match backend /contact route expectations
+            // Send both `phone` and `number` for backward compatibility with deployed backend
+            const phoneValue = formData.phone.trim() || 'Not provided';
             const payload = {
                 name: formData.name.trim(),
                 email: formData.email.trim(),
-                phone: formData.phone.trim(),
+                phone: phoneValue,
+                number: phoneValue, // Deployed backend expects `number`, not `phone`
                 company: formData.company.trim() || 'Not specified',
                 subject: formData.subject.trim() || `Quote Inquiry from ${formData.name.trim()}`,
                 message: formData.message.trim(),
@@ -76,7 +79,9 @@ const QuoteModal = ({ isOpen, onClose, initialItem = '' }) => {
             setStatus({ loading: false, success: true, error: null });
         } catch (err) {
             console.error('Quote submission error:', err);
-            const errMsg = err.response?.data?.message || 'Failed to submit quote request. Please try again or contact us directly at info@skenterprisesluicegate.com.';
+            const backendError = err.response?.data?.error || err.response?.data?.message;
+            
+            const errMsg = backendError || (err.code === 'ECONNABORTED' || err.message?.includes('timeout') ? 'Server is waking up from sleep mode (Render cold start). Please click Submit again in a few seconds.' : 'Failed to submit quote request. Please try again or contact us directly at skenterprise2989@gmail.com.');
             setStatus({ loading: false, success: false, error: errMsg });
         }
     };

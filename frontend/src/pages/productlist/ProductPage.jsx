@@ -9,6 +9,7 @@ import { getProducts } from '../../services/api';
 import SEO from '../../components/SEO';
 import QuoteModal from '../../components/QuoteModal';
 import SpecDrawer from '../../components/SpecDrawer';
+import { generateCatalogSchema } from '../../utils/schemaGenerators';
 
 const ProductCards = () => {
     const [products, setProducts] = useState([]);
@@ -127,6 +128,7 @@ const ProductCards = () => {
                 name="SK Enterprise"
                 type="website"
                 url="/products"
+                schema={generateCatalogSchema(products, "Sluice Gates & Valves Catalog", "/products")}
             />
 
             {/* Hero Header & Breadcrumb */}
@@ -390,7 +392,7 @@ const ProductCards = () => {
                                                     <Link to={`/products/${product._id}`}>{product.Name}</Link>
                                                 </h3>
                                                 <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
-                                                    {product.Application || 'Designed for reliable industrial water control and sewage isolation.'}
+                                                    {product.Application || 'Precision-engineered water control equipment designed for seating/unseating head pressure isolation in water treatment plants, sewage works, and flood control infrastructures. Cast Iron IS:210 Grade FG 200/260 & SS 316 metallurgy available.'}
                                                 </p>
                                             </div>
 
@@ -399,13 +401,13 @@ const ProductCards = () => {
                                                 <div>
                                                     <span className="text-slate-500 block text-[10px] uppercase font-semibold">Water Head</span>
                                                     <span className="text-slate-200 font-medium font-mono truncate block">
-                                                        {product.Water || product.Water_Head || 'Standard'}
+                                                        {product.Water || product.Water_Head || '5m - 15m Seating / Unseating'}
                                                     </span>
                                                 </div>
                                                 <div>
                                                     <span className="text-slate-500 block text-[10px] uppercase font-semibold">Sealing</span>
                                                     <span className="text-slate-200 font-medium truncate block">
-                                                        {product.Sealing || 'Metallic / EPDM'}
+                                                        {product.Sealing || 'Metallic / EPDM to IS 3042'}
                                                     </span>
                                                 </div>
                                             </div>
@@ -416,7 +418,7 @@ const ProductCards = () => {
                                     <div className="p-5 pt-0 flex items-center gap-2.5">
                                         <button
                                             onClick={() => setSelectedSpecItem(product)}
-                                            className="flex-1 px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-medium text-xs rounded-xl border border-slate-700/80 transition-all flex items-center justify-center gap-1.5"
+                                            className="flex-1 px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-medium text-xs rounded-xl border border-slate-700/80 transition-all flex items-center justify-center gap-1.5 min-h-[44px]"
                                         >
                                             <Eye className="w-3.5 h-3.5 text-blue-400" />
                                             <span>View Specs</span>
@@ -426,7 +428,7 @@ const ProductCards = () => {
                                                 setQuoteItem(product.Name);
                                                 setIsQuoteOpen(true);
                                             }}
-                                            className="flex-1 px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded-xl shadow-md shadow-blue-600/20 hover:shadow-blue-500/30 transition-all flex items-center justify-center gap-1.5"
+                                            className="flex-1 px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded-xl shadow-md shadow-blue-600/20 hover:shadow-blue-500/30 transition-all flex items-center justify-center gap-1.5 min-h-[44px]"
                                         >
                                             <FileText className="w-3.5 h-3.5" />
                                             <span>Request Quote</span>
