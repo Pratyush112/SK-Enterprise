@@ -7,14 +7,17 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const smStream = new SitemapStream({ hostname: "https://www.skenterprize.com" });
+    const smStream = new SitemapStream({ hostname: "https://www.skenterprisesluicegate.com" });
 
     // Static pages
     smStream.write({ url: "/", changefreq: "weekly", priority: 1.0 });
-    smStream.write({ url: "/about", changefreq: "monthly", priority: 0.7 });
-    smStream.write({ url: "/contactus", changefreq: "monthly", priority: 0.7 });
-    smStream.write({ url: "/products", changefreq: "weekly", priority: 0.8 });
+    smStream.write({ url: "/aboutus", changefreq: "monthly", priority: 0.7 });
+    smStream.write({ url: "/contactus", changefreq: "monthly", priority: 0.8 });
+    smStream.write({ url: "/products", changefreq: "weekly", priority: 0.9 });
     smStream.write({ url: "/parts", changefreq: "weekly", priority: 0.8 });
+    smStream.write({ url: "/quality", changefreq: "monthly", priority: 0.7 });
+    smStream.write({ url: "/WhyUs", changefreq: "monthly", priority: 0.7 });
+    smStream.write({ url: "/productcategories", changefreq: "weekly", priority: 0.8 });
 
     // Fetch dynamic products
     const products = await Product.find({});
