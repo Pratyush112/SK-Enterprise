@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.skenterprize.com/sitemap.xml
+Sitemap: https://www.skenterprisesluicegate.com/sitemap.xml
