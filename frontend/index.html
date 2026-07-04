@@ -25,7 +25,7 @@
       name="description"
       content="S.K. Enterprise manufactures high-quality industrial valves and gates including sluice gates, penstock gates, and related components. Contact us for customized solutions."
     />
-    <link rel="canonical" href="https://www.skenterprize.com/" />
+    <link rel="canonical" href="https://www.skenterprisesluicegate.com/" />
     <meta name="theme-color" content="#1E3A8A" />
 
     <!-- Open Graph -->
@@ -38,10 +38,10 @@
       content="S.K. Enterprise manufactures high-quality industrial valves and gates including sluice gates, penstock gates, and related components."
     />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.skenterprize.com/" />
+    <meta property="og:url" content="https://www.skenterprisesluicegate.com/" />
     <meta
       property="og:image"
-      content="https://www.skenterprize.com/sk-logo.png"
+      content="https://www.skenterprisesluicegate.com/sk-logo.png"
     />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -59,26 +59,62 @@
     />
     <meta
       name="twitter:image"
-      content="https://www.skenterprize.com/sk-logo.png"
+      content="https://www.skenterprisesluicegate.com/sk-logo.png"
     />
 
-    <!-- Structured data: Organization -->
+    <!-- Structured data: Organization & LocalBusiness -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "SK Enterprise",
-        "url": "https://www.skenterprize.com/",
-        "logo": "https://www.skenterprize.com/logo.svg",
-        "contactPoint": [
+        "@graph": [
           {
-            "@type": "ContactPoint",
+            "@type": "Organization",
+            "@id": "https://www.skenterprisesluicegate.com/#organization",
+            "name": "SK Enterprise",
+            "url": "https://www.skenterprisesluicegate.com/",
+            "logo": "https://www.skenterprisesluicegate.com/logo.svg",
+            "contactPoint": [
+              {
+                "@type": "ContactPoint",
+                "telephone": "+91 82966 31533",
+                "contactType": "technical support",
+                "areaServed": "IN",
+                "availableLanguage": ["English", "Hindi", "Bengali"]
+              }
+            ]
+          },
+          {
+            "@type": "LocalBusiness",
+            "@id": "https://www.skenterprisesluicegate.com/#localbusiness",
+            "name": "SK Enterprise — Industrial Valves & Gates Manufacturer",
+            "url": "https://www.skenterprisesluicegate.com/",
             "telephone": "+91 82966 31533",
-            "contactType": "customer service",
-            "areaServed": "IN"
+            "priceRange": "$$$",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Howrah",
+              "addressRegion": "West Bengal",
+              "addressCountry": "IN"
+            },
+            "openingHoursSpecification": [
+              {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                "opens": "09:00",
+                "closes": "18:00"
+              }
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://www.skenterprisesluicegate.com/#website",
+            "url": "https://www.skenterprisesluicegate.com/",
+            "name": "SK Enterprise",
+            "publisher": {
+              "@id": "https://www.skenterprisesluicegate.com/#organization"
+            }
           }
-        ],
-        "sameAs": []
+        ]
       }
     </script>
   </head>

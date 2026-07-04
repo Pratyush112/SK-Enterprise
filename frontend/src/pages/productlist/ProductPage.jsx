@@ -1,42 +1,49 @@
-import React, { useMemo, useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
-import { useReactTable, getCoreRowModel, flexRender, getPaginationRowModel } from '@tanstack/react-table';
-import { Home, ArrowLeft } from 'lucide-react';
-import { useNavigation } from '../../hooks/useNavigation';
-import { getProducts } from '../../routers/APIs';
+import { motion } from 'framer-motion';
+import { 
+    Home, ChevronRight, Search, Filter, Grid, Table as TableIcon, FileText, Eye, 
+    ShieldCheck, CheckCircle2, Award, Wrench, RefreshCw, ChevronLeft, X, SlidersHorizontal 
+} from 'lucide-react';
+import { getProducts } from '../../services/api';
 import SEO from '../../components/SEO';
-
-const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1,
-            delayChildren: 0.3
-        }
-    }
-};
-
-const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.5 } }
-};
-
-// function createData(name, series, standard, mounting, sizes, sealing, water, leakage_parameter, spacing_between_bars, single_piece_width, single_piece_height, materials_of_construction, application) {
-//     return { name, series, standard, mounting, sizes, sealing, water, leakage_parameter, spacing_between_bars, single_piece_width, single_piece_height, materials_of_construction, application };
-// }
+import QuoteModal from '../../components/QuoteModal';
+import SpecDrawer from '../../components/SpecDrawer';
 
 const ProductCards = () => {
-
-    const { goBack, redirectTo } = useNavigation();
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    
+    // UI State
+    const [viewMode, setViewMode] = useState('grid'); // 'grid' | 'table'
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedSeries, setSelectedSeries] = useState('All');
+    const [selectedSpecItem, setSelectedSpecItem] = useState(null);
+    const [quoteItem, setQuoteItem] = useState(null);
+    const [isQuoteOpen, setIsQuoteOpen] = useState(false);
+
+    // Refs
+    const searchInputRef = useRef(null);
+    const filterScrollRef = useRef(null);
+
+    // Pagination state
+    const [currentPage, setCurrentPage] = useState(1);
+    const pageSize = 12;
+
+    // Keyboard shortcut to focus search bar
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === '/' && document.activeElement !== searchInputRef.current) {
+                e.preventDefault();
+                searchInputRef.current?.focus();
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
 
     useEffect(() => {
         const CACHE_KEY = 'products_cache_v1';
-
-        // Try render from cache first (stale-while-revalidate)
         try {
             const cached = localStorage.getItem(CACHE_KEY);
             if (cached) {
@@ -52,7 +59,6 @@ const ProductCards = () => {
                 const response = await getProducts();
                 if (response && response.data) {
                     const data = Array.isArray(response.data) ? response.data : [];
-                    // Ensure each product has `Image` (server uses `Image`) and consistent keys
                     const normalized = data.map(p => ({ ...p, Image: p.Image || p.image || '' }));
                     setProducts(normalized);
                     try {
@@ -60,8 +66,6 @@ const ProductCards = () => {
                     } catch (e) {
                         console.warn('Failed writing product cache', e);
                     }
-                } else {
-                    console.warn('getProducts returned no data or unexpected shape', response);
                 }
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -72,325 +76,515 @@ const ProductCards = () => {
         fetchProducts();
     }, []);
 
-    const columns = useMemo(() => [
-        {
-            header: 'Image',
-            accessorKey: 'Image',
-            cell: info => (
-                <div className="min-w-[200px]">  {/* Add minimum width container */}
-                    <Link to={`/products/${info.row.original._id}`}>
-                        <img
-                            src={info.getValue()}
-                            alt={info.row.original?.Name || 'Product image'}
-                            width={256}
-                            height={256}
-                            decoding="async"
-                            className="w-64 h-64 object-cover rounded-lg shadow-sm hover:scale-105 transition-transform duration-300"
-                            loading="lazy"
-                        />
-                    </Link>
-                </div>
-            ),
-        },
-        {
-            header: 'Name',
-            accessorKey: 'Name',
-        },
-        {
-            header: 'Series',
-            accessorKey: 'Series',
-        },
-        {
-            header: 'Standard',
-            accessorKey: 'Standard',
-        },
-        {
-            header: 'Mounting',
-            accessorKey: 'Mounting',
-        },
-        {
-            header: 'Sizes',
-            accessorKey: 'Sizes',
-        },
-        {
-            header: 'Sealing',
-            accessorKey: 'Sealing',
-        },
-        {
-            header: 'Water Head',
-            accessorKey: 'Water',
-        },
-        {
-            header: 'Leakage Parameter',
-            accessorKey: 'Leakage_Parameter',
-        },
-        {
-            header: 'Spacing Between Bars',
-            accessorKey: 'Spacing_Between_Bars',
-        },
-        {
-            header: 'Single Piece Width',
-            accessorKey: 'Single_Piece_Width',
-        },
-        {
-            header: 'Single Piece Height',
-            accessorKey: 'Single_Piece_Height',
-        },
-        {
-            header: 'Materials',
-            accessorKey: 'Materials_of_construction',
-        },
-        {
-            header: 'Application',
-            accessorKey: 'Application',
-        },
-    ], []);
+    // Derive unique series for filter pills
+    const seriesList = useMemo(() => {
+        const list = products.map(p => p.Series).filter(Boolean);
+        return ['All', ...new Set(list)];
+    }, [products]);
 
-    const table = useReactTable({
-        data: products,
-        columns,
-        getCoreRowModel: getCoreRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-    });
+    // Filtered products based on search and series
+    const filteredProducts = useMemo(() => {
+        return products.filter(p => {
+            const matchesSeries = selectedSeries === 'All' || p.Series === selectedSeries;
+            const query = searchQuery.toLowerCase().trim();
+            if (!query) return matchesSeries;
+            
+            const matchName = (p.Name || '').toLowerCase().includes(query);
+            const matchSeries = (p.Series || '').toLowerCase().includes(query);
+            const matchStandard = (p.Standard || '').toLowerCase().includes(query);
+            const matchApp = (p.Application || '').toLowerCase().includes(query);
+            const matchMat = (p.Materials_of_construction || p.Materials || '').toLowerCase().includes(query);
+            
+            return matchesSeries && (matchName || matchSeries || matchStandard || matchApp || matchMat);
+        });
+    }, [products, selectedSeries, searchQuery]);
 
-    // Sub-component: per-product animated hero section
-    const ProductHero = ({ product, index, total }) => {
-        const ref = React.useRef(null);
-        const shouldReduceMotion = useReducedMotion();
-        // Use scroller progress for this product block
-        const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'center center', 'end start'] });
+    // Reset pagination when filter changes
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [selectedSeries, searchQuery]);
 
-        // Smoother transforms for hero/shrink effect
-        // More gradual value changes and explicit transition props
-        const scale = shouldReduceMotion ? 1 : useTransform(scrollYProgress, [0, 0.35, 0.5, 0.65, 1], [0.96, 1, 1.12, 1, 0.96]);
-        const y = shouldReduceMotion ? 0 : useTransform(scrollYProgress, [0, 0.35, 0.5, 0.65, 1], [-20, 0, 24, 0, -20]);
-        const overlayOpacity = shouldReduceMotion ? 0.4 : useTransform(scrollYProgress, [0, 0.35, 0.5, 0.65, 1], [0.7, 0.4, 0.12, 0.4, 0.7]);
-        const detailsY = shouldReduceMotion ? 4 : useTransform(scrollYProgress, [0, 0.35, 0.5, 0.65, 1], [-8, 8, 64, 8, -8]);
-
-        return (
-            <section ref={ref} className="min-h-[60vh] sm:min-h-[75vh] md:min-h-screen relative flex items-center justify-center overflow-hidden bg-fixed px-2 sm:px-4 md:px-8" style={{ touchAction: 'pan-y' }}>
-                {/* background image */}
-                <motion.div
-                    style={{ scale, y, willChange: 'transform, opacity' }}
-                    className="absolute inset-0 flex items-center justify-center pointer-events-none"
-                    transition={{ duration: 1.1, ease: 'easeInOut' }}
-                >
-                    {/* reduced border-radius & blur on small devices for performance */}
-                    <div className="w-full h-full bg-cover bg-center sm:rounded-[2rem] rounded-none" style={{ backgroundImage: `url(${product.Image || '/public/og-image.png'})` }} />
-                    <div style={{ opacity: overlayOpacity, transition: 'opacity 1.1s cubic-bezier(0.77,0,0.18,1)', willChange: 'opacity' }} className="absolute inset-0 bg-gradient-to-br from-black/10 via-black/20 to-black/30 sm:rounded-[2rem] rounded-none" />
-                </motion.div>
-
-                {/* floating product index (sticky) */}
-                <div className="absolute top-6 right-6 z-30 rounded-[2.5rem] hidden md:block">
-                    <div className="inline-flex items-center gap-3 px-3 py-2 rounded-full bg-white/5 border border-white/10 shadow-md backdrop-blur-md text-sm text-white/90">
-                        <div className="font-semibold">{index + 1}</div>
-                        <div className="text-xs text-white/60">/</div>
-                        <div className="text-xs text-white/60">{total}</div>
-                    </div>
-                </div>
-
-                {/* content */}
-                <motion.div style={{ y: detailsY, willChange: 'transform' }} className="relative z-20 max-w-6xl px-2 sm:px-4 md:px-8 rounded-[2.5rem] text-center py-8 sm:py-14 md:py-20" transition={{ duration: 1.1, ease: 'easeInOut' }}>
-                    <div className="inline-block bg-gradient-to-tr from-black/30 to-black/25 backdrop-blur-md rounded-[2.5rem] px-2 sm:px-6 md:px-12 py-6 sm:py-10 md:py-12 shadow-2xl border border-white/10 max-w-full w-full md:w-auto overflow-hidden">
-                        {/* two-column layout: left image, right details (responsive) */}
-                        <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-10 items-center">
-                            {/* left: image */}
-                            <div className="col-span-12 md:col-span-5 flex items-center justify-center">
-                                {product.Image ? (
-                                    <img
-                                        src={product.Image}
-                                        alt={product.Name || 'product image'}
-                                        className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl h-auto object-contain rounded-[1.25rem] shadow-inner"
-                                        loading="lazy"
-                                        decoding="async"
-                                        style={{ willChange: 'transform' }}
-                                    />
-                                ) : (
-                                    <div className="w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl h-40 bg-white/5 rounded-[2rem] flex items-center justify-center text-xs text-white/60">No image</div>
-                                )}
-                            </div>
-
-                            {/* right: product info labels */}
-                            <div className="col-span-12 md:col-span-7 text-left px-2 sm:px-6 md:px-10 lg:px-14 md:border-l-2 md:border-white/30 md:pl-12 lg:pl-16 xl:pl-20">
-                                <h2 className="text-lg sm:text-xl md:text-3xl lg:text-4xl font-extrabold text-white tracking-tight drop-shadow-lg" style={{ fontSize: 'clamp(1rem, 2.2vw, 2rem)' }}>{product.Name || 'Product'}</h2>
-                                <div className="flex gap-2 sm:gap-3 items-start py-2 sm:py-3">
-                                    <div className="font-semibold w-32 sm:w-44 text-white">Application:</div>
-                                    <div className="flex-1 text-xs sm:text-base md:text-lg text-blue-100/85 leading-relaxed">{product.Application || '—'}</div>
-                                </div>
-                                <div className="mt-4 grid grid-cols-1 sm:grid-cols-2  gap-3 sm:gap-6 text-xs sm:text-sm md:text-sm lg:text-base text-white/90">
-                                    {/* Use wrapping values (no truncate) and better contrast for readability */}
-                                    <div className="flex gap-2 sm:gap-3 items-start py-2 sm:py-3">
-                                        <div className="font-semibold w-32 sm:w-44 text-white">Series:</div>
-                                        <div className="break-words text-white/95">{product.Series || '—'}</div>
-                                    </div>
-
-                                    <div className="flex gap-2 sm:gap-3 items-start py-2 sm:py-3">
-                                        <div className="font-semibold w-32 sm:w-44 text-white">Standard:</div>
-                                        <div className="break-words text-white/95">{product.Standard || '—'}</div>
-                                    </div>
-
-                                    <div className="flex gap-2 sm:gap-3 items-start py-2 sm:py-3">
-                                        <div className="font-semibold w-32 sm:w-44 text-white">Mounting:</div>
-                                        <div className="break-words text-white/95">{product.Mounting || '—'}</div>
-                                    </div>
-
-                                    <div className="flex gap-2 sm:gap-3 items-start py-2 sm:py-3">
-                                        <div className="font-semibold w-32 sm:w-44 text-white">Sizes:</div>
-                                        <div className="break-words text-white/95">{product.Sizes || '—'}</div>
-                                    </div>
-
-                                    <div className="flex gap-2 sm:gap-3 items-start py-2 sm:py-3">
-                                        <div className="font-semibold w-32 sm:w-44 text-white">Sealing:</div>
-                                        <div className="break-words text-white/95">{product.Sealing || '—'}</div>
-                                    </div>
-
-                                    <div className="flex gap-2 sm:gap-3 items-start py-2 sm:py-3">
-                                        <div className="font-semibold w-32 sm:w-44 text-white">Water Head:</div>
-                                        <div className="break-words text-white/95">{product.Water || product.Water_Head || '—'}</div>
-                                    </div>
-
-                                    <div className="flex gap-2 sm:gap-3 items-start py-2 sm:py-3">
-                                        <div className="font-semibold w-32 sm:w-44 text-white">Leakage Parameter:</div>
-                                        <div className="break-words text-white/95">{product.Leakage_Parameter || product.Leakage || '—'}</div>
-                                    </div>
-
-                                    <div className="flex gap-2 sm:gap-3 items-start py-2 sm:py-3">
-                                        <div className="font-semibold w-32 sm:w-44 text-white">Spacing between Bars:</div>
-                                        <div className="break-words text-white/95">{product.Spacing_Between_Bars || '—'}</div>
-                                    </div>
-
-                                    <div className="flex gap-2 sm:gap-3 items-start py-2 sm:py-3">
-                                        <div className="font-semibold w-32 sm:w-44 text-white">Single Piece Width:</div>
-                                        <div className="break-words text-white/95">{product.Single_Piece_Width || '—'}</div>
-                                    </div>
-
-                                    <div className="flex gap-2 sm:gap-3 items-start py-2 sm:py-3">
-                                        <div className="font-semibold w-32 sm:w-44 text-white">Single Piece Height:</div>
-                                        <div className="break-words text-white/95">{product.Single_Piece_Height || '—'}</div>
-                                    </div>
-
-                                    <div className="flex gap-2 sm:gap-3 items-start py-2 sm:py-3">
-                                        <div className="font-semibold w-32 sm:w-44 text-white">Materials:</div>
-                                        <div className="break-words text-white/95">{product.Materials_of_construction || product.Materials || '—'}</div>
-                                    </div>
-                                </div>
-
-                                <div className="mt-6 sm:mt-8 flex flex-wrap items-center gap-2 sm:gap-4">
-                                    <button onClick={() => redirectTo(`/products/${product._id}`)} className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm md:text-base">View</button>
-                                    <a href={product.Image || '#'} className="px-3 sm:px-4 py-2 border border-white/20 rounded-lg text-white/90 text-xs sm:text-sm md:text-base">Image</a>
-                                </div>
-                            </div>
-                        </div>
-                        {/* badges removed — details are shown on the right-hand column */}
-                    </div>
-                    {/* keep bottom area clean - optional extra metadata could be added here */}
-                    <div className="mt-4 sm:mt-6 text-xs text-white/50 opacity-80"></div>
-                </motion.div>
-
-                {/* small product card on the side for context (only visible on larger screens) */}
-                <div className="absolute bottom-6 left-6 hidden lg:block z-30">
-                    <div className="w-72 bg-white/5 p-5 rounded-xl border border-white/10 sm:backdrop-blur-md">
-                        <img src={product.Image || '/public/og-image.png'} alt={product.Name || 'product'} className="w-full h-44 object-contain rounded-lg" />
-                        <div className="mt-3 text-base font-semibold text-white">{product.Name}</div>
-                        <div className="text-sm text-white/60">{product.Series}</div>
-                    </div>
-                </div>
-            </section>
-        );
+    // Scroll pills container left/right
+    const scrollFilter = (direction) => {
+        if (filterScrollRef.current) {
+            const scrollAmount = direction === 'left' ? -250 : 250;
+            filterScrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
     };
 
-    /**
-     * Top hero that shrinks on scroll — used for the page title/intro
-     */
-    const HeroSection = ({ title, subtitle }) => {
-        const ref = React.useRef(null);
-        const shouldReduceMotion = useReducedMotion();
-        const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-
-        // transform values — fallback to static values when motion is reduced
-        const scale = shouldReduceMotion ? 1 : useTransform(scrollYProgress, [0, 0.25, 0.6], [1.06, 1, 0.92]);
-        const titleY = shouldReduceMotion ? 6 : useTransform(scrollYProgress, [0, 0.25, 0.6], [28, 6, -20]);
-        const subtitleY = shouldReduceMotion ? 0 : useTransform(scrollYProgress, [0, 0.4], [22, -8]);
-        const bgOpacity = shouldReduceMotion ? 0.5 : useTransform(scrollYProgress, [0, 0.6], [0.28, 0.8]);
-
-        return (
-            <section ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-                {/* blobs and decorative background removed for flat effect */}
-                <div className="relative w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12 text-center">
-                    <motion.h1 style={{ y: titleY, fontSize: 'clamp(2.75rem, 9vw, 7.5rem)', willChange: 'transform' }} className="font-extrabold text-white tracking-tight leading-tight">
-                        {title}
-                    </motion.h1>
-                    <motion.p style={{ y: subtitleY, fontSize: 'clamp(.95rem, 2.6vw, 1.6rem)', willChange: 'transform, opacity' }} className="mt-10 text-base sm:text-base md:text-lg lg:text-xl text-blue-100/90 max-w-4xl mx-auto font-medium leading-relaxed">
-                        {subtitle}
-                    </motion.p>
-                </div>
-            </section>
-        );
-    };
-
-
-    // If we have nothing in memory and still loading, show loading state.
-    if (!products.length) {
-        return <div className="text-center py-4">{isLoading ? 'Loading...' : 'No data available'}</div>;
-    }
-
+    // Paginated items
+    const totalPages = Math.ceil(filteredProducts.length / pageSize) || 1;
+    const paginatedProducts = useMemo(() => {
+        const start = (currentPage - 1) * pageSize;
+        return filteredProducts.slice(start, start + pageSize);
+    }, [filteredProducts, currentPage]);
 
     return (
-        <motion.div
-            className="min-h-screen relative bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-        >
+        <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
             <SEO 
-                title="Sluice Gates & Products | SK Enterprise"
-                description="Explore our wide range of high-quality sluice gates and industrial valves manufactured by SK Enterprise."
+                title="Sluice Gates & Valves Catalog | SK Enterprise"
+                description="Explore SK Enterprise's production-grade catalog of Cast Iron Sluice Gates, MS/SS Penstocks, Flap Gates, and Industrial Valves manufactured to AWWA, IS, and BS standards."
                 name="SK Enterprise"
                 type="website"
                 url="/products"
             />
-            {/* Navigation: Home (left) and Back (right) - responsive */}
-            <div className="absolute top-24 left-4 right-4 z-10 sm:z-50 flex items-center justify-between sm:top-24 sm:left-8 sm:right-8">
-                    <motion.button
-                        onClick={() => redirectTo('/')}
-                        aria-label="Home"
-                        className="flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 bg-green-600 border-white/20 backdrop-blur-md border-2 text-white rounded-full sm:rounded-lg hover:bg-transparent transition-all duration-300 shadow-sm sm:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.2 }}
-                    >
-                        <Home className="w-5 h-5" />
-                        <span className="hidden sm:inline">Home</span>
-                    </motion.button>
 
-                    <motion.button
-                        onClick={goBack}
-                        aria-label="Back"
-                        className="flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 bg-indigo-600 border-white/20 backdrop-blur-md border-2 text-white rounded-full sm:rounded-lg hover:bg-transparent transition-all duration-300 shadow-sm sm:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.3 }}
-                    >
-                        <ArrowLeft className="w-5 h-5" />
-                        <span className="hidden sm:inline">Back</span>
-                    </motion.button>
-            </div>
+            {/* Hero Header & Breadcrumb */}
+            <header className="relative bg-gradient-to-b from-slate-900 to-slate-950 border-b border-slate-800/80 py-8 sm:py-12 px-4 sm:px-8">
+                <div className="max-w-7xl mx-auto space-y-6">
+                    {/* Breadcrumbs */}
+                    <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-medium text-slate-400">
+                        <Link to="/" className="hover:text-blue-400 flex items-center gap-1 transition-colors">
+                            <Home className="w-3.5 h-3.5" />
+                            <span>Home</span>
+                        </Link>
+                        <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+                        <span className="text-slate-200 font-semibold">Products Catalog</span>
+                    </nav>
 
-            {/* Animated hero section (large -> shrink on scroll) */}
-            <HeroSection title="Sluice Gates" subtitle="S.K. Enterprise specializes in manufacturing high-quality sluice gates and industrial valves for a wide range of water-control applications" />
+                    <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+                        <div className="max-w-3xl space-y-3">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold uppercase tracking-wider">
+                                <Award className="w-3.5 h-3.5" />
+                                <span>AWWA & IS Certified Manufacturer</span>
+                            </div>
+                            <h1 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight font-headline">
+                                Industrial Sluice Gates & Valves Catalog
+                            </h1>
+                            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                                Precision-engineered water control equipment designed for water treatment plants, irrigation works, sewage facilities, and flood control infrastructures.
+                            </p>
+                        </div>
 
-            {/* decorative background blobs were moved into the hero component; nothing to close here */}
+                        <button 
+                            onClick={() => {
+                                setQuoteItem('');
+                                setIsQuoteOpen(true);
+                            }}
+                            className="shrink-0 inline-flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-sm font-semibold rounded-xl shadow-lg shadow-blue-600/25 transition-all self-start lg:self-auto"
+                        >
+                            <FileText className="w-4 h-4" />
+                            <span>Request Custom Quote</span>
+                        </button>
+                    </div>
 
-            {/* Animated product hero list: each product is its own large hero section */}
-            {/* overlap the first product hero slightly to hide any seam with the hero card */}
-            <div className="-mt-12 md:-mt-16 lg:-mt-24">
-                {products.map((product, idx) => (
-                    <ProductHero key={product._id || idx} product={product} index={idx} total={products.length} />
-                ))}
-            </div>
-        </motion.div>
+                    {/* Trust Badges */}
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-slate-800/80">
+                        <div className="flex items-center gap-2.5">
+                            <ShieldCheck className="w-4 h-4 text-blue-400 shrink-0" />
+                            <span className="text-xs font-medium text-slate-300">ISO 9001:2015 Quality</span>
+                        </div>
+                        <div className="flex items-center gap-2.5">
+                            <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
+                            <span className="text-xs font-medium text-slate-300">100% Hydrostatic Tested</span>
+                        </div>
+                        <div className="flex items-center gap-2.5">
+                            <Wrench className="w-4 h-4 text-indigo-400 shrink-0" />
+                            <span className="text-xs font-medium text-slate-300">Custom Dimensions</span>
+                        </div>
+                        <div className="flex items-center gap-2.5">
+                            <Award className="w-4 h-4 text-amber-400 shrink-0" />
+                            <span className="text-xs font-medium text-slate-300">IS 3042 / BS 7775 Standard</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            {/* Production-Grade Responsive Sticky Toolbar */}
+            <section className="bg-slate-950/95 border-b border-slate-800/90 px-4 sm:px-8 py-3.5 sticky top-16 sm:top-20 z-30 backdrop-blur-2xl shadow-xl transition-all">
+                <div className="max-w-7xl mx-auto space-y-3">
+                    {/* Row 1: Search Bar & View Controls */}
+                    <div className="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
+                        {/* Search Input Box */}
+                        <div className="relative w-full sm:w-80 md:w-96 shrink-0">
+                            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                <Search className="w-4 h-4 text-blue-400" />
+                            </div>
+                            <input
+                                ref={searchInputRef}
+                                type="text"
+                                placeholder="Search products, series, standards..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="w-full pl-10 pr-14 py-2.5 bg-slate-900 border border-slate-800 hover:border-slate-700 focus:border-blue-500 rounded-xl text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/40 transition-all shadow-inner"
+                            />
+                            <div className="absolute inset-y-0 right-0 pr-3 flex items-center gap-1.5">
+                                {searchQuery ? (
+                                    <button 
+                                        onClick={() => setSearchQuery('')}
+                                        className="p-1 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                                        title="Clear search"
+                                    >
+                                        <X className="w-4 h-4" />
+                                    </button>
+                                ) : (
+                                    <kbd className="hidden sm:inline-flex items-center justify-center px-1.5 py-0.5 text-[10px] font-mono font-semibold text-slate-400 bg-slate-950 border border-slate-800 rounded">
+                                        /
+                                    </kbd>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* View Switcher & Counter */}
+                        <div className="flex items-center justify-between sm:justify-end gap-3">
+                            <div className="text-xs text-slate-400 font-medium">
+                                Showing <strong className="text-white font-mono">{filteredProducts.length}</strong> of <strong className="text-slate-300 font-mono">{products.length}</strong> Products
+                            </div>
+                            <div className="flex items-center gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800">
+                                <button
+                                    onClick={() => setViewMode('grid')}
+                                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                                        viewMode === 'grid' ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/30' : 'text-slate-400 hover:text-slate-200'
+                                    }`}
+                                    title="Grid View"
+                                >
+                                    <Grid className="w-3.5 h-3.5" />
+                                    <span>Grid</span>
+                                </button>
+                                <button
+                                    onClick={() => setViewMode('table')}
+                                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                                        viewMode === 'table' ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/30' : 'text-slate-400 hover:text-slate-200'
+                                    }`}
+                                    title="Table View"
+                                >
+                                    <TableIcon className="w-3.5 h-3.5" />
+                                    <span>Table</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Row 2: Series Filter Pills */}
+                    <div className="flex items-center gap-2 pt-1 border-t border-slate-800/60">
+                        <div className="flex items-center gap-1.5 text-xs font-bold text-slate-400 uppercase tracking-wider shrink-0 mr-1">
+                            <SlidersHorizontal className="w-3.5 h-3.5 text-blue-400" />
+                            <span className="hidden xs:inline">Series:</span>
+                        </div>
+
+                        {/* Left Scroll Button */}
+                        <button
+                            onClick={() => scrollFilter('left')}
+                            className="hidden md:flex items-center justify-center w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 shrink-0 transition-colors"
+                            aria-label="Scroll left"
+                        >
+                            <ChevronLeft className="w-4 h-4" />
+                        </button>
+
+                        {/* Scrollable Pills Row */}
+                        <div 
+                            ref={filterScrollRef}
+                            className="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth py-1 w-full"
+                        >
+                            {seriesList.map(series => (
+                                <button
+                                    key={series}
+                                    onClick={() => setSelectedSeries(series)}
+                                    title={series}
+                                    className={`px-3.5 py-1.5 rounded-xl text-xs font-medium transition-all shrink-0 max-w-[200px] truncate ${
+                                        selectedSeries === series
+                                            ? 'bg-blue-600 text-white shadow-md shadow-blue-600/25 font-semibold border border-blue-500'
+                                            : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 hover:border-slate-700'
+                                    }`}
+                                >
+                                    {series}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Right Scroll Button */}
+                        <button
+                            onClick={() => scrollFilter('right')}
+                            className="hidden md:flex items-center justify-center w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 shrink-0 transition-colors"
+                            aria-label="Scroll right"
+                        >
+                            <ChevronRight className="w-4 h-4" />
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            {/* Main Catalog Content */}
+            <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-8 py-8 sm:py-12">
+                {isLoading ? (
+                    /* Loading Skeleton */
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {[...Array(6)].map((_, i) => (
+                            <div key={i} className="bg-slate-900 border border-slate-800 rounded-2xl p-5 space-y-4 animate-pulse">
+                                <div className="w-full h-52 bg-slate-800 rounded-xl" />
+                                <div className="h-6 bg-slate-800 rounded w-3/4" />
+                                <div className="h-4 bg-slate-800 rounded w-1/2" />
+                                <div className="pt-4 border-t border-slate-800 flex justify-between">
+                                    <div className="h-9 bg-slate-800 rounded-xl w-24" />
+                                    <div className="h-9 bg-slate-800 rounded-xl w-28" />
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                ) : filteredProducts.length === 0 ? (
+                    /* Empty State */
+                    <div className="text-center py-20 bg-slate-900/40 border border-slate-800 rounded-2xl max-w-2xl mx-auto p-8 space-y-4">
+                        <div className="w-16 h-16 bg-slate-800/80 rounded-full flex items-center justify-center mx-auto text-slate-500">
+                            <Search className="w-8 h-8" />
+                        </div>
+                        <h3 className="text-xl font-bold text-white">No products found</h3>
+                        <p className="text-slate-400 text-sm max-w-md mx-auto">
+                            We couldn't find any sluice gates or valves matching "{searchQuery}" under the selected category.
+                        </p>
+                        <button
+                            onClick={() => {
+                                setSearchQuery('');
+                                setSelectedSeries('All');
+                            }}
+                            className="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white text-sm font-medium rounded-xl border border-slate-700 transition-colors inline-flex items-center gap-2"
+                        >
+                            <RefreshCw className="w-4 h-4" />
+                            <span>Reset Filters</span>
+                        </button>
+                    </div>
+                ) : viewMode === 'grid' ? (
+                    /* Grid View */
+                    <div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {paginatedProducts.map((product) => (
+                                <motion.div
+                                    key={product._id}
+                                    initial={{ opacity: 0, y: 15 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.3 }}
+                                    className="bg-slate-900 border border-slate-800/80 hover:border-blue-500/40 rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl hover:shadow-blue-500/5 transition-all flex flex-col justify-between group"
+                                >
+                                    <div>
+                                        {/* Image Box */}
+                                        <div className="relative w-full h-56 bg-slate-950 p-6 flex items-center justify-center border-b border-slate-800/80 overflow-hidden">
+                                            <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start">
+                                                {product.Series && (
+                                                    <span className="px-2.5 py-1 bg-slate-900/90 backdrop-blur-md border border-slate-700/80 text-blue-400 font-semibold text-[11px] rounded-lg shadow-sm">
+                                                        {product.Series}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            {product.Standard && (
+                                                <div className="absolute top-3 right-3 z-10">
+                                                    <span className="px-2 py-1 bg-slate-900/90 backdrop-blur-md border border-slate-700/80 text-slate-300 font-mono text-[11px] rounded-lg shadow-sm">
+                                                        {product.Standard}
+                                                    </span>
+                                                </div>
+                                            )}
+                                            {product.Image ? (
+                                                <img
+                                                    src={product.Image}
+                                                    alt={product.Name}
+                                                    className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-md"
+                                                    loading="lazy"
+                                                />
+                                            ) : (
+                                                <div className="text-slate-600 text-xs font-mono">No Image Available</div>
+                                            )}
+                                        </div>
+
+                                        {/* Card Body */}
+                                        <div className="p-5 space-y-3">
+                                            <div>
+                                                <h3 className="font-bold text-lg text-white group-hover:text-blue-400 transition-colors line-clamp-1">
+                                                    <Link to={`/products/${product._id}`}>{product.Name}</Link>
+                                                </h3>
+                                                <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                                                    {product.Application || 'Designed for reliable industrial water control and sewage isolation.'}
+                                                </p>
+                                            </div>
+
+                                            {/* Quick Specs Grid */}
+                                            <div className="grid grid-cols-2 gap-2 pt-2 text-xs bg-slate-950/60 p-3 rounded-xl border border-slate-800/60">
+                                                <div>
+                                                    <span className="text-slate-500 block text-[10px] uppercase font-semibold">Water Head</span>
+                                                    <span className="text-slate-200 font-medium font-mono truncate block">
+                                                        {product.Water || product.Water_Head || 'Standard'}
+                                                    </span>
+                                                </div>
+                                                <div>
+                                                    <span className="text-slate-500 block text-[10px] uppercase font-semibold">Sealing</span>
+                                                    <span className="text-slate-200 font-medium truncate block">
+                                                        {product.Sealing || 'Metallic / EPDM'}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Card Footer Actions */}
+                                    <div className="p-5 pt-0 flex items-center gap-2.5">
+                                        <button
+                                            onClick={() => setSelectedSpecItem(product)}
+                                            className="flex-1 px-3.5 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white font-medium text-xs rounded-xl border border-slate-700/80 transition-all flex items-center justify-center gap-1.5"
+                                        >
+                                            <Eye className="w-3.5 h-3.5 text-blue-400" />
+                                            <span>View Specs</span>
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                setQuoteItem(product.Name);
+                                                setIsQuoteOpen(true);
+                                            }}
+                                            className="flex-1 px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold text-xs rounded-xl shadow-md shadow-blue-600/20 hover:shadow-blue-500/30 transition-all flex items-center justify-center gap-1.5"
+                                        >
+                                            <FileText className="w-3.5 h-3.5" />
+                                            <span>Request Quote</span>
+                                        </button>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+
+                        {/* Grid Pagination */}
+                        {totalPages > 1 && (
+                            <div className="mt-8 flex items-center justify-between p-4 bg-slate-900 border border-slate-800 rounded-xl text-xs text-slate-400">
+                                <div>
+                                    Page <strong className="text-white">{currentPage}</strong> of <strong className="text-white">{totalPages}</strong>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <button
+                                        onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                                        disabled={currentPage === 1}
+                                        className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1"
+                                    >
+                                        <ChevronLeft className="w-4 h-4" />
+                                        <span>Previous</span>
+                                    </button>
+                                    <button
+                                        onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                                        disabled={currentPage === totalPages}
+                                        className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1"
+                                    >
+                                        <span>Next</span>
+                                        <ChevronRight className="w-4 h-4" />
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    /* Table View */
+                    <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left border-collapse">
+                                <thead>
+                                    <tr className="bg-slate-950/80 border-b border-slate-800 text-slate-400 text-xs uppercase font-semibold tracking-wider">
+                                        <th className="p-4 whitespace-nowrap">Image</th>
+                                        <th className="p-4 whitespace-nowrap">Product Name</th>
+                                        <th className="p-4 whitespace-nowrap">Standard</th>
+                                        <th className="p-4 whitespace-nowrap">Sizes</th>
+                                        <th className="p-4 whitespace-nowrap">Water Head</th>
+                                        <th className="p-4 whitespace-nowrap">Sealing</th>
+                                        <th className="p-4 whitespace-nowrap">Materials</th>
+                                        <th className="p-4 whitespace-nowrap">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-slate-800/60 text-sm">
+                                    {paginatedProducts.map(product => (
+                                        <tr key={product._id} className="hover:bg-slate-800/30 transition-colors">
+                                            <td className="p-4 whitespace-nowrap">
+                                                <div className="w-16 h-16 bg-slate-900 rounded-lg p-1 border border-slate-800 flex items-center justify-center shrink-0">
+                                                    <img
+                                                        src={product.Image || '/og-image.png'}
+                                                        alt={product.Name}
+                                                        className="max-w-full max-h-full object-contain rounded"
+                                                        loading="lazy"
+                                                    />
+                                                </div>
+                                            </td>
+                                            <td className="p-4 whitespace-nowrap">
+                                                <div>
+                                                    <div className="font-bold text-white text-sm hover:text-blue-400 transition-colors">
+                                                        <Link to={`/products/${product._id}`}>{product.Name || '—'}</Link>
+                                                    </div>
+                                                    <div className="text-xs text-slate-400 mt-0.5">{product.Series || '—'}</div>
+                                                </div>
+                                            </td>
+                                            <td className="p-4 whitespace-nowrap">
+                                                <span className="text-xs font-mono bg-slate-800 text-slate-300 px-2.5 py-1 rounded-md border border-slate-700">{product.Standard || '—'}</span>
+                                            </td>
+                                            <td className="p-4 whitespace-nowrap text-xs text-slate-300">{product.Sizes || '—'}</td>
+                                            <td className="p-4 whitespace-nowrap text-xs text-slate-300">{product.Water || product.Water_Head || '—'}</td>
+                                            <td className="p-4 whitespace-nowrap text-xs text-slate-300">{product.Sealing || '—'}</td>
+                                            <td className="p-4 whitespace-nowrap text-xs text-slate-400 max-w-xs truncate">{product.Materials_of_construction || product.Materials || '—'}</td>
+                                            <td className="p-4 whitespace-nowrap">
+                                                <div className="flex items-center gap-2">
+                                                    <button 
+                                                        onClick={() => setSelectedSpecItem(product)}
+                                                        className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg transition-colors text-xs flex items-center gap-1.5"
+                                                        title="View Specifications"
+                                                    >
+                                                        <Eye className="w-3.5 h-3.5 text-blue-400" />
+                                                        <span className="hidden xl:inline">Specs</span>
+                                                    </button>
+                                                    <button 
+                                                        onClick={() => {
+                                                            setQuoteItem(product.Name);
+                                                            setIsQuoteOpen(true);
+                                                        }}
+                                                        className="p-2 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 hover:text-blue-300 border border-blue-500/30 rounded-lg transition-colors text-xs flex items-center gap-1.5 font-medium"
+                                                        title="Request Quote"
+                                                    >
+                                                        <FileText className="w-3.5 h-3.5" />
+                                                        <span className="hidden xl:inline">Quote</span>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {/* Pagination Controls */}
+                        <div className="p-4 bg-slate-950/60 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+                            <div>
+                                Page <strong className="text-white">{currentPage}</strong> of <strong className="text-white">{totalPages}</strong>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <button
+                                    onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                                    disabled={currentPage === 1}
+                                    className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1"
+                                >
+                                    <ChevronLeft className="w-4 h-4" />
+                                    <span>Previous</span>
+                                </button>
+                                <button
+                                    onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                                    disabled={currentPage === totalPages}
+                                    className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg border border-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all font-medium flex items-center gap-1"
+                                >
+                                    <span>Next</span>
+                                    <ChevronRight className="w-4 h-4" />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </main>
+
+            {/* Spec Drawer */}
+            <SpecDrawer
+                isOpen={!!selectedSpecItem}
+                onClose={() => setSelectedSpecItem(null)}
+                item={selectedSpecItem}
+                type="product"
+                onRequestQuote={(itemName) => {
+                    setQuoteItem(itemName);
+                    setIsQuoteOpen(true);
+                }}
+            />
+
+            {/* Quote Inquiry Modal */}
+            <QuoteModal
+                isOpen={isQuoteOpen}
+                onClose={() => setIsQuoteOpen(false)}
+                initialItem={quoteItem}
+            />
+        </div>
     );
 };
 
 export default ProductCards;
-

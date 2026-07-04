@@ -1,19 +1,22 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
-const DEFAULT_OG_IMAGE = 'https://www.skenterprize.com/sk-logo.png';
+const BASE_URL = 'https://www.skenterprisesluicegate.com';
+const DEFAULT_OG_IMAGE = `${BASE_URL}/sk-logo.png`;
 
-export default function SEO({ title, description, name, type, image, url }) {
+export default function SEO({ title, description, name, type = 'website', image, url, schema }) {
   const ogImage = image || DEFAULT_OG_IMAGE;
+  const absoluteUrl = url 
+    ? (url.startsWith('http') ? url : `${BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`) 
+    : BASE_URL;
+
   return (
     <Helmet>
       {/* Standard metadata tags */}
       <title>{title}</title>
       <meta name='description' content={description} />
       
-      {/* End standard metadata tags */}
-      
-      {/* Facebook tags */}
+      {/* Facebook / Open Graph tags */}
       <meta property='og:type' content={type} />
       <meta property='og:title' content={title} />
       <meta property='og:description' content={description} />
@@ -21,19 +24,24 @@ export default function SEO({ title, description, name, type, image, url }) {
       <meta property='og:image:width' content='1200' />
       <meta property='og:image:height' content='630' />
       <meta property='og:image:type' content='image/png' />
-      {url && <meta property='og:url' content={url} />}
-      {/* End Facebook tags */}
+      <meta property='og:url' content={absoluteUrl} />
       
       {/* Twitter tags */}
-      <meta name='twitter:creator' content={name} />
+      <meta name='twitter:creator' content={name || 'SK Enterprise'} />
       <meta name='twitter:card' content='summary_large_image' />
       <meta name='twitter:title' content={title} />
       <meta name='twitter:description' content={description} />
       <meta name='twitter:image' content={ogImage} />
-      {/* End Twitter tags */}
       
       {/* Canonical URL setup */}
-      {url && <link rel="canonical" href={url} />}
+      <link rel="canonical" href={absoluteUrl} />
+
+      {/* Dynamic JSON-LD Schema injection */}
+      {schema && (
+        <script type="application/ld+json">
+          {JSON.stringify(schema)}
+        </script>
+      )}
     </Helmet>
   );
 }

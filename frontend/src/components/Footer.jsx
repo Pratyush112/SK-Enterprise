@@ -7,12 +7,15 @@ const Footer = () => {
             <div className="max-w-screen-2xl mx-auto px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
                     <div className="space-y-6">
-                        <img src="/logo.jpg" alt="logo" className="w-24 h-24 rounded-full" />
-                        <h4 className="font-headline text-3xl font-black uppercase tracking-tighter text-white">
+                        <img src="/logo.jpg" alt="SK Enterprise Logo" className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover shadow-md bg-white p-1" />
+                        <h4 className="font-headline text-2xl md:text-3xl font-black uppercase tracking-tighter text-white">
                             SK Enterprise
                         </h4>
-                        <p className="text-surface-variant/80 dark:text-slate-400 font-medium leading-relaxed max-w-sm transition-colors duration-300">
-                            Engineering the future of industrial infrastructure with precision hardware and unyielding reliability.
+                        <div className="inline-block px-3 py-1 rounded bg-blue-600/20 text-blue-400 text-xs font-bold uppercase tracking-wider border border-blue-500/30">
+                            ISO 9001:2015 Certified Works
+                        </div>
+                        <p className="text-surface-variant/80 dark:text-slate-400 font-medium leading-relaxed max-w-sm transition-colors duration-300 text-sm">
+                            Premier manufacturer of mission-critical Sluice Gates, Penstock Gates, and high-tensile industrial fasteners for water boards and heavy infrastructure.
                         </p>
                     </div>
 
@@ -20,7 +23,9 @@ const Footer = () => {
                         <h5 className="font-headline font-bold text-lg mb-6 text-white tracking-widest uppercase">Products</h5>
                         <ul className="space-y-4">
                             <li><Link to="/products" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">Sluice Gates</Link></li>
+                            <li><Link to="/products" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">Penstock Gates</Link></li>
                             <li><Link to="/parts" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">Industrial Fasteners</Link></li>
+                            <li><Link to="/parts" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">Custom Stud Bolts</Link></li>
                         </ul>
                     </div>
 
@@ -28,9 +33,9 @@ const Footer = () => {
                         <h5 className="font-headline font-bold text-lg mb-6 text-white tracking-widest uppercase">Company</h5>
                         <ul className="space-y-4">
                             <li><Link to="/aboutus" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">About Us</Link></li>
-                            <li><Link to="/quality" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">Quality Standards</Link></li>
-                            <li><Link to="/contact" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">Contact</Link></li>
-                            <li><Link to="/WhyUs" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">Why SK Enterprise</Link></li>
+                            <li><Link to="/quality" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">Quality Assurance</Link></li>
+                            <li><Link to="/contactus" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">Technical Helpdesk</Link></li>
+                            <li><Link to="/WhyUs" className="text-surface-variant/80 dark:text-slate-400 hover:text-primary-fixed dark:hover:text-primary transition-colors duration-300 font-medium tracking-wide">Why Choose Us</Link></li>
                         </ul>
                     </div>
 

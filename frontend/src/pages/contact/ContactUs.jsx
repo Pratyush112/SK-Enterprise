@@ -16,29 +16,33 @@ const ContactUs = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        number: '',
-        message: ''
+        phone: '',
+        message: '',
+        botcheck: '' // Honeypot field
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitStatus, setSubmitStatus] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsSubmitting(true);
+        setErrorMessage('');
+        setSubmitStatus(null);
 
-        // Add your form submission logic here
         try {
-            const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL}/contact`, {
+            const response = await fetch(`${import.meta.env.VITE_BACKEND_BASE_URL || "https://sk-enterprise.onrender.com"}/contact`, {
                 method: 'POST',
                 headers: {
-                    'content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
             });
 
+            const data = await response.json();
 
             if (!response.ok) {
-                throw new Error('Something went wrong while submitting the form');
+                throw new Error(data.error || 'Something went wrong while submitting the form');
             }
 
             setSubmitStatus('success');
@@ -46,99 +50,70 @@ const ContactUs = () => {
                 name: '',
                 email: '',
                 phone: '',
-                message: ''
+                message: '',
+                botcheck: ''
             });
-        }
-
-        catch (error) {
+        } catch (error) {
             console.error('Error submitting form:', error);
             setSubmitStatus('error');
-        }
-
-
-        finally {
-            // Reset form state after submission    
-            setFormData({
-                name: '',
-                email: '',
-                phone: '',
-                message: ''
-            });
-            setTimeout(() => setSubmitStatus(null), 3000);
+            setErrorMessage(error.message || 'Failed to send message. Please try again.');
+        } finally {
             setIsSubmitting(false);
         }
-
     };
 
     const contactInfo = [
         {
             icon: <MapPin className="w-6 h-6" />,
-            title: "Address",
+            title: "Works Address",
             content: "Shanpur (South) Dasnagar, Howrah - 711105, West Bengal, India",
             link: "https://www.google.com/maps/place/Shanpur+South+Dasnagar,+Howrah,+West+Bengal,+India"
         },
         {
             icon: <Phone className="w-6 h-6" />,
-            title: "Phone",
+            title: "Contact Helpdesk",
             content: ["+91 82966 31533", "+91 97480 28331"],
             link: "tel:+918296631533"
         },
         {
             icon: <Mail className="w-6 h-6" />,
-            title: "Email",
+            title: "Email For Inquiries",
             content: ["skenterprise2989@gmail.com", "saha.biswa2013@gmail.com"],
             link: "mailto:skenterprise2989@gmail.com"
         },
         {
             icon: <Clock className="w-6 h-6" />,
             title: "Business Hours",
-            content: ["Monday - Saturday: 9:00 AM - 6:00 PM", "lunch from 2:00 PM to 3:00 PM"],
+            content: ["Monday - Saturday: 9:00 AM - 6:00 PM", "Emergency Spares Dispatch: 24/7 Support"],
         }
     ];
 
     return (
         <div className="min-h-screen transition-colors duration-300">
             <SEO 
-                title="Contact Us | SK Enterprise"
-                description="Get in touch with SK Enterprise for inquiries about our industrial valves, sluice gates, and services."
+                title="Contact Us | SK Enterprise - Request Technical Quote"
+                description="Get in touch with SK Enterprise for technical inquiries, BOQ tender support, and custom quotations for industrial sluice gates and fasteners."
                 name="SK Enterprise"
                 type="website"
                 url="/contactus"
             />
-            {/* Navigation: Home (left) and Back (right) - responsive */}
-            {/* <div className="absolute top-24 left-4 right-4 z-10 sm:z-50 flex items-center justify-between sm:top-24 sm:left-8 sm:right-8" aria-hidden="false">
-                <button
-                    onClick={() => redirectTo('/')}
-                    aria-label="Home"
-                    className="flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 text-white border-2 border-white/20 backdrop-blur-md rounded-full sm:rounded-lg hover:bg-transparent transition-all duration-300 shadow-sm sm:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-                >
-                    <Home className="w-5 h-5" />
-                    <span className="hidden sm:inline">Home</span>
-                </button>
-
-                <button
-                    onClick={goBack}
-                    aria-label="Back"
-                    className="flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2 text-white border-2 border-white/20 backdrop-blur-md rounded-full sm:rounded-lg hover:bg-transparent transition-all duration-300 shadow-sm sm:shadow-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                    <ArrowLeft className="w-5 h-5" />
-                    <span className="hidden sm:inline">Back</span>
-                </button>
-            </div> */}
 
             {/* Hero Section */}
-            <div className="relative py-32 mt-16 pb-12 overflow-hidden">
+            <div className="relative py-12 mt-12 pb-12 overflow-hidden">
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.6 }}
                     className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
                 >
+                    {/* <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 dark:bg-primary/20 text-primary dark:text-blue-400 font-bold text-xs uppercase tracking-wider mb-4">
+                        Direct Technical Support & Sales
+                    </div> */}
                     <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 dark:text-white mb-6 transition-colors duration-300 tracking-tight">
-                        Contact Us
+                        Contact Us 
                     </h1>
                     <p className="text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto transition-colors duration-300 leading-relaxed font-medium">
-                        Get in touch with us for any inquiries about our products and services
+                        Request a customized quotation, submit tender BOQs, or speak directly with our industrial valve specialists.
                     </p>
                 </motion.div>
             </div>
@@ -154,55 +129,76 @@ const ContactUs = () => {
                         viewport={{ once: true }}
                         className="bg-white dark:bg-white/5 backdrop-blur-md rounded-2xl p-8 border border-outline/10 dark:border-white/10 shadow-sm transition-colors duration-300"
                     >
-                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 transition-colors duration-300">Send us a Message</h2>
+                        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2 transition-colors duration-300">Send an Inquiry</h2>
+                        <p className="text-sm text-slate-500 dark:text-slate-400 mb-6">Fill out the form below and our Team will respond within 24 hours.</p>
+                        
                         <form onSubmit={handleSubmit} className="space-y-6">
-                            <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 transition-colors duration-300">
-                                    Name
-                                </label>
+                            {/* Honeypot field (hidden from real users) */}
+                            <div className="hidden" aria-hidden="true">
+                                <label htmlFor="botcheck">Do not fill this out if you are human</label>
                                 <input
                                     type="text"
+                                    id="botcheck"
+                                    name="botcheck"
+                                    value={formData.botcheck}
+                                    onChange={(e) => setFormData({ ...formData, botcheck: e.target.value })}
+                                    tabIndex={-1}
+                                    autoComplete="off"
+                                />
+                            </div>
+
+                            <div>
+                                <label htmlFor="name" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 transition-colors duration-300">
+                                    Full Name with Company <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                    id="name"
+                                    type="text"
                                     required
-                                    className="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-white/5 border border-outline/20 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-300"
-                                    placeholder="Your name"
+                                    className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
+                                    placeholder="Your Name (Company Name)"
                                     value={formData.name}
                                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 transition-colors duration-300">
-                                    Email
+                                <label htmlFor="email" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 transition-colors duration-300">
+                                    Email Address <span className="text-red-500">*</span>
                                 </label>
                                 <input
+                                    id="email"
                                     type="email"
                                     required
-                                    className="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-white/5 border border-outline/20 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-300"
-                                    placeholder="your@email.com"
+                                    className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
+                                    placeholder="name@company.com"
                                     value={formData.email}
                                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 transition-colors duration-300">
-                                    Phone Number
+                                <label htmlFor="phone" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 transition-colors duration-300">
+                                    Phone / WhatsApp Number <span className="text-red-500">*</span>
                                 </label>
                                 <input
+                                    id="phone"
                                     type="tel"
-                                    className="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-white/5 border border-outline/20 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-300"
-                                    placeholder="Your phone number"
-                                    value={formData.number}
-                                    onChange={(e) => setFormData({ ...formData, number: e.target.value })}
+                                    required
+                                    className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
+                                    placeholder="+91 1234567890"
+                                    value={formData.phone}
+                                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 transition-colors duration-300">
-                                    Message
+                                <label htmlFor="message" className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2 transition-colors duration-300">
+                                    Technical Specifications & Message <span className="text-red-500">*</span>
                                 </label>
                                 <textarea
+                                    id="message"
                                     required
                                     rows={4}
-                                    className="w-full px-4 py-2 rounded-lg bg-gray-50 dark:bg-white/5 border border-outline/20 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-300"
-                                    placeholder="Your message"
+                                    className="w-full px-4 py-3 rounded-xl bg-gray-50 dark:bg-white/5 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-200"
+                                    placeholder="Please specify valve type, size, seating water head, alloy metallurgy, or attach tender BOQ details..."
                                     value={formData.message}
                                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                                 />
@@ -210,19 +206,19 @@ const ContactUs = () => {
                             <button
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="w-full px-6 py-3 bg-primary hover:bg-primary-fixed dark:hover:bg-primary/90 text-white font-bold rounded-lg transition-colors duration-300 disabled:opacity-50 shadow-md"
+                                className="w-full px-6 py-4 bg-primary hover:bg-primary-container text-white font-bold rounded-xl transition-all duration-200 disabled:opacity-50 shadow-md hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                             >
-                                {isSubmitting ? 'Sending...' : 'Send Message'}
+                                {isSubmitting ? 'Sending...' : 'Submit Technical Inquiry'}
                             </button>
                             {submitStatus === 'success' && (
-                                <p className="text-green-600 dark:text-green-400 font-medium text-sm mt-2 transition-colors duration-300">
-                                    Message sent successfully!
-                                </p>
+                                <div className="p-4 rounded-xl bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-300 font-medium text-sm transition-all duration-300">
+                                    Inquiry sent successfully! Our Team will contact you shortly.
+                                </div>
                             )}
                             {submitStatus === 'error' && (
-                                <p className="text-red-500 font-medium text-sm mt-2 transition-colors duration-300">
-                                    Error sending message. Please try again.
-                                </p>
+                                <div className="p-4 rounded-xl bg-red-50 dark:bg-red-900/30 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 font-medium text-sm transition-all duration-300">
+                                     {errorMessage || 'Error sending inquiry. Please call us directly.'}
+                                </div>
                             )}
                         </form>
                     </motion.div>

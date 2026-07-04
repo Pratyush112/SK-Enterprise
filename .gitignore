@@ -2,6 +2,7 @@
 /.pnp
 .pnp.js
 .agents/
+.skills-lock.json
 # testing
 /coverage
 

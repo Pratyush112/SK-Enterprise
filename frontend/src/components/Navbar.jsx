@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Menu, X, Sun, Moon, ArrowRight, ShieldCheck } from 'lucide-react';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { pathname } = useLocation();
 
-    // Theme state
+    // Theme state initialized from system preference or localStorage
     const [isDark, setIsDark] = useState(() => {
         if (typeof window !== 'undefined') {
             return localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
         }
-        return false;
+        return true;
     });
 
     useEffect(() => {
@@ -20,7 +21,24 @@ const Navbar = () => {
         } else {
             document.documentElement.classList.remove('dark');
         }
-    }, []);
+    }, [isDark]);
+
+    // Close mobile menu when route changes
+    useEffect(() => {
+        setIsMenuOpen(false);
+    }, [pathname]);
+
+    // Prevent body scroll when mobile menu is open
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isMenuOpen]);
 
     const toggleTheme = () => {
         const nextTheme = !isDark;
@@ -34,114 +52,148 @@ const Navbar = () => {
         }
     };
 
-    const navLinks = ['Home', 'About Us', 'Sluice Gates', 'Nuts & Bolts', 'Contact Us'];
+    const navLinks = [
+        { label: 'Home', path: '/' },
+        { label: 'About Us', path: '/aboutus' },
+        { label: 'Products', path: '/products' },
+        { label: 'Parts', path: '/parts' },
+        { label: 'Contact Us', path: '/contactus' }
+    ];
 
-    const isActive = (path) => {
-        const target = path === 'Home' ? '/' : `/${path.toLowerCase().replace(/\s+/g, '')}`;
-        return pathname === target;
-    };
+    const isActive = (path) => pathname === path;
 
     return (
-        <header className="absolute top-0 w-full z-50 transition-all duration-300">
-            <nav className="flex justify-between items-center px-6 md:px-8 py-4 max-w-screen-2xl mx-auto font-headline font-bold tracking-tight">
-                {/* Logo */}
+        <header className="sticky top-0 z-50 w-full bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80 transition-colors duration-300 pt-[env(safe-area-inset-top)]">
+            <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between font-sans">
+                {/* Logo & Brand Title */}
                 <Link
                     to="/"
-                    className="flex items-center gap-3 flex-1 transition-colors duration-300"
+                    className="flex items-center gap-3 shrink-0 group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-xl py-1 px-1.5 transition-all"
+                    aria-label="SK Enterprise Home"
                 >
-                    <img src="/logo.jpg" alt="Logo" className="w-12 h-12 md:w-16 md:h-16 rounded-full object-cover shadow-sm bg-white" />
-                    <span className="text-xl md:text-2xl font-black text-slate-900 dark:text-white uppercase tracking-tighter">
-                        SK Enterprise
-                    </span>
+                    <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-slate-900 border border-slate-800 p-1 flex items-center justify-center shadow-md group-hover:border-blue-500/50 transition-colors">
+                        <img 
+                            src="/logo.jpg" 
+                            alt="SK Enterprise" 
+                            className="w-full h-full object-contain rounded-lg" 
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        <span className="text-base sm:text-lg font-black text-white tracking-wider uppercase font-headline group-hover:text-blue-400 transition-colors leading-tight">
+                            SK Enterprise
+                        </span>
+                        <span className="text-[10px] sm:text-[11px] font-medium text-slate-400 font-mono tracking-normal hidden xs:block">
+                            Flow Control Systems
+                        </span>
+                    </div>
                 </Link>
 
-                {/* Desktop Navigation - Pill Container */}
-                <div className="hidden lg:flex items-center backdrop-blur-xl bg-gray-100/80 dark:bg-white/5 p-1.5 rounded-full border border-gray-200/50 dark:border-white/10 transition-colors duration-300">
+                {/* Desktop Center Pill Navigation */}
+                <div className="hidden lg:flex items-center bg-slate-900/80 border border-slate-800/80 p-1.5 rounded-full shadow-inner">
                     {navLinks.map((item) => {
-                        const path = item === 'Home' ? '/' : `/${item.toLowerCase().replace(/\s+/g, '')}`;
-                        const active = isActive(item);
+                        const active = isActive(item.path);
                         return (
                             <Link
-                                key={item}
-                                to={path}
-                                className={`transition-all duration-300 ease-in-out px-6 py-2.5 rounded-full font-semibold text-sm ${
+                                key={item.label}
+                                to={item.path}
+                                className={`px-5 py-2 rounded-full font-semibold text-xs transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
                                     active
-                                        ? 'bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-fixed'
-                                        : 'text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary-fixed hover:bg-gray-200/50 dark:hover:bg-white/5'
+                                        ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30'
+                                        : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
                                 }`}
                             >
-                                {item}
+                                {item.label}
                             </Link>
                         );
                     })}
                 </div>
 
-                {/* Right Side Buttons */}
-                <div className="hidden lg:flex items-center justify-end gap-3 flex-1">
-                    {/* Theme Toggle Button */}
-                    <button onClick={toggleTheme} className="w-11 h-11 flex items-center justify-center rounded-full bg-gray-100/80 hover:bg-gray-200 transition-colors dark:bg-white/5 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 border border-gray-200/50 dark:border-white/10">
-                        <span className="material-symbols-outlined text-[20px]">{isDark ? 'light_mode' : 'dark_mode'}</span>
+                {/* Right Actions: Theme Toggle & Quote CTA */}
+                <div className="hidden lg:flex items-center gap-3">
+                    <button
+                        onClick={toggleTheme}
+                        aria-label="Toggle Theme"
+                        className="w-10 h-10 rounded-xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                        title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+                    >
+                        {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-300" />}
                     </button>
 
-                    <button className="bg-primary text-white px-7 py-2.5 rounded-full font-bold shadow-lg shadow-primary/20 hover:bg-primary-container hover:text-on-primary-container transition-all hover:-translate-y-0.5 text-sm">
-                        Get a Quote
-                    </button>
+                    <Link
+                        to="/contactus"
+                        className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold text-xs shadow-lg shadow-blue-600/25 hover:shadow-blue-500/35 transition-all flex items-center gap-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                    >
+                        <span>Get a Quote</span>
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                    </Link>
                 </div>
 
-                {/* Hamburger (Mobile) */}
-                <button
-                    className="lg:hidden p-2 rounded-lg text-slate-900 dark:text-white"
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    aria-label="Toggle Menu"
-                >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                        {isMenuOpen ? (
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        ) : (
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                        )}
-                    </svg>
-                </button>
+                {/* Mobile Controls (Theme Toggle + Hamburger) */}
+                <div className="flex items-center gap-2 lg:hidden">
+                    <button
+                        onClick={toggleTheme}
+                        aria-label="Toggle Theme"
+                        className="w-9 h-9 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 flex items-center justify-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                    >
+                        {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-300" />}
+                    </button>
+
+                    <button
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        aria-label={isMenuOpen ? 'Close Menu' : 'Open Menu'}
+                        aria-expanded={isMenuOpen}
+                        aria-controls="mobile-menu-drawer"
+                        className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-200 hover:text-white transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                    >
+                        {isMenuOpen ? <X className="w-6 h-6 text-blue-400" /> : <Menu className="w-6 h-6" />}
+                    </button>
+                </div>
             </nav>
 
-            {/* Mobile Menu */}
+            {/* Mobile Navigation Drawer */}
             <AnimatePresence>
                 {isMenuOpen && (
                     <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="lg:hidden overflow-hidden bg-surface dark:bg-slate-900 border-t border-outline/10 shadow-xl transition-colors duration-300"
+                        id="mobile-menu-drawer"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.25, ease: 'easeInOut' }}
+                        className="lg:hidden border-t border-slate-800/80 bg-slate-950/95 backdrop-blur-2xl overflow-hidden shadow-2xl"
                     >
-                        <ul className="flex flex-col px-4 py-6 space-y-4 font-headline text-center">
-                            {navLinks.map((item) => {
-                                const path = item === 'Home' ? '/' : `/${item.toLowerCase().replace(/\s+/g, '')}`;
-                                return (
-                                    <li key={item}>
+                        <div className="px-4 pt-4 pb-6 space-y-3 max-w-lg mx-auto">
+                            <div className="grid grid-cols-1 gap-1.5">
+                                {navLinks.map((item) => {
+                                    const active = isActive(item.path);
+                                    return (
                                         <Link
-                                            to={path}
+                                            key={item.label}
+                                            to={item.path}
                                             onClick={() => setIsMenuOpen(false)}
-                                            className={`block text-lg font-bold transition-all duration-300 py-2 rounded-xl ${
-                                                isActive(item)
-                                                    ? 'text-primary bg-primary/5'
-                                                    : 'text-slate-600 dark:text-slate-400 hover:text-primary'
+                                            className={`px-4 py-3 rounded-xl font-bold text-sm transition-all flex items-center justify-between ${
+                                                active
+                                                    ? 'bg-blue-600/15 text-blue-400 border border-blue-500/30'
+                                                    : 'text-slate-300 hover:text-white hover:bg-slate-900'
                                             }`}
                                         >
-                                            {item}
+                                            <span>{item.label}</span>
+                                            {active && <span className="w-2 h-2 rounded-full bg-blue-400" />}
                                         </Link>
-                                    </li>
-                                );
-                            })}
-                            <li className="pt-4 flex justify-center gap-4">
-                                <button onClick={toggleTheme} className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors dark:bg-white/5 dark:hover:bg-white/10 text-slate-600 dark:text-slate-300 border border-gray-200/50 dark:border-white/10">
-                                    <span className="material-symbols-outlined text-[20px]">{isDark ? 'light_mode' : 'dark_mode'}</span>
-                                </button>
-                                <button className="flex-1 bg-primary text-white px-6 py-3 rounded-full font-bold shadow-lg shadow-primary/20">
-                                    Get a Quote
-                                </button>
-                            </li>
-                        </ul>
+                                    );
+                                })}
+                            </div>
+
+                            <div className="pt-3 border-t border-slate-800/80 flex flex-col gap-2.5">
+                                <Link
+                                    to="/contactus"
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-sm shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2"
+                                >
+                                    <ShieldCheck className="w-4 h-4" />
+                                    <span>Request Custom Quote</span>
+                                </Link>
+                            </div>
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>

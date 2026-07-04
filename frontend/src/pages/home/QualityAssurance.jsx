@@ -16,7 +16,7 @@ const QualityAssurance = () => {
                 <h2 className="font-headline text-6xl md:text-8xl font-extrabold text-white tracking-tight leading-tight">Certified Quality Assurance</h2>
               </div>
               <div className="md:pl-8 flex flex-col justify-center">
-                <p className="text-surface-variant dark:text-slate-300 text-xl leading-relaxed mb-8">
+                <p className="text-slate-200 dark:text-slate-300 text-xl leading-relaxed mb-8">
                   Our proprietary &quot;interior quality assurance system&quot; integrates rigorous testing protocols at every stage of fabrication, ensuring our &quot;zero defects&quot; goal is achieved for every client.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -24,14 +24,14 @@ const QualityAssurance = () => {
                     <div className="w-1 bg-primary h-full"></div>
                     <div>
                       <p className="text-white font-bold text-lg">Zero Defects</p>
-                      <p className="text-surface-variant/80 dark:text-slate-400 text-sm transition-colors duration-300">Targeted precision through automated inspection.</p>
+                      <p className="text-slate-300 dark:text-slate-400 text-sm transition-colors duration-300">Targeted precision through automated inspection.</p>
                     </div>
                   </div>
                   <div className="flex gap-4">
                     <div className="w-1 bg-primary h-full"></div>
                     <div>
                       <p className="text-white font-bold text-lg">Global Compliance</p>
-                      <p className="text-surface-variant/80 dark:text-slate-400 text-sm transition-colors duration-300">Meeting international ASTM and ISO specifications.</p>
+                      <p className="text-slate-300 dark:text-slate-400 text-sm transition-colors duration-300">Meeting international ASTM and ISO specifications.</p>
                     </div>
                   </div>
                 </div>

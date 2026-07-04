@@ -1,11 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { GrCertificate } from "react-icons/gr";
-import { MdEngineering, MdPrecisionManufacturing } from "react-icons/md";
-import { Home, ArrowLeft } from "lucide-react";
-import { TbTruckDelivery } from "react-icons/tb";
-import { RiCustomerService2Line } from "react-icons/ri";
-import { FaIndustry } from "react-icons/fa";
+import { Cog, Award, HardHat, Truck, Headphones, Factory, Home, ArrowLeft } from "lucide-react";
 import { useNavigation } from "../../hooks/useNavigation";
 import SEO from "../../components/SEO";
 
@@ -25,34 +20,34 @@ const staggerContainer = {
 
 const features = [
   {
-    icon: <MdPrecisionManufacturing className="w-8 h-8" />,
+    icon: <Cog className="w-8 h-8" />,
     title: "Precision Manufacturing",
     description:
       "State-of-the-art manufacturing facilities ensuring highest quality standards",
   },
   {
-    icon: <GrCertificate className="w-8 h-8" />,
+    icon: <Award className="w-8 h-8" />,
     title: "Quality Certification",
     description:
       "ISO certified processes and international standard compliance",
   },
   {
-    icon: <MdEngineering className="w-8 h-8" />,
+    icon: <HardHat className="w-8 h-8" />,
     title: "Technology & Expertise",
     description: "Professional Valve Engineers with deep industry knowledge",
   },
   {
-    icon: <TbTruckDelivery className="w-8 h-8" />,
+    icon: <Truck className="w-8 h-8" />,
     title: "Reliable Delivery",
     description: "On-time delivery with careful handling and packaging",
   },
   {
-    icon: <RiCustomerService2Line className="w-8 h-8" />,
+    icon: <Headphones className="w-8 h-8" />,
     title: "Documentation & Support",
     description: "All available documentation and excellent customer support",
   },
   {
-    icon: <FaIndustry className="w-8 h-8" />,
+    icon: <Factory className="w-8 h-8" />,
     title: "Tailor Made",
     description: "Tailor made solutions to meet specific industry needs",
   },
@@ -91,7 +86,7 @@ const About = () => {
       </div> */}
       
       {/* Hero Section - Reduced bottom padding */}
-      <div className="relative py-32 mt-16 pb-12 overflow-hidden">
+      <div className="relative py-12 mt-12 pb-12 overflow-hidden">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

@@ -3,6 +3,7 @@ import Hero from './Hero'
 import Features from './Features'
 import QualityAssurance from './QualityAssurance'
 import ProductCategories from './ProductCategories'
+import TrustAndFAQ from './TrustAndFAQ'
 import CTA from './CTA'
 import { useNavigation } from '../../hooks/useNavigation'
 import SEO from '../../components/SEO'
@@ -24,6 +25,7 @@ const Home = () => {
         <Features />
         <QualityAssurance />
         <ProductCategories />
+        <TrustAndFAQ />
         <CTA />
       </main>
     </div>
