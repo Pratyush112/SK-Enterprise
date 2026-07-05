@@ -16,13 +16,27 @@ export default function QualityAssurance() {
       .catch(() => setImages([])); // fail soft — render skeletons, never crash the section
   }, []);
 
-  const steps = qualityStepsCopy.map((step) => {
-    const foundImg = images?.find((img) => 
+  // Filter out homepage hero banner and get all quality control images
+  const qualityImages = images ? images.filter((img) => {
+    const isHeroBanner = img.title === "Homepage-Hero-Image" || (typeof img.image === 'object' && img.image?.folder === "Website-hero-image");
+    return !isHeroBanner;
+  }) : [];
+
+  const steps = qualityStepsCopy.map((step, i) => {
+    // 1. Try to find an image with exact matching displayOrder/order (1, 2, 3, 4) among quality images
+    let foundImg = qualityImages.find((img) => 
       Number(img.displayOrder) === step.order || 
       Number(img.order) === step.order || 
       Number(img.id) === step.order || 
       Number(img.step) === step.order
     );
+
+    // 2. If all quality images have the same displayOrder (e.g. all set to 1 in MongoDB Compass),
+    // automatically map them sequentially by index (0, 1, 2, 3) so all 4 steps get their image!
+    const allHaveSameOrder = qualityImages.filter(img => Number(img.displayOrder) === 1).length > 1;
+    if (!foundImg || (allHaveSameOrder && Number(step.order) > 1)) {
+      foundImg = qualityImages[i] || qualityImages[0];
+    }
 
     const imgUrl = foundImg ? (
       (typeof foundImg.image === 'object' ? foundImg.image?.url : foundImg.image) ||
