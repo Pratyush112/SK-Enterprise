@@ -133,11 +133,11 @@ const ProductCards = () => {
     return (
         <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-accent selection:text-white">
             <SEO 
-                title="Sluice Gates & Valves Catalog | SK Enterprise"
-                description="Explore SK Enterprise's production-grade catalog of Cast Iron Sluice Gates, MS/SS Penstocks, Flap Gates, and Industrial Valves manufactured to AWWA, IS, and BS standards."
+                title={selectedSpecItem ? `${selectedSpecItem.Series || selectedSpecItem.item || 'Industrial Valve'} — ${selectedSpecItem.Type || 'Sluice Gate'} | SK Enterprise` : "Sluice Gates & Valves Catalog | SK Enterprise"}
+                description={selectedSpecItem ? `Technical specification and dimensions for ${selectedSpecItem.Series || 'Sluice Gate'} manufactured by SK Enterprise to IS 3042 and AWWA standards.` : "Explore SK Enterprise's production-grade catalog of Cast Iron Sluice Gates, MS/SS Penstocks, Flap Gates, and Industrial Valves manufactured to AWWA, IS, and BS standards."}
                 name="SK Enterprise"
                 type="website"
-                url="/products"
+                url={selectedSpecItem ? `/products/${selectedSpecItem._id || selectedSpecItem.id || id}` : "/products"}
                 schema={generateCatalogSchema(products, "Sluice Gates & Valves Catalog", "/products")}
             />
 

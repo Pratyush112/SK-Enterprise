@@ -10,33 +10,33 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 const faqs = [
   {
     index: "Q.01",
-    question: "What is S.K. Enterprise's motto?",
-    answer: "The company's motto is to deliver the clients with nothing less than best and quality is one such parameter where we make no compromises."
+    question: "What manufacturing standards and certifications does S.K. Enterprise comply with?",
+    answer: "All Cast Iron Sluice Gates and Thimble Mounted Gates are engineered and tested in strict accordance with IS:3042 and BS:7775 standards. Our manufacturing facility operates under an ISO 9001:2015 Quality Management System accredited by IAS (MSCB-119), ensuring rigorous quality control from raw casting to final hydrostatic testing."
   },
   {
     index: "Q.02",
-    question: "Why choose S.K. Enterprise?",
-    answer: "We offer: 1. Fast track for special alloy valve, 2. Complete spare parts supply, 3. Professional valve technology, 4. All available documentation, 5. Tailor made valve solution."
+    question: "What hydrostatic testing and quality inspection protocols are performed before dispatch?",
+    answer: "Every industrial valve and sluice gate undergoes rigorous testing prior to factory dispatch. This includes non-destructive testing (NDT) during raw casting, followed by hydrostatic body strength tests (at 1.5x working pressure) and seat/sealing leakage tests (at 1.1x working pressure) as per IS:3042 protocols. Each valve is stamped with a unique heat number for complete metallurgical traceability."
   },
   {
     index: "Q.03",
-    question: "What is S.K. Enterprise's Quality Goal?",
-    answer: "Continuous improvement & Zero defect, Meeting and even exceeding the quality and service needs of customers."
+    question: "What material grades and metallurgy options are available for sluice gates and valves?",
+    answer: "We manufacture across diverse metallurgy specifications: Cast Iron grades FG 200 / FG 260 (IS:210) for heavy-duty structural frames, Stainless Steel grades SS 304 / SS 316 / SS 316L for spindles, fasteners, and penstocks, and Gun Metal (LTB-2 as per IS:318) or EPDM/neoprene rubber for resilient precision sealing."
   },
   {
     index: "Q.04",
-    question: "How does S.K. Enterprise ensure quality control?",
-    answer: "We own interior quality assurance system, implementing overall quality management in the whole process. Every and each valve has a unique heat number to achieve traceability. All raw materials must carry on the material composition and mechanical performance review before entering the factory."
+    question: "Do you provide custom sizing and tailored engineering solutions for municipal and industrial projects?",
+    answer: "Yes. In addition to standard dimensions, we specialize in tailor-made valve and gate solutions. Our engineering team customizes seating vs. unseating head ratings, rising vs. non-rising spindle configurations, extension rod assemblies, and manual/motorized actuation to match exact project BOQ specifications for irrigation boards, water treatment plants (WTPs), sewage treatment plants (STPs), and flood control infrastructure."
   },
   {
     index: "Q.05",
-    question: "What testing is performed before valves leave the factory?",
-    answer: "Non-destructive testing for valve pipes is necessary before and during raw material processing. Valves should pass valve body strength test, hydraulic pressure seal test and gas seal test one by one before leaving factory."
+    question: "What documentation and compliance test certificates are provided with orders?",
+    answer: "We provide comprehensive technical documentation with every supply, including Material Test Certificates (MTCs) correlating to heat numbers, Hydrostatic Test Guarantee Certificates, General Arrangement (GA) drawings, and IS-standard compliance inspection reports required for municipal and government procurement audits."
   },
   {
     index: "Q.06",
-    question: "What application markets does S.K. Enterprise serve?",
-    answer: "S.K. Enterprise offer many kind of industrial valve utilized in the several application environment against high temperature, high pressure, high corrosive and low temperature or cryogenic application market range from water treatment, power generation, mining, petrochemical, oil and gas with onshore and offshore working condition."
+    question: "What is your typical delivery timeline and spare parts availability?",
+    answer: "We maintain ex-stock availability for standard industrial valves and fasteners for urgent requirements. For custom fabricated sluice gates and penstocks, we operate on fast-track manufacturing schedules. We also supply a complete range of replacement spares, including high-tensile anchor studs, spindle rods, rubber seals, and operating nut assemblies."
   }
 ];
 

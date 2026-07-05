@@ -6,6 +6,7 @@ import { Card } from "../../components/ui/Card";
 import { Skeleton } from "../../components/ui/Skeleton";
 import StampBadge from "../../components/ui/StampBadge";
 import { ShieldCheck } from "lucide-react";
+import SEO from "../../components/SEO";
 
 export default function QualityAssurance() {
   const [images, setImages] = useState(null); // null = loading, [] = empty, [...] = loaded
@@ -53,25 +54,31 @@ export default function QualityAssurance() {
   });
 
   return (
-    <section className="bg-[#0f172a] py-24 md:py-32 px-6 sm:px-8 border-t border-slate-800 text-white selection:bg-accent selection:text-white overflow-hidden">
-      <div className="max-w-container-max mx-auto">
-        {/* Section Header */}
-        <div className="max-w-3xl mb-20 md:mb-28">
-          <RevealOnScroll direction="up" delay={0}>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-800/80 border border-accent/40 text-accent font-mono text-xs font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-lg">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>{qualityControlHeader.eyebrowLabel}</span>
-            </div>
-            <h2 className="text-reveal-wrapper font-headline uppercase text-white text-3xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.08] mb-6">
-              {qualityControlHeader.title}
-            </h2>
-          </RevealOnScroll>
-          <RevealOnScroll direction="up" delay={0.15}>
-            <p className="font-body text-slate-300 text-base sm:text-lg leading-relaxed border-l-2 border-accent pl-6 font-medium">
-              {qualityControlHeader.subtitle}
-            </p>
-          </RevealOnScroll>
-        </div>
+    <>
+      <SEO 
+        title="Quality Assurance & Testing Standards | SK Enterprise" 
+        description="Explore SK Enterprise's certified quality assurance protocols, IS 3042 compliance, and hydrostatic testing for industrial valves and sluice gates." 
+        url="/quality" 
+      />
+      <section className="bg-[#0f172a] py-24 md:py-32 px-6 sm:px-8 border-t border-slate-800 text-white selection:bg-accent selection:text-white overflow-hidden">
+        <div className="max-w-container-max mx-auto">
+          {/* Section Header */}
+          <div className="max-w-6xl mx-auto mb-20 md:mb-28 grid md:grid-cols-12 gap-8 lg:gap-16 items-end">
+            <RevealOnScroll direction="up" delay={0} className="md:col-span-7">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-accent font-mono text-xs font-bold uppercase tracking-widest mb-6 backdrop-blur-md shadow-lg">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>{qualityControlHeader.eyebrowLabel}</span>
+              </div>
+              <h2 className="text-reveal-wrapper font-headline uppercase text-white text-3xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.08]">
+                {qualityControlHeader.title}
+              </h2>
+            </RevealOnScroll>
+            <RevealOnScroll direction="up" delay={0.15} className="md:col-span-5 md:pb-2">
+              <p className="font-body text-slate-300 text-base sm:text-lg leading-relaxed border-l-2 border-accent pl-6 font-medium">
+                {qualityControlHeader.subtitle}
+              </p>
+            </RevealOnScroll>
+          </div>
 
         {/* 4-Step Sequence Grid */}
         <div className="max-w-6xl mx-auto flex flex-col gap-20 sm:gap-28">
@@ -122,5 +129,6 @@ export default function QualityAssurance() {
         </div>
       </div>
     </section>
+    </>
   );
 }

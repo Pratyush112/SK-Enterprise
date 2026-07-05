@@ -2,6 +2,7 @@ import React from 'react';
 import RevealOnScroll from '../../components/motion/RevealOnScroll';
 import { Bolt, Cog, Cpu, FileText, Wrench, ShieldCheck, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEO from '../../components/SEO';
 
 const capabilities = [
   {
@@ -45,7 +46,13 @@ const capabilities = [
 
 const Features = () => {
   return (
-    <section className="pt-36 pb-24 sm:pt-44 md:pt-48 md:pb-32 bg-white transition-colors duration-300 border-t border-slate-200 relative overflow-hidden">
+    <>
+      <SEO 
+        title="Why Choose SK Enterprise | Industrial Engineering Excellence" 
+        description="Discover why leading municipalities, irrigation boards, and industrial plants trust SK Enterprise for precision sluice gates and valves." 
+        url="/WhyUs" 
+      />
+      <section className="pt-36 pb-24 sm:pt-44 md:pt-48 md:pb-32 bg-white transition-colors duration-300 border-t border-slate-200 relative overflow-hidden">
       <div className="max-w-container-max mx-auto px-6 sm:px-8">
         
         {/* Section Header - Cargokite Editorial Style */}
@@ -167,6 +174,7 @@ const Features = () => {
 
       </div>
     </section>
+    </>
   );
 };
 

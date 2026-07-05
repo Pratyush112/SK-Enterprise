@@ -67,7 +67,7 @@ const Preloader = ({ onComplete }) => {
             {/* Top Bar: Eyebrow */}
             <div className="flex justify-between items-center text-xs font-mono tracking-widest uppercase text-slate-500 border-b border-slate-200 pb-4">
                 <span>SK ENTERPRISE • HOWRAH WORKS</span>
-                <span className="text-accent font-bold">EST. 1990s</span>
+                <span className="text-accent font-bold">EST. 1992</span>
             </div>
 
             {/* Center / Left Side: Large Tabular Numeral Counter */}
@@ -75,9 +75,6 @@ const Preloader = ({ onComplete }) => {
                 <div ref={numberRef} className="font-tabular font-mono text-7xl sm:text-9xl md:text-[11rem] font-black tracking-tighter text-slate-900 leading-none">
                     {count < 10 ? `0${count}` : count}
                     <span className="text-accent text-4xl sm:text-6xl md:text-8xl ml-2">%</span>
-                </div>
-                <div className="mt-4 text-xs sm:text-sm font-mono uppercase tracking-widest text-slate-500">
-                    INITIALIZING HYDROSTATIC & METALLURGICAL DATA
                 </div>
             </div>
 
@@ -94,16 +91,15 @@ const Preloader = ({ onComplete }) => {
                 >
                     <span style={{ WebkitTextStroke: '1.5px rgba(0, 180, 216, 01)'}}>SK</span> Enterprise
                 </div>
+                <div className="mt-4 text-xs sm:text-sm font-mono uppercase tracking-widest text-slate-500">
+                    Manufacturers of : C.I. | S.S. | G.M. | Valves | Cocks & Fittings.
+                </div>
 
                 {/* Bottom Bar: System Status */}
                 <div className="flex justify-between items-end text-xs font-mono text-slate-500 border-t border-slate-200 pt-4">
                     <div>
                         <span>STANDARD COMPLIANCE: </span>
                         <span className="text-slate-900 font-bold">IS 3042 • BS 7775 • AWWA C560</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-accent animate-ping" />
-                        <span className="text-accent font-bold uppercase tracking-wider">SYSTEM READY</span>
                     </div>
                 </div>
             </div>

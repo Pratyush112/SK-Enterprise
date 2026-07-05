@@ -141,11 +141,11 @@ const PartsCards = () => {
     return (
         <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-accent selection:text-white">
             <SEO 
-                title="Industrial Fasteners & Spares Catalog | SK Enterprise"
-                description="Explore SK Enterprise's high-tensile fasteners, Anchor Studs, Spindle Rods, and Replacement Spares engineered for heavy infrastructure."
+                title={selectedSpecItem ? `${selectedSpecItem.Name || 'Industrial Fastener'} — Grade ${selectedSpecItem.Grade || 'Standard'} | SK Enterprise` : "Industrial Fasteners & Spares Catalog | SK Enterprise"}
+                description={selectedSpecItem ? `Technical specification for ${selectedSpecItem.Name || 'Industrial Fastener'} in material grade ${selectedSpecItem.Grade || 'SS/MS'} manufactured by SK Enterprise.` : "Explore SK Enterprise's high-tensile fasteners, Anchor Studs, Spindle Rods, and Replacement Spares engineered for heavy infrastructure."}
                 name="SK Enterprise"
                 type="website"
-                url="/parts"
+                url={selectedSpecItem ? `/parts/${selectedSpecItem._id || selectedSpecItem.id || id}` : "/parts"}
                 schema={generateCatalogSchema(parts, "Industrial Fasteners & Spares Catalog", "/parts")}
             />
 

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import RevealOnScroll from "../../components/motion/RevealOnScroll";
 import { ArrowRight, Wrench, CheckCircle2, ShieldCheck } from "lucide-react";
+import SEO from "../../components/SEO";
 
 const categories = [
   { 
@@ -36,7 +37,13 @@ const categories = [
 
 const ProductCategories = () => {
   return (
-    <section className="py-24 md:py-32 bg-slate-50 transition-colors duration-300 border-t border-slate-200 relative">
+    <>
+      <SEO 
+        title="Industrial Product Categories | SK Enterprise" 
+        description="Browse our complete catalog of Cast Iron, Stainless Steel, and Gun Metal valves, sluice gates, cocks, and pipe fittings." 
+        url="/productcategories" 
+      />
+      <section className="py-24 md:py-32 bg-slate-50 transition-colors duration-300 border-t border-slate-200 relative">
       <div className="max-w-container-max mx-auto px-6 sm:px-8">
         
         {/* Section Header - Cargokite Architectural Typography */}
@@ -133,6 +140,7 @@ const ProductCategories = () => {
 
       </div>
     </section>
+    </>
   );
 };
 
