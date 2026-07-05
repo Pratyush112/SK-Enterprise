@@ -53,7 +53,7 @@ export const getProducts = async () => {
     if (cached) return { data: cached, fromCache: true };
 
     const response = await api.get("/products");
-    if (response.data && Array.isArray(response.data)) {
+    if (response.data && Array.isArray(response.data) && response.data.length > 0) {
         setCachedData(CACHE_KEY, response.data);
     }
     return response;
@@ -65,7 +65,19 @@ export const getParts = async () => {
     if (cached) return { data: cached, fromCache: true };
 
     const response = await api.get("/parts");
-    if (response.data && Array.isArray(response.data)) {
+    if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+        setCachedData(CACHE_KEY, response.data);
+    }
+    return response;
+};
+
+export const getQualitySteps = async () => {
+    const CACHE_KEY = "sk_quality_steps_cache_v2";
+    const cached = getCachedData(CACHE_KEY);
+    if (cached) return { data: cached, fromCache: true };
+
+    const response = await api.get("/quality-steps");
+    if (response.data && Array.isArray(response.data) && response.data.length > 0) {
         setCachedData(CACHE_KEY, response.data);
     }
     return response;

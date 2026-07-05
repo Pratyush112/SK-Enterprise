@@ -1,5 +1,6 @@
 import React from 'react'
 import Hero from './Hero'
+import StatOverlay from './StatOverlay'
 import Features from './Features'
 import QualityAssurance from './QualityAssurance'
 import ProductCategories from './ProductCategories'
@@ -22,6 +23,7 @@ const Home = () => {
       />
       <main>
         <Hero />
+        <StatOverlay />
         <Features />
         <QualityAssurance />
         <ProductCategories />

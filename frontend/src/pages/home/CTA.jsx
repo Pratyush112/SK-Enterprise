@@ -14,10 +14,10 @@ const CTA = () => {
               
               {/* Left Column: Heading & Gravitas */}
               <div className="lg:col-span-8 space-y-6">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-300 text-accent font-mono text-xs font-bold uppercase tracking-widest backdrop-blur-md shadow-sm">
+                {/* <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-200 text-accent font-mono text-xs font-bold uppercase tracking-widest backdrop-blur-md shadow-sm">
                   <ShieldCheck className="w-3.5 h-3.5" />
                   <span>ISO 9001 : 2015 CERTIFIED CO.</span>
-                </div>
+                </div> */}
 
                 <h2 className="font-headline text-3xl sm:text-5xl md:text-6xl font-black tracking-tight uppercase leading-[1.08] text-slate-900">
                   OUR <br />

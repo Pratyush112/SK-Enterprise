@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import RevealOnScroll from '../../components/motion/RevealOnScroll';
 import Marquee from '../../components/motion/Marquee';
 import { Award, ShieldCheck, CheckCircle2, HelpCircle, Plus, X } from 'lucide-react';
+import { useGSAP } from '@gsap/react';
+import { gsap, ScrollTrigger } from '../../lib/gsap';
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const faqs = [
   {
@@ -38,6 +42,25 @@ const faqs = [
 
 const TrustAndFAQ = () => {
   const [openIndex, setOpenIndex] = useState(0);
+  const containerRef = useRef(null);
+
+  useGSAP(() => {
+    gsap.fromTo(".trust-card", 
+      { y: 30, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.7,
+        stagger: 0.12,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: ".trust-grid",
+          start: "clamp(top 85%)",
+          toggleActions: "play none none none"
+        }
+      }
+    );
+  }, { scope: containerRef });
 
   const toggleAccordion = (index) => {
     setOpenIndex(openIndex === index ? -1 : index);
@@ -58,78 +81,72 @@ const TrustAndFAQ = () => {
   };
 
   return (
-    <section className="py-24 md:py-32 bg-white transition-colors duration-300 border-t border-slate-200 relative overflow-hidden">
+    <section ref={containerRef} className="py-24 md:py-32 bg-slate-900 text-white transition-colors duration-300 border-t border-slate-800 relative overflow-hidden">
       <script type="application/ld+json">
         {JSON.stringify(faqSchema)}
       </script>
 
       {/* Infinite Trust Strip Marquee - Clean Architectural Typography */}
-      <div className="mb-24 pb-12 border-b border-slate-200">
-        <p className="text-center text-xs font-mono font-bold text-slate-500 uppercase tracking-widest mb-8">
+      {/* <div className="mb-24 pb-12 border-b border-slate-800">
+        <p className="text-center text-sm font-sans font-bold text-slate-400 uppercase tracking-widest mb-8">
           S.K. ENTERPRISE • ISO 9001 : 2015 CERTIFIED CO. • IAS ACCREDITED MSCB-119
         </p>
         <Marquee speed={35}>
-          <span className="font-headline font-black text-xl md:text-2xl text-slate-700 tracking-wider">ISO 9001 : 2015 CERTIFIED CO.</span>
+          <span className="font-headline font-black text-xl md:text-2xl text-slate-200 tracking-wider">ISO 9001 : 2015 CERTIFIED CO.</span>
           <span className="text-accent font-bold">•</span>
-          <span className="font-headline font-black text-xl md:text-2xl text-slate-700 tracking-wider">IAS ACCREDITED MSCB-119</span>
+          <span className="font-headline font-black text-xl md:text-2xl text-slate-200 tracking-wider">IAS ACCREDITED MSCB-119</span>
           <span className="text-accent font-bold">•</span>
-          <span className="font-headline font-black text-xl md:text-2xl text-slate-700 tracking-wider">OUR MOTTO</span>
-          <span className="text-accent font-bold">•</span>
-          <span className="font-headline font-black text-xl md:text-2xl text-slate-700 tracking-wider">WHY CHOOSE S.K. ENTERPRISE</span>
-          <span className="text-accent font-bold">•</span>
-          <span className="font-headline font-black text-xl md:text-2xl text-slate-700 tracking-wider">QUALITY CONTROL</span>
-          <span className="text-accent font-bold">•</span>
-          <span className="font-headline font-black text-xl md:text-2xl text-slate-700 tracking-wider">APPLICATION MARKET</span>
+          <span className="font-headline font-black text-xl md:text-2xl text-slate-200 tracking-wider">WHY CHOOSE S.K. ENTERPRISE</span>
           <span className="text-accent font-bold">•</span>
         </Marquee>
-      </div>
+      </div> */}
 
       <div className="max-w-container-max mx-auto px-6 sm:px-8">
         
         {/* Certifications & Trust Showcase */}
         <RevealOnScroll direction="up" delay={0}>
-          <div className="bg-white rounded-industrial-lg p-8 sm:p-12 md:p-16 border border-slate-200 mb-24 shadow-xl hover:shadow-2xl transition-all">
+          <div className="bg-slate-800/50 rounded-industrial-lg p-8 sm:p-12 md:p-16 border border-slate-700/80 mb-24 shadow-2xl hover:shadow-[0_0_30px_rgba(0,180,216,0.15)] transition-all">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-300 text-accent font-mono text-xs font-bold uppercase tracking-widest mb-4 shadow-sm">
+              {/* <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-accent/40 text-accent font-mono text-xs font-bold uppercase tracking-widest mb-4 backdrop-blur-md shadow-lg">
                 <Award className="w-3.5 h-3.5" />
                 <span>ISO 9001 : 2015 CERTIFIED CO.</span>
-              </div>
-              <h2 className="font-headline text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight uppercase mb-4">
+              </div> */}
+              <h2 className="font-headline text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight uppercase mb-4">
                 S.K. ENTERPRISE.
               </h2>
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-medium">
                 The company's motto is to deliver the clients with nothing less than best and quality is one such parameter where we make no compromises.
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-              <div className="bg-slate-50 p-6 sm:p-8 rounded-industrial-md border border-slate-200 flex items-start gap-4 shadow-md hover:border-accent transition-colors">
-                <div className="w-12 h-12 rounded-industrial-md bg-white border border-slate-200 text-accent flex items-center justify-center shrink-0 shadow-sm">
+            <div className="trust-grid grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+              <div className="trust-card bg-slate-900/80 p-6 sm:p-8 rounded-industrial-md border border-slate-700/60 flex items-start gap-4 shadow-lg hover:border-accent transition-colors">
+                <div className="w-12 h-12 rounded-industrial-md bg-slate-800 border border-slate-700 text-accent flex items-center justify-center shrink-0 shadow-sm">
                   <ShieldCheck className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-headline font-bold text-lg text-slate-900 mb-2">ISO 9001 : 2015 Certified Co.</h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">ISO 9001 : 2015 Certified Co.</p>
+                  <h3 className="font-headline font-bold text-lg text-white mb-2">ISO 9001 : 2015 Certified Co.</h3>
+                  <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-normal">ISO 9001 : 2015 Certified Co.</p>
                 </div>
               </div>
 
-              <div className="bg-slate-50 p-6 sm:p-8 rounded-industrial-md border border-slate-200 flex items-start gap-4 shadow-md hover:border-accent transition-colors">
-                <div className="w-12 h-12 rounded-industrial-md bg-white border border-slate-200 text-accent flex items-center justify-center shrink-0 shadow-sm">
+              <div className="trust-card bg-slate-900/80 p-6 sm:p-8 rounded-industrial-md border border-slate-700/60 flex items-start gap-4 shadow-lg hover:border-accent transition-colors">
+                <div className="w-12 h-12 rounded-industrial-md bg-slate-800 border border-slate-700 text-accent flex items-center justify-center shrink-0 shadow-sm">
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-headline font-bold text-lg text-slate-900 mb-2">IAS ACCREDITED MSCB-119</h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">IAS ACCREDITED Management Systems Certification Body MSCB-119.</p>
+                  <h3 className="font-headline font-bold text-lg text-white mb-2">IAS ACCREDITED MSCB-119</h3>
+                  <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-normal">IAS ACCREDITED Management Systems Certification Body MSCB-119.</p>
                 </div>
               </div>
 
-              <div className="bg-slate-50 p-6 sm:p-8 rounded-industrial-md border border-slate-200 flex items-start gap-4 shadow-md hover:border-accent transition-colors">
-                <div className="w-12 h-12 rounded-industrial-md bg-white border border-slate-200 text-accent flex items-center justify-center shrink-0 shadow-sm">
+              <div className="trust-card bg-slate-900/80 p-6 sm:p-8 rounded-industrial-md border border-slate-700/60 flex items-start gap-4 shadow-lg hover:border-accent transition-colors">
+                <div className="w-12 h-12 rounded-industrial-md bg-slate-800 border border-slate-700 text-accent flex items-center justify-center shrink-0 shadow-sm">
                   <Award className="w-6 h-6" />
                 </div>
                 <div>
-                  <h3 className="font-headline font-bold text-lg text-slate-900 mb-2">Manufacturers of :</h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">C.I. | S.S. | G.M. | Valves | Cocks & Fittings.</p>
+                  <h3 className="font-headline font-bold text-lg text-white mb-2">Manufacturers of :</h3>
+                  <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-normal">C.I. | S.S. | G.M. | Valves | Cocks & Fittings.</p>
                 </div>
               </div>
             </div>
@@ -140,14 +157,13 @@ const TrustAndFAQ = () => {
         <div className="max-w-4xl mx-auto">
           <RevealOnScroll direction="up" delay={0.1}>
             <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-50 border border-slate-300 text-accent font-mono text-xs font-bold uppercase tracking-widest mb-4 shadow-sm">
-                <HelpCircle className="w-3.5 h-3.5" />
+              {/* <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-accent font-mono text-xs font-bold uppercase tracking-widest mb-4 backdrop-blur-md shadow-lg">
                 <span>S.K. ENTERPRISE</span>
-              </div>
-              <h2 className="font-headline text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight uppercase mb-4">
+              </div> */}
+              <h2 className="font-headline text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight uppercase mb-4">
                 FREQUENTLY ASKED QUESTIONS.
               </h2>
-              <p className="text-slate-600 text-sm sm:text-base font-medium">
+              <p className="text-slate-300 text-sm sm:text-base font-medium">
                 Manufacturers of : C.I. | S.S. | G.M. | Valves | Cocks & Fittings.
               </p>
             </div>
@@ -158,24 +174,24 @@ const TrustAndFAQ = () => {
               const isOpen = openIndex === index;
               return (
                 <RevealOnScroll key={faq.index} direction="up" delay={0.05 * index}>
-                  <div className={`bg-white rounded-industrial-md border transition-all duration-300 overflow-hidden shadow-md hover:shadow-lg ${isOpen ? 'border-accent ring-1 ring-accent/20' : 'border-slate-200 hover:border-slate-300'}`}>
+                  <div className={`bg-slate-800/60 rounded-industrial-md border transition-all duration-300 overflow-hidden shadow-lg ${isOpen ? 'border-accent ring-1 ring-accent/20 bg-slate-800' : 'border-slate-700/80 hover:border-slate-600'}`}>
                     <button
                       onClick={() => toggleAccordion(index)}
-                      className="w-full px-6 sm:px-8 py-6 text-left font-headline font-bold text-base sm:text-lg text-slate-900 flex justify-between items-center gap-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent group"
+                      className="w-full px-6 sm:px-8 py-6 text-left font-headline font-bold text-base sm:text-lg text-white flex justify-between items-center gap-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent group"
                       aria-expanded={isOpen}
                     >
                       <div className="flex items-center gap-4">
-                        <span className="font-tabular font-mono text-xs font-bold text-accent bg-accent/10 px-2.5 py-1 rounded border border-accent/20 shrink-0">
+                        <span className="font-tabular font-mono text-xs font-bold text-accent bg-accent/10 px-2.5 py-1 rounded border border-accent/30 shrink-0">
                           {faq.index}
                         </span>
                         <span className="group-hover:text-accent transition-colors">{faq.question}</span>
                       </div>
-                      <div className={`w-8 h-8 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center shrink-0 transition-all duration-300 ${isOpen ? 'bg-accent text-white border-accent rotate-90 shadow-sm' : 'text-slate-500 group-hover:text-slate-900'}`}>
+                      <div className={`w-8 h-8 rounded-full border flex items-center justify-center shrink-0 transition-all duration-300 ${isOpen ? 'bg-accent text-white border-accent rotate-90 shadow-sm' : 'bg-slate-900 text-slate-400 border-slate-700 group-hover:text-white'}`}>
                         {isOpen ? <X className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                       </div>
                     </button>
                     {isOpen && (
-                      <div className="px-6 sm:px-8 pb-6 pt-2 text-slate-600 text-sm sm:text-base leading-relaxed border-t border-slate-100 pl-16 font-normal">
+                      <div className="px-6 sm:px-8 pb-6 pt-2 text-slate-300 text-sm sm:text-base leading-relaxed border-t border-slate-700/80 pl-16 font-normal">
                         <p>{faq.answer}</p>
                       </div>
                     )}

@@ -55,7 +55,7 @@ export const useReveal = (ref, options = {}) => {
           ease: 'power3.out',
           scrollTrigger: {
             trigger: element,
-            start: `top ${100 - threshold * 100}%`,
+            start: `clamp(top ${100 - threshold * 100}%)`,
             toggleActions: once ? 'play none none none' : 'play reverse play reverse',
           },
         }

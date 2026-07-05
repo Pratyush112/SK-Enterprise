@@ -85,7 +85,7 @@ const Hero = () => {
 
       <section 
         ref={heroRef} 
-        className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-slate-50 pt-24 pb-20 px-6 sm:px-8 select-none"
+        className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-slate-50 pt-24 pb-36 sm:pb-44 md:pb-48 px-6 sm:px-8 select-none"
       >
         {/* Background Parallax Layer with Contrast Scrim */}
         <div className="absolute inset-0 z-0 overflow-hidden">

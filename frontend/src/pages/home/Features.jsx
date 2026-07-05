@@ -10,7 +10,8 @@ const capabilities = [
     title: "Fast Track Special Alloy Valve",
     description: "Fast track for special alloy valve",
     icon: <Bolt className="w-6 h-6 text-accent" />,
-    isFeatured: true
+    isFeatured: true,
+    // highlight: "Ex-stock delivery available for urgent industrial requirements"
   },
   {
     index: "02",
@@ -44,7 +45,7 @@ const capabilities = [
 
 const Features = () => {
   return (
-    <section className="py-24 md:py-32 bg-white transition-colors duration-300 border-t border-slate-200 relative overflow-hidden">
+    <section className="pt-36 pb-24 sm:pt-44 md:pt-48 md:pb-32 bg-white transition-colors duration-300 border-t border-slate-200 relative overflow-hidden">
       <div className="max-w-container-max mx-auto px-6 sm:px-8">
         
         {/* Section Header - Cargokite Editorial Style */}
@@ -79,23 +80,23 @@ const Features = () => {
                   
                   <div className="lg:col-span-8 space-y-6">
                     <div className="flex items-center gap-4">
-                      <span className="font-tabular font-mono text-xs font-bold text-slate-500 px-3 py-1 rounded-full">
-                        {cap.eyebrow}
+                      <span className="font-sans text-xs w-12 h-12 bg-slate-50 border border-slate-200 flex items-center justify-center group-hover:scale-110 group-hover:border-accent transition-all shadow-sm mb-3 text-slate-500 px-3 py-1 rounded-industrial-lg">
+                        {cap.icon}
                       </span>
-                      <span className="font-mono text-xs font-bold text-slate-500">ISO 9001 : 2015 Co.</span>
+                      <span className="font-sans text-xs font-bold text-slate-500">ISO 9001 : 2015 Co.</span>
                     </div>
 
                     <h3 className="font-headline text-2xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight uppercase group-hover:text-accent transition-colors">
                       {cap.title}
                     </h3>
 
-                    <p className="text-slate-600 text-base sm:text-lg leading-relaxed max-w-3xl font-normal">
+                    <p className="p-4 sm:p-5 text-slate-600 text-base sm:text-lg leading-relaxed max-w-md gap-4 rounded-industrial-md bg-slate-50 border border-slate-200 flex font-sans">
+                      <ShieldCheck className="w-6 h-6 text-accent shrink-0 mt-0.5" />
                       {cap.description}
                     </p>
 
                     {cap.highlight && (
                       <div className="p-4 sm:p-5 rounded-industrial-md bg-slate-50 border border-slate-200 flex items-start gap-3.5 max-w-2xl">
-                        <ShieldCheck className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                         <p className="text-xs sm:text-sm font-bold text-slate-900 leading-relaxed font-mono">
                           {cap.highlight}
                         </p>
@@ -104,8 +105,8 @@ const Features = () => {
                   </div>
 
                   <div className="lg:col-span-4 flex flex-col items-start lg:items-end justify-between h-full border-t lg:border-t-0 lg:border-l border-slate-200 pt-6 lg:pt-0 lg:pl-12">
-                    <div className="w-16 h-16 rounded-industrial-lg bg-slate-50 border border-slate-200 flex items-center justify-center group-hover:scale-110 group-hover:border-accent transition-all shadow-sm mb-6">
-                      {cap.icon}
+                    <div className="font-sans text-5xl font-extrabold px-3 py-1 flex items-center justify-center" style={{WebkitTextStroke: '2px rgba(148, 163, 184, 1)', color:'transparent',}}>
+                      {cap.index}
                     </div>
 
                     <div className="space-y-4 w-full lg:text-right">
@@ -136,12 +137,12 @@ const Features = () => {
                 <div className="bg-white p-8 sm:p-10 rounded-industrial-lg border border-slate-200 hover:border-accent/80 transition-all duration-300 flex flex-col justify-between h-full group shadow-md hover:shadow-lg">
                   <div>
                     <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-200">
-                      <span className="font-mono text-xs font-bold text-slate-500 group-hover:text-accent transition-colors">
-                        {cap.eyebrow}
-                      </span>
                       <div className="w-12 h-12 rounded-industrial-md bg-slate-50 border border-slate-200 flex items-center justify-center group-hover:scale-110 group-hover:border-accent transition-all">
                         {cap.icon}
                       </div>
+                      <span className="font-sans text-5xl font-extrabold px-3 py-1 flex items-center justify-center" style={{WebkitTextStroke: '2px rgba(148, 163, 184, 1)', color:'transparent',}}>
+                        {cap.index}
+                      </span>
                     </div>
 
                     <h3 className="font-headline text-xl sm:text-2xl font-bold mb-4 text-slate-900 tracking-tight group-hover:text-accent transition-colors">
@@ -153,7 +154,7 @@ const Features = () => {
                     </p>
                   </div>
 
-                  <div className="mt-8 pt-4 border-t border-slate-200 flex items-center justify-between text-xs font-mono font-bold text-slate-500">
+                  <div className="mt-8 pt-4 border-t border-slate-200 flex items-center justify-between text-xs font-sans font-bold text-slate-500">
                     <span>ISO 9001 : 2015</span>
                     <span className="text-accent">IAS ACCREDITED</span>
                   </div>

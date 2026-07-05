@@ -8,6 +8,7 @@ import productRouter from "./routers/product.router.js";
 import partRouter from "./routers/part.router.js";
 import contactRouter from "./routers/contact.router.js";
 import sitemapRouter from "./routers/sitemap.router.js";
+import qualityStepRouter from "./routers/qualityStep.router.js";
 
 dotenv.config();
 const app = express();
@@ -64,6 +65,7 @@ app.use("/products", productRouter);
 app.use("/parts", partRouter);
 app.use("/contact", contactLimiter, contactRouter);
 app.use("/sitemap.xml", sitemapRouter);
+app.use("/quality-steps", qualityStepRouter);
 
 // Global Error Handler
 app.use((err, req, res, next) => {

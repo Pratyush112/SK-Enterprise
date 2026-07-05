@@ -88,11 +88,11 @@ const Preloader = ({ onComplete }) => {
                     className="w-full font-black tracking-tighter leading-none text-[12vw] select-none mb-4 sm:mb-6 whitespace-nowrap overflow-hidden"
                     style={{ 
                         fontFamily: "'Roboto', sans-serif",
-                        WebkitTextStroke: '4px rgba(148, 163, 184, 1)',
+                        WebkitTextStroke: '1.5px rgba(148, 163, 184, 1)',
                         color: 'transparent'
                     }}
                 >
-                    <span style={{ WebkitTextStroke: '4px rgba(0, 180, 216, 01)'}}>SK</span> Enterprise
+                    <span style={{ WebkitTextStroke: '1.5px rgba(0, 180, 216, 01)'}}>SK</span> Enterprise
                 </div>
 
                 {/* Bottom Bar: System Status */}
