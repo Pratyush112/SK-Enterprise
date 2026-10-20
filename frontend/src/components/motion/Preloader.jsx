@@ -82,9 +82,8 @@ const Preloader = ({ onComplete }) => {
             <div className="mt-auto w-full">
                 {/* Massive Outlined Reference Typography (LangChain Academy style) */}
                 <div 
-                    className="w-full font-black tracking-tighter leading-none text-[12vw] select-none mb-4 sm:mb-6 whitespace-nowrap overflow-hidden"
+                    className="w-full font-black tracking-tighter leading-none text-[12vw] select-none mb-4 sm:mb-6 whitespace-nowrap overflow-hidden font-sans"
                     style={{ 
-                        fontFamily: "'Roboto', sans-serif",
                         WebkitTextStroke: '1.5px #64748b',
                         color: 'transparent'
                     }}

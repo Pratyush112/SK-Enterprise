@@ -49,15 +49,12 @@ export default {
         'error': '#ef4444',
       },
       fontFamily: {
-        "headline": ["'Archia'", "'Archia Regular'", "sans-serif"],
-        "body": ["'Plus Jakarta Sans'", "sans-serif"],
-        "sans": ["'Plus Jakarta Sans'", "sans-serif"],
-        "serif": ["'Lora'", "serif"],
-        "subheadline": ["'Lora'", "serif"],
-        "accent": ["'Lora'", "serif"],
-        "label": ["'Plus Jakarta Sans'", "sans-serif"],
-        "manrope": ["'Plus Jakarta Sans'", "sans-serif"],
-        "mono": ["JetBrains Mono", "monospace"],
+        headline: ["'Outfit Variable'", 'system-ui', 'sans-serif'],
+        body: ["'Plus Jakarta Sans Variable'", 'system-ui', 'sans-serif'],
+        sans: ["'Plus Jakarta Sans Variable'", 'system-ui', 'sans-serif'],
+        mono: ["'JetBrains Mono'", 'ui-monospace', 'monospace'],
+        label: ["'Plus Jakarta Sans Variable'", 'system-ui', 'sans-serif'],
+        manrope: ["'Plus Jakarta Sans Variable'", 'system-ui', 'sans-serif'],
       },
       spacing: {
         'section-sm': '4rem',      // 64px mobile

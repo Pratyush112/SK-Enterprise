@@ -22,7 +22,7 @@
   }
 
   h1, h2, h3, .font-headline, .hero-line {
-    font-family: 'Archia', 'Archia Regular', sans-serif;
+    font-family: 'Outfit Variable', system-ui, sans-serif;
     font-weight: 800;
   }
 }

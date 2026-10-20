@@ -88,7 +88,7 @@ const About = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 max-w-5xl mx-auto">
               {stats.map((stat, idx) => (
                 <div key={idx} className="bg-white p-6 rounded-industrial-lg border border-slate-200 text-center hover:border-accent transition-all duration-300 shadow-md hover:shadow-lg">
-                  <div className="font-tabular text-2xl sm:text-4xl font-black text-slate-900 font-headline tracking-tight">{stat.value}</div>
+                  <div className="font-tabular text-2xl sm:text-3xl md:text-2xl lg:text-4xl font-black text-slate-900 font-headline tracking-tight">{stat.value}</div>
                   <div className="text-[11px] font-mono font-bold text-accent-text uppercase tracking-wider mt-1">{stat.label}</div>
                 </div>
               ))}
