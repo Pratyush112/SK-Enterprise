@@ -35,14 +35,16 @@ const categories = [
   },
 ];
 
-const ProductCategories = () => {
+const ProductCategories = ({ showSEO = true }) => {
   return (
     <>
-      <SEO 
-        title="Industrial Product Categories | SK Enterprise" 
-        description="Browse our complete catalog of Cast Iron, Stainless Steel, and Gun Metal valves, sluice gates, cocks, and pipe fittings." 
-        url="/productcategories" 
-      />
+      {showSEO && (
+        <SEO 
+          title="Industrial Product Categories | SK Enterprise" 
+          description="Browse our complete catalog of Cast Iron, Stainless Steel, and Gun Metal valves, sluice gates, cocks, and pipe fittings." 
+          url="/productcategories" 
+        />
+      )}
       <section className="py-24 md:py-32 bg-slate-50 transition-colors duration-300 border-t border-slate-200 relative">
       <div className="max-w-container-max mx-auto px-6 sm:px-8">
         

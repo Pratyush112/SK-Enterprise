@@ -2,13 +2,16 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 
 const BASE_URL = 'https://www.skenterprisesluicegate.com';
+const toAbsoluteUrl = (u = '/') => {
+  const raw = u.startsWith('http') ? new URL(u).pathname : (u.startsWith('/') ? u : `/${u}`);
+  const path = raw.length > 1 ? raw.replace(/\/+$/, '') : raw;
+  return `${BASE_URL}${path}`;
+};
 const DEFAULT_OG_IMAGE = `${BASE_URL}/sk-logo.png`;
 
 export default function SEO({ title, description, name, type = 'website', image, url, schema }) {
   const ogImage = image || DEFAULT_OG_IMAGE;
-  const absoluteUrl = url 
-    ? (url.startsWith('http') ? url : `${BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`) 
-    : BASE_URL;
+  const absoluteUrl = toAbsoluteUrl(url);
 
   return (
     <Helmet>

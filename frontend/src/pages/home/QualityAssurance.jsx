@@ -8,7 +8,7 @@ import StampBadge from "../../components/ui/StampBadge";
 import { ShieldCheck } from "lucide-react";
 import SEO from "../../components/SEO";
 
-export default function QualityAssurance() {
+export default function QualityAssurance({ showSEO = true }) {
   const [images, setImages] = useState(null); // null = loading, [] = empty, [...] = loaded
 
   useEffect(() => {
@@ -55,11 +55,13 @@ export default function QualityAssurance() {
 
   return (
     <>
-      <SEO 
-        title="Quality Assurance & Testing Standards | SK Enterprise" 
-        description="Explore SK Enterprise's certified quality assurance protocols, IS 3042 compliance, and hydrostatic testing for industrial valves and sluice gates." 
-        url="/quality" 
-      />
+      {showSEO && (
+        <SEO 
+          title="Quality Assurance & Testing Standards | SK Enterprise" 
+          description="Explore SK Enterprise's certified quality assurance protocols, IS 3042 compliance, and hydrostatic testing for industrial valves and sluice gates." 
+          url="/quality" 
+        />
+      )}
       <section className="bg-[#0f172a] py-24 md:py-32 px-6 sm:px-8 border-t border-slate-800 text-white selection:bg-accent selection:text-white overflow-hidden">
         <div className="max-w-container-max mx-auto">
           {/* Section Header */}

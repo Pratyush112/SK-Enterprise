@@ -24,9 +24,9 @@ const Home = () => {
       <main>
         <Hero />
         <StatOverlay />
-        <Features />
-        <QualityAssurance />
-        <ProductCategories />
+        <Features showSEO={false} />
+        <QualityAssurance showSEO={false} />
+        <ProductCategories showSEO={false} />
         <TrustAndFAQ />
         <CTA />
       </main>

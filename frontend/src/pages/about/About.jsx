@@ -57,7 +57,7 @@ const About = () => {
         description="Learn about SK Enterprise, a leading manufacturer of industrial cast iron sluice gates, penstocks, and heavy-duty water control valves established in 1989."
         name="SK Enterprise"
         type="website"
-        url="/about"
+        url="/aboutus"
       />
       
       {/* Hero Header Section */}
