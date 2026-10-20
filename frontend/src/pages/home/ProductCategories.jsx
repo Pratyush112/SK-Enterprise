@@ -52,12 +52,12 @@ const ProductCategories = ({ showSEO = true }) => {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8 border-b border-slate-200 pb-12">
           <RevealOnScroll direction="up" delay={0}>
             <div className="max-w-3xl">
-              <span className="text-xs font-mono text-accent font-bold uppercase tracking-widest block mb-3">
+              <span className="text-xs font-mono text-accent-text font-bold uppercase tracking-widest block mb-3">
                 S.K. ENTERPRISE
               </span>
               <h2 className="font-headline text-3xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tight uppercase leading-tight">
                 APPLICATION <br />
-                <span className="text-accent font-light">MARKET.</span>
+                <span className="text-accent-text font-light">MARKET.</span>
               </h2>
             </div>
           </RevealOnScroll>
@@ -89,13 +89,13 @@ const ProductCategories = ({ showSEO = true }) => {
                     <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent"></div>
                     
                     <div className="absolute top-6 left-6">
-                      <span className="px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-slate-300 text-[11px] font-mono uppercase tracking-wider text-accent font-bold shadow-sm">
+                      <span className="px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md border border-slate-300 text-[11px] font-mono uppercase tracking-wider text-accent-text font-bold shadow-sm">
                         {category.division}
                       </span>
                     </div>
 
                     <div className="absolute bottom-6 left-6 right-6 text-slate-900">
-                      <h3 className="font-headline text-2xl sm:text-3xl font-black tracking-tight uppercase group-hover:text-accent transition-colors">
+                      <h3 className="font-headline text-2xl sm:text-3xl font-black tracking-tight uppercase group-hover:text-accent-text transition-colors">
                         {category.name}
                       </h3>
                     </div>

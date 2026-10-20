@@ -95,10 +95,10 @@ const Navbar = () => {
                         />
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-base sm:text-lg font-black text-accent tracking-wider uppercase font-headline group-hover:text-accent transition-colors leading-tight">
+                        <span className="text-base sm:text-lg font-black text-accent-text tracking-wider uppercase font-headline group-hover:text-accent-text transition-colors leading-tight">
                             SK Enterprise
                         </span>
-                        <span className="text-[10px] sm:text-[11px] font-bold text-accent font-mono tracking-normal hidden xs:block">
+                        <span className="text-[10px] sm:text-[11px] font-bold text-accent-text font-mono tracking-normal hidden xs:block">
                             Valves | Cocks & Fittings
                         </span>
                     </div>
@@ -167,7 +167,7 @@ const Navbar = () => {
                                         onClick={() => setIsMenuOpen(false)}
                                         className={`mobile-nav-item px-5 py-3.5 rounded-industrial-md font-bold text-sm tracking-wide transition-all flex items-center justify-between uppercase ${
                                             active
-                                                ? 'bg-accent/15 text-accent border border-accent/30'
+                                                ? 'bg-accent/15 text-accent-text border border-accent/30'
                                                 : 'text-slate-800 hover:bg-slate-50 border border-transparent'
                                         }`}
                                     >

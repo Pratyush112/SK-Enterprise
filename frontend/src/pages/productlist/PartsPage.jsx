@@ -154,7 +154,7 @@ const PartsCards = () => {
                 <div className="max-w-7xl mx-auto space-y-6">
                     {/* Breadcrumbs */}
                     <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-mono text-slate-500">
-                        <Link to="/" className="hover:text-accent flex items-center gap-1 transition-colors">
+                        <Link to="/" className="hover:text-accent-text flex items-center gap-1 transition-colors">
                             <Home className="w-3.5 h-3.5" />
                             <span>Home</span>
                         </Link>
@@ -164,7 +164,7 @@ const PartsCards = () => {
 
                     <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
                         <div className="max-w-3xl space-y-3">
-                            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-300 text-accent text-xs font-mono font-bold uppercase tracking-wider shadow-sm">
+                            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-300 text-accent-text text-xs font-mono font-bold uppercase tracking-wider shadow-sm">
                                 <Award className="w-3.5 h-3.5" />
                                 <span>HIGH-TENSILE FASTENERS & SPARES</span>
                             </div>
@@ -277,7 +277,7 @@ const PartsCards = () => {
 
                     {/* Row 2: Grade Filter Pills */}
                     <div className="flex items-center gap-2 pt-1 border-t border-slate-200">
-                        <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-accent uppercase tracking-wider shrink-0 mr-1">
+                        <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-accent-text uppercase tracking-wider shrink-0 mr-1">
                             <SlidersHorizontal className="w-3.5 h-3.5 text-accent" />
                             <span className="hidden xs:inline">GRADE:</span>
                         </div>
@@ -374,7 +374,7 @@ const PartsCards = () => {
                                         <div className="relative w-full h-56 bg-slate-50 p-6 flex items-center justify-center border-b border-slate-200 overflow-hidden shadow-xs">
                                             <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start">
                                                 {part.Grade && (
-                                                    <span className="px-2.5 py-1 bg-white/90 backdrop-blur-md border border-slate-200 text-accent font-mono font-bold text-[11px] rounded-md shadow-xs">
+                                                    <span className="px-2.5 py-1 bg-white/90 backdrop-blur-md border border-slate-200 text-accent-text font-mono font-bold text-[11px] rounded-md shadow-xs">
                                                         {part.Grade}
                                                     </span>
                                                 )}
@@ -409,7 +409,7 @@ const PartsCards = () => {
                                         {/* Card Body */}
                                         <div className="p-5 space-y-3">
                                             <div>
-                                                <h3 className="font-bold text-lg text-slate-900 group-hover:text-accent transition-colors line-clamp-1 font-headline uppercase">
+                                                <h3 className="font-bold text-lg text-slate-900 group-hover:text-accent-text transition-colors line-clamp-1 font-headline uppercase">
                                                     <Link to={`/parts/${part._id}`}>{part.Name}</Link>
                                                 </h3>
                                                 <p className="text-xs text-slate-600 mt-1 line-clamp-2 leading-relaxed font-normal">
@@ -518,7 +518,7 @@ const PartsCards = () => {
                                             </td>
                                             <td className="p-4 whitespace-nowrap">
                                                 <div>
-                                                    <div className="font-bold text-slate-900 text-sm hover:text-accent transition-colors uppercase font-headline">
+                                                    <div className="font-bold text-slate-900 text-sm hover:text-accent-text transition-colors uppercase font-headline">
                                                         <Link to={`/parts/${part._id}`}>{part.Name || '—'}</Link>
                                                     </div>
                                                 </div>

@@ -146,7 +146,7 @@ const QuoteModal = ({ isOpen, onClose, initialItem = '' }) => {
                             </div>
                             <h4 className="text-2xl font-headline font-black text-slate-900 uppercase tracking-tight">Quotation Request Sent.</h4>
                             <p className="text-slate-600 max-w-md mx-auto text-sm leading-relaxed font-normal">
-                                Thank you for your inquiry regarding <span className="font-semibold text-slate-900">{initialItem || 'our products'}</span>. Our technical sales team has received your specifications and will respond within <span className="text-accent font-semibold">24 hours</span> with pricing and lead times.
+                                Thank you for your inquiry regarding <span className="font-semibold text-slate-900">{initialItem || 'our products'}</span>. Our technical sales team has received your specifications and will respond within <span className="text-accent-text font-semibold">24 hours</span> with pricing and lead times.
                             </p>
                             <div className="pt-4">
                                 <button 
@@ -183,7 +183,7 @@ const QuoteModal = ({ isOpen, onClose, initialItem = '' }) => {
                             {/* Subject / Item Summary */}
                             <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-industrial-md flex items-center justify-between text-xs sm:text-sm shadow-2xs">
                                 <span className="text-slate-500 font-mono uppercase font-bold">Inquiry Subject:</span>
-                                <span className="font-semibold text-accent truncate max-w-[280px] sm:max-w-md font-mono">
+                                <span className="font-semibold text-accent-text truncate max-w-[280px] sm:max-w-md font-mono">
                                     {formData.subject || 'Industrial Products Inquiry'}
                                 </span>
                             </div>
@@ -192,7 +192,7 @@ const QuoteModal = ({ isOpen, onClose, initialItem = '' }) => {
                                 {/* Name */}
                                 <div className="space-y-1.5">
                                     <label htmlFor="quote-name" className="block text-xs font-mono font-bold text-slate-700 uppercase tracking-wider">
-                                        Full Name <span className="text-accent">*</span>
+                                        Full Name <span className="text-accent-text">*</span>
                                     </label>
                                     <div className="relative">
                                         <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -214,7 +214,7 @@ const QuoteModal = ({ isOpen, onClose, initialItem = '' }) => {
                                 {/* Email */}
                                 <div className="space-y-1.5">
                                     <label htmlFor="quote-email" className="block text-xs font-mono font-bold text-slate-700 uppercase tracking-wider">
-                                        Business Email <span className="text-accent">*</span>
+                                        Business Email <span className="text-accent-text">*</span>
                                     </label>
                                     <div className="relative">
                                         <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -279,7 +279,7 @@ const QuoteModal = ({ isOpen, onClose, initialItem = '' }) => {
                             {/* Requirements / Message */}
                             <div className="space-y-1.5">
                                 <label htmlFor="quote-message" className="block text-xs font-mono font-bold text-slate-700 uppercase tracking-wider justify-between items-center">
-                                    <span>Technical Requirements & Quantities <span className="text-accent">*</span></span>
+                                    <span>Technical Requirements & Quantities <span className="text-accent-text">*</span></span>
                                     <span className="text-slate-500 font-normal text-[10px] hidden sm:inline">Include dimensions or head pressure</span>
                                 </label>
                                 <textarea 

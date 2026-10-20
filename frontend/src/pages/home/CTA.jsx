@@ -21,7 +21,7 @@ const CTA = () => {
 
                 <h2 className="font-headline text-3xl sm:text-5xl md:text-6xl font-black tracking-tight uppercase leading-[1.08] text-slate-900">
                   OUR <br />
-                  <span className="text-accent">MOTTO.</span>
+                  <span className="text-accent-text">MOTTO.</span>
                 </h2>
 
                 <p className="text-slate-600 text-base sm:text-lg max-w-2xl font-medium leading-relaxed">
@@ -63,11 +63,11 @@ const CTA = () => {
 
                 <div className="mt-6 pt-6 border-t border-slate-200 flex flex-col gap-3 font-mono text-xs text-slate-600 text-center lg:text-left font-medium">
                   <span className="text-slate-500 font-bold">DIRECT ENGINEERING HELPDESK:</span>
-                  <a href="tel:+918296631533" className="text-slate-900 hover:text-accent transition-colors font-bold flex items-center justify-center lg:justify-start gap-2.5">
+                  <a href="tel:+918296631533" className="text-slate-900 hover:text-accent-text transition-colors font-bold flex items-center justify-center lg:justify-start gap-2.5">
                     <PhoneCall className="w-4 h-4 text-accent shrink-0" />
                     <span>+91 82966 31533 / +91 97480 28331</span>
                   </a>
-                  <a href="mailto:skenterprise2989@gmail.com" className="text-slate-900 hover:text-accent transition-colors font-bold flex items-center justify-center lg:justify-start gap-2.5">
+                  <a href="mailto:skenterprise2989@gmail.com" className="text-slate-900 hover:text-accent-text transition-colors font-bold flex items-center justify-center lg:justify-start gap-2.5">
                     <Mail className="w-4 h-4 text-accent shrink-0" />
                     <span>skenterprise2989@gmail.com</span><br/>
                   </a>

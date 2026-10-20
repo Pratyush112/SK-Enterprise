@@ -64,7 +64,7 @@ const About = () => {
       <section className="relative pt-24 pb-16 md:pt-32 md:pb-20 bg-slate-50 border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-6">
           <RevealOnScroll direction="down" duration={0.6}>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-300 text-accent font-mono text-xs font-bold tracking-widest uppercase shadow-sm">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-slate-300 text-accent-text font-mono text-xs font-bold tracking-widest uppercase shadow-sm">
               <ShieldCheck className="w-4 h-4" />
               <span>ISO 9001 : 2015 CERTIFIED CO. • IAS ACCREDITED MSCB-119</span>
             </div>
@@ -73,7 +73,7 @@ const About = () => {
           <RevealOnScroll delay={0.1} duration={0.7}>
             <h1 className="text-4xl sm:text-6xl md:text-7xl font-black text-slate-900 tracking-tight leading-tight font-headline uppercase">
               S.K. ENTERPRISE <br className="hidden sm:inline" />
-              <span className="text-2xl sm:text-4xl md:text-5xl text-accent">VALVES | COCKS & FITTINGS.</span>
+              <span className="text-2xl sm:text-4xl md:text-5xl text-accent-text">VALVES | COCKS & FITTINGS.</span>
             </h1>
           </RevealOnScroll>
 
@@ -89,7 +89,7 @@ const About = () => {
               {stats.map((stat, idx) => (
                 <div key={idx} className="bg-white p-6 rounded-industrial-lg border border-slate-200 text-center hover:border-accent transition-all duration-300 shadow-md hover:shadow-lg">
                   <div className="font-tabular text-2xl sm:text-4xl font-black text-slate-900 font-headline tracking-tight">{stat.value}</div>
-                  <div className="text-[11px] font-mono font-bold text-accent uppercase tracking-wider mt-1">{stat.label}</div>
+                  <div className="text-[11px] font-mono font-bold text-accent-text uppercase tracking-wider mt-1">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -101,7 +101,7 @@ const About = () => {
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <RevealOnScroll>
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-            <h2 className="text-xs font-mono font-bold text-accent uppercase tracking-widest">
+            <h2 className="text-xs font-mono font-bold text-accent-text uppercase tracking-widest">
               WHY CHOOSE S.K. ENTERPRISE
             </h2>
             <p className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight font-headline uppercase">
@@ -121,7 +121,7 @@ const About = () => {
                   <div className="w-12 h-12 rounded-industrial-md bg-slate-50 border border-slate-200 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:border-accent transition-all duration-300 shadow-sm">
                     {feature.icon}
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3 font-headline group-hover:text-accent transition-colors">
+                  <h3 className="text-xl font-bold text-slate-900 mb-3 font-headline group-hover:text-accent-text transition-colors">
                     {feature.title}
                   </h3>
                   <p className="text-slate-600 text-sm leading-relaxed mb-6 font-normal">
@@ -129,7 +129,7 @@ const About = () => {
                   </p>
                 </div>
                 <div className="pt-4 border-t border-slate-200 flex items-center justify-between text-[11px] font-mono font-bold text-slate-500">
-                  <span className="text-accent">{feature.spec}</span>
+                  <span className="text-accent-text">{feature.spec}</span>
                   <CheckCircle2 className="w-4 h-4 text-emerald-500" />
                 </div>
               </div>
@@ -145,7 +145,7 @@ const About = () => {
             <div className="bg-white rounded-industrial-lg p-8 sm:p-14 border border-slate-200 shadow-xl relative overflow-hidden">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
                 <div className="lg:col-span-7 space-y-6">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-accent text-xs font-mono font-bold uppercase tracking-wider">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-accent-text text-xs font-mono font-bold uppercase tracking-wider">
                     <Wrench className="w-3.5 h-3.5" />
                     <span>QUALITY CONTROL & APPLICATION MARKET</span>
                   </div>

@@ -61,12 +61,12 @@ const Features = ({ showSEO = true }) => {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8 border-b border-slate-200 pb-12">
           <RevealOnScroll direction="up" delay={0}>
             <div className="max-w-3xl">
-              <span className="text-xs font-mono text-accent font-bold uppercase tracking-widest block mb-3">
+              <span className="text-xs font-mono text-accent-text font-bold uppercase tracking-widest block mb-3">
                 WHY CHOOSE S.K. ENTERPRISE
               </span>
               <h2 className="font-headline text-3xl sm:text-5xl md:text-6xl font-bold text-slate-900 tracking-tight uppercase leading-tight">
                 WHY CHOOSE <br />
-                <span className="text-accent font-light">S.K. ENTERPRISE.</span>
+                <span className="text-accent-text font-light">S.K. ENTERPRISE.</span>
               </h2>
             </div>
           </RevealOnScroll>
@@ -95,7 +95,7 @@ const Features = ({ showSEO = true }) => {
                       <span className="font-sans text-xs font-bold text-slate-500">ISO 9001 : 2015 Co.</span>
                     </div>
 
-                    <h3 className="font-headline text-2xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight uppercase group-hover:text-accent transition-colors">
+                    <h3 className="font-headline text-2xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight uppercase group-hover:text-accent-text transition-colors">
                       {cap.title}
                     </h3>
 
@@ -154,7 +154,7 @@ const Features = ({ showSEO = true }) => {
                       </span>
                     </div>
 
-                    <h3 className="font-headline text-xl sm:text-2xl font-bold mb-4 text-slate-900 tracking-tight group-hover:text-accent transition-colors">
+                    <h3 className="font-headline text-xl sm:text-2xl font-bold mb-4 text-slate-900 tracking-tight group-hover:text-accent-text transition-colors">
                       {cap.title}
                     </h3>
                     
@@ -165,7 +165,7 @@ const Features = ({ showSEO = true }) => {
 
                   <div className="mt-8 pt-4 border-t border-slate-200 flex items-center justify-between text-xs font-sans font-bold text-slate-500">
                     <span>ISO 9001 : 2015</span>
-                    <span className="text-accent">IAS ACCREDITED</span>
+                    <span className="text-accent-text">IAS ACCREDITED</span>
                   </div>
                 </div>
               </RevealOnScroll>

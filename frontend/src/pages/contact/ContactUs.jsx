@@ -121,7 +121,7 @@ const ContactUs = () => {
                     <RevealOnScroll delay={0.1} duration={0.7}>
                         <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tight leading-tight font-headline uppercase">
                             CONNECT <br className="hidden sm:inline" />
-                            <span className="text-accent">WITH US.</span>
+                            <span className="text-accent-text">WITH US.</span>
                         </h1>
                     </RevealOnScroll>
 
@@ -142,7 +142,7 @@ const ContactUs = () => {
                             <div className="bg-white rounded-industrial-lg p-6 sm:p-10 border border-slate-200 shadow-xl relative overflow-hidden">
                                 <div className="mb-8 border-b border-slate-200 pb-6">
                                     <h2 className="text-2xl font-black text-slate-900 tracking-tight font-headline uppercase">
-                                        <span className="text-accent">CONTACT</span> US.
+                                        <span className="text-accent-text">CONTACT</span> US.
                                     </h2>
                                     <p className="text-sm text-slate-600 mt-1">
                                         Fill out the specifications below. Our Team will respond within 24 hours.
@@ -284,7 +284,7 @@ const ContactUs = () => {
                     <div className="lg:col-span-5 space-y-6">
                         <RevealOnScroll delay={0.1}>
                             <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-lg space-y-6">
-                                <h3 className="text-xs font-mono font-bold text-accent uppercase tracking-widest border-b border-slate-200 pb-4">
+                                <h3 className="text-xs font-mono font-bold text-accent-text uppercase tracking-widest border-b border-slate-200 pb-4">
                                     DIRECT COMMUNICATION CHANNELS
                                 </h3>
 
@@ -295,7 +295,7 @@ const ContactUs = () => {
                                                 {info.icon}
                                             </div>
                                             <div>
-                                                <h4 className="text-base font-bold text-slate-900 font-headline group-hover:text-accent transition-colors">
+                                                <h4 className="text-base font-bold text-slate-900 font-headline group-hover:text-accent-text transition-colors">
                                                     {info.title}
                                                 </h4>
                                                 <div className="mt-1 text-sm text-slate-600 space-y-1 font-medium">
@@ -303,7 +303,7 @@ const ContactUs = () => {
                                                         info.content.map((item, i) => (
                                                             <p key={i}>
                                                                 {info.link && i === 0 ? (
-                                                                    <a href={info.link} className="hover:text-accent transition-colors underline decoration-slate-300 underline-offset-4 font-mono">
+                                                                    <a href={info.link} className="hover:text-accent-text transition-colors underline decoration-slate-300 underline-offset-4 font-mono">
                                                                         {item}
                                                                     </a>
                                                                 ) : item}
@@ -312,7 +312,7 @@ const ContactUs = () => {
                                                     ) : (
                                                         <p>
                                                             {info.link ? (
-                                                                <a href={info.link} target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors underline decoration-slate-300 underline-offset-4">
+                                                                <a href={info.link} target="_blank" rel="noopener noreferrer" className="hover:text-accent-text transition-colors underline decoration-slate-300 underline-offset-4">
                                                                     {info.content}
                                                                 </a>
                                                             ) : info.content}

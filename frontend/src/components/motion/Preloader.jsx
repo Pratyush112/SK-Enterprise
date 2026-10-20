@@ -67,14 +67,14 @@ const Preloader = ({ onComplete }) => {
             {/* Top Bar: Eyebrow */}
             <div className="flex justify-between items-center text-xs font-mono tracking-widest uppercase text-slate-500 border-b border-slate-200 pb-4">
                 <span>SK ENTERPRISE • HOWRAH WORKS</span>
-                <span className="text-accent font-bold">EST. 1992</span>
+                <span className="text-accent-text font-bold">EST. 1992</span>
             </div>
 
             {/* Center / Left Side: Large Tabular Numeral Counter */}
             <div className="flex flex-col items-start justify-center my-auto">
                 <div ref={numberRef} className="font-tabular font-mono text-7xl sm:text-9xl md:text-[11rem] font-black tracking-tighter text-slate-900 leading-none">
                     {count < 10 ? `0${count}` : count}
-                    <span className="text-accent text-4xl sm:text-6xl md:text-8xl ml-2">%</span>
+                    <span className="text-accent-text text-4xl sm:text-6xl md:text-8xl ml-2">%</span>
                 </div>
             </div>
 
@@ -85,11 +85,11 @@ const Preloader = ({ onComplete }) => {
                     className="w-full font-black tracking-tighter leading-none text-[12vw] select-none mb-4 sm:mb-6 whitespace-nowrap overflow-hidden"
                     style={{ 
                         fontFamily: "'Roboto', sans-serif",
-                        WebkitTextStroke: '1.5px rgba(148, 163, 184, 1)',
+                        WebkitTextStroke: '1.5px #64748b',
                         color: 'transparent'
                     }}
                 >
-                    <span style={{ WebkitTextStroke: '1.5px rgba(0, 180, 216, 01)'}}>SK</span> Enterprise
+                    <span style={{ WebkitTextStroke: '1.5px #0096c7'}}>SK</span> Enterprise
                 </div>
                 <div className="mt-4 text-xs sm:text-sm font-mono uppercase tracking-widest text-slate-500">
                     Manufacturers of : C.I. | S.S. | G.M. | Valves | Cocks & Fittings.

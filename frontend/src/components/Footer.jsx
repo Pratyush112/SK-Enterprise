@@ -24,7 +24,7 @@ const Footer = () => {
                                 </div>
                             </div>
                             
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-bold uppercase tracking-wider border border-accent/20">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent/10 text-accent-text text-xs font-bold uppercase tracking-wider border border-accent/20">
                                 <ShieldCheck className="w-3.5 h-3.5" />
                                 <span>ISO 9001 : 2015 Certified Co.</span>
                             </div>
@@ -119,7 +119,7 @@ const Footer = () => {
                     </RevealOnScroll>
                 </div>
 
-                <div className="pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-mono text-slate-500">
+                <div className="pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 text-xs font-mono text-slate-600">
                     <p>
                         &copy; {new Date().getFullYear()} SK Enterprise. All rights reserved.
                     </p>

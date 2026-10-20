@@ -20,6 +20,7 @@ export default {
         'bg-paper': '#f1f5f9',     // Slate-100 secondary container
         'accent': '#00b4d8',       // Bright eye-appealing Cargokite cyan
         'accent-hover': '#0096c7',
+        'accent-text': '#006d9c',
         'accent-bright': '#0088cc', // Deep cyan highlight
         'accent-ochre': '#b5622b', // AMES safari-khaki / ochre
         'muted': '#64748b',        // Slate-500 readable muted text

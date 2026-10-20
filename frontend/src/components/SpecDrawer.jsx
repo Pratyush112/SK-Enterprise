@@ -146,7 +146,7 @@ const SpecDrawer = ({ isOpen, onClose, item, type = 'product', onRequestQuote })
                 <div>
                     <div className="sticky top-0 z-20 flex items-center justify-between px-6 sm:px-8 py-5 bg-slate-50/95 backdrop-blur-md border-b border-slate-200 shadow-2xs">
                         <div className="flex items-center gap-3">
-                            <span className="px-2.5 py-1 bg-white text-accent text-[11px] font-mono font-bold rounded-full border border-slate-200 uppercase tracking-wider shadow-2xs">
+                            <span className="px-2.5 py-1 bg-white text-accent-text text-[11px] font-mono font-bold rounded-full border border-slate-200 uppercase tracking-wider shadow-2xs">
                                 {type === 'product' ? 'Sluice Gate Spec' : 'Valve Part Spec'}
                             </span>
                             <h3 id="spec-drawer-title" className="text-lg font-headline font-black text-slate-900 truncate max-w-[240px] sm:max-w-xs uppercase">
@@ -180,7 +180,7 @@ const SpecDrawer = ({ isOpen, onClose, item, type = 'product', onRequestQuote })
 
                         {/* Compliance Badges */}
                         <div className="flex flex-wrap items-center justify-center gap-2 w-full">
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200 text-accent font-mono text-[11px] font-bold shadow-2xs">
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200 text-accent-text font-mono text-[11px] font-bold shadow-2xs">
                                 <Award className="w-3 h-3" />
                                 <span>IS:3042 / BS:5143</span>
                             </span>
@@ -201,7 +201,7 @@ const SpecDrawer = ({ isOpen, onClose, item, type = 'product', onRequestQuote })
                             <h4 className="text-xs font-mono font-bold text-slate-500 uppercase tracking-wider">
                                 Technical Data Sheet
                             </h4>
-                            <span className="text-xs text-accent font-mono font-bold">
+                            <span className="text-xs text-accent-text font-mono font-bold">
                                 SK-REF-{id.slice(-6).toUpperCase() || 'STD'}
                             </span>
                         </div>
