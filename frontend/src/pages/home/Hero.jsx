@@ -1,32 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import api from '../../services/api';
 import { gsap } from '../../lib/gsap';
 import { ChevronDown, ShieldCheck, Award, MapPin } from 'lucide-react';
 import Preloader from '../../components/motion/Preloader';
 import StampBadge from '../../components/ui/StampBadge';
 
+const HERO_IMG = 'https://storage.googleapis.com/sk-enterprise/Website-hero-image/Website%20Image.jpeg';
+
 const Hero = () => {
-  const [heroImg, setHeroImg] = useState('https://storage.googleapis.com/sk-enterprise/Website-hero-image/Website%20Image.jpeg');
   const [isPreloaderDone, setIsPreloaderDone] = useState(false);
   const heroRef = useRef(null);
   const bgRef = useRef(null);
   const titleRef = useRef(null);
   const contentRef = useRef(null);
-
-  useEffect(() => {
-    const fetchHeroImageFromMongo = async () => {
-      try {
-        const response = await api.get('/settings/hero');
-        if (response.data && response.data.heroImage) {
-          setHeroImg(response.data.heroImage);
-        }
-      } catch (error) {
-        console.error("Failed to fetch Hero image from MongoDB:", error);
-      }
-    };
-    fetchHeroImageFromMongo();
-  }, []);
 
   // GSAP Cinematic Animations & Parallax
   useEffect(() => {
@@ -77,7 +63,7 @@ const Hero = () => {
     }, heroRef);
 
     return () => ctx.revert();
-  }, [heroImg, isPreloaderDone]);
+  }, [isPreloaderDone]);
 
   return (
     <>
@@ -93,7 +79,7 @@ const Hero = () => {
             <img 
               className="w-full h-full object-cover opacity-90 filter contrast-105 saturate-125 transition-opacity duration-1000" 
               alt="SK Enterprise Industrial Valve Manufacturing Works" 
-              src={heroImg}
+              src={HERO_IMG}
             />
           </div>
           {/* Clean Cinematic Scrim - Guaranteeing Bright Typography is 100% Visible */}
@@ -109,7 +95,7 @@ const Hero = () => {
         <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center mt-8 sm:mt-12">
           
           {/* Eyebrow Badge */}
-          <div ref={contentRef} className="flex flex-col items-center w-full">
+          <div className="flex flex-col items-center w-full">
             <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/80 border border-accent/40 text-accent font-mono text-xs font-bold uppercase tracking-widest mb-8 backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
               <span>ISO 9001 : 2015 Certified Co. • IAS ACCREDITED MSCB-119</span>
