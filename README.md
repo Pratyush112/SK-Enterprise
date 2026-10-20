@@ -14,9 +14,9 @@ A modern web application for **SK Enterprise**, specializing in manufacturing in
 >
 > **This repository is proprietary and protected under copyright law.**
 >
-> - 🚫 **DO NOT** clone, fork, copy, or download this repository.
-> - 🚫 **DO NOT** use any part of this code for commercial or personal projects.
-> - 🚫 **DO NOT** redistribute, modify, or create derivative works from this code.
+> - **DO NOT** clone, fork, copy, or download this repository.
+> - **DO NOT** use any part of this code for commercial or personal projects.
+> - **DO NOT** redistribute, modify, or create derivative works from this code.
 >
 > **Unauthorized use will result in a copyright strike, DMCA takedown, and strict legal action.**
 >
@@ -26,15 +26,15 @@ A modern web application for **SK Enterprise**, specializing in manufacturing in
 
 ---
 
-## 🏭 About
+## About
 
 S.K. Enterprise is a company specialized in manufacturing high-quality industrial valves and gates for various applications. Our products are designed to meet the highest standards of quality and durability, ensuring reliable performance in demanding conditions.
 
-## 🌐 Website
+## Website
 
 Visit us at [www.skenterprisesluicegate.com](https://www.skenterprisesluicegate.com/)
 
-## ✨ Features
+## Features
 
 - Modern, responsive design with Framer Motion animations
 - Product catalog with detailed specifications
@@ -44,14 +44,14 @@ Visit us at [www.skenterprisesluicegate.com](https://www.skenterprisesluicegate.
 - Secure online ordering and payment processing
 - Customer support and technical assistance
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend:** React.js, React Router, Framer Motion, TanStack Table
 - **Backend:** Node.js, Express, MongoDB
 - **Styling:** Tailwind CSS
 - **Others:** Axios, React Hook Form
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 SK Enterprise/
@@ -77,7 +77,7 @@ SK Enterprise/
 └── README.md
 ```
 
-## 📞 Contact
+## Contact
 
 For any inquiries or support, please contact us at:
 
@@ -89,7 +89,7 @@ For any inquiries or support, please contact us at:
 
 - [Facebook](https://www.facebook.com/share/1BNffYzjWk/)
 
-## 📄 License
+## License
 
 **This project is NOT open source.**
 
