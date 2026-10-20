@@ -103,18 +103,18 @@ const Hero = () => {
           </div>
 
           {/* Masked Headline Reveal - Bright White & Bright Cyan */}
-          <div ref={titleRef} className="flex flex-col items-center mb-8 font-headline">
-            <div className="overflow-hidden">
-              <h1 className="hero-line text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white tracking-tight leading-[1.05] uppercase">
+          <h1 ref={titleRef} className="flex flex-col items-center mb-8 font-headline">
+            <span className="block overflow-hidden">
+              <span className="hero-line block text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white tracking-tight leading-[1.05] uppercase">
                 S.K. ENTERPRISE
-              </h1>
-            </div>
-            <div className="overflow-hidden">
-              <h1 className="hero-line text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-accent tracking-tight leading-[1.05] uppercase">
+              </span>
+            </span>
+            <span className="block overflow-hidden">
+              <span className="hero-line block text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-accent tracking-tight leading-[1.05] uppercase">
                 VALVES | COCKS & FITTINGS
-              </h1>
-            </div>
-          </div>
+              </span>
+            </span>
+          </h1>
 
           {/* Subheadline & Trust Indicators */}
           <div ref={contentRef} className="flex flex-col items-center max-w-3xl mx-auto">
