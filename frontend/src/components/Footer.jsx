@@ -17,9 +17,9 @@ const Footer = () => {
                             <div className="flex items-center gap-3.5">
                                 <img src="/logo.jpg" alt="SK Enterprise Logo" className="w-14 h-14 rounded-industrial-md object-cover shadow-md bg-white p-1 border border-slate-200" />
                                 <div>
-                                    <h4 className="font-headline text-xl font-black uppercase tracking-wider text-slate-900">
+                                    <p className="font-headline text-xl font-black uppercase tracking-wider text-slate-900">
                                         SK Enterprise
-                                    </h4>
+                                    </p>
                                     <span className="text-[11px] font-mono text-slate-500 uppercase tracking-widest block">Est. 1990s</span>
                                 </div>
                             </div>
@@ -37,10 +37,10 @@ const Footer = () => {
 
                     <RevealOnScroll direction="up" delay={0.1}>
                         <div>
-                            <h5 className="font-headline font-bold text-xs mb-6 text-slate-900 tracking-widest uppercase flex items-center gap-2">
+                            <h2 className="font-headline font-bold text-xs mb-6 text-slate-900 tracking-widest uppercase flex items-center gap-2">
                                 <span className="w-1.5 h-1.5 rounded-full bg-accent"></span>
                                 <span>Products</span>
-                            </h5>
+                            </h2>
                             <ul className="space-y-3 text-sm">
                                 <li><Link to="/products" className="text-slate-600 hover:text-accent transition-colors duration-200 font-bold inline-flex items-center gap-1 group uppercase"><span>Cast Iron Sluice Gates</span><ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" /></Link></li>
                                 <li><Link to="/products" className="text-slate-600 hover:text-accent transition-colors duration-200 font-bold inline-flex items-center gap-1 group uppercase"><span>Penstock Gates</span><ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" /></Link></li>
@@ -53,10 +53,10 @@ const Footer = () => {
 
                     <RevealOnScroll direction="up" delay={0.2}>
                         <div>
-                            <h5 className="font-headline font-bold text-xs mb-6 text-slate-900 tracking-widest uppercase flex items-center gap-2">
+                            <h2 className="font-headline font-bold text-xs mb-6 text-slate-900 tracking-widest uppercase flex items-center gap-2">
                                 <span className="w-1.5 h-1.5 rounded-full bg-accent"></span>
                                 <span>Company</span>
-                            </h5>
+                            </h2>
                             <ul className="space-y-3 text-sm">
                                 <li><Link to="/aboutus" className="text-slate-600 hover:text-accent transition-colors duration-200 font-bold inline-flex items-center uppercase">About Us</Link></li>
                                 <li><Link to="/quality" className="text-slate-600 hover:text-accent transition-colors duration-200 font-bold inline-flex items-center uppercase">Quality Assurance</Link></li>
@@ -69,10 +69,10 @@ const Footer = () => {
 
                     <RevealOnScroll direction="up" delay={0.3}>
                         <div>
-                            <h5 className="font-headline font-bold text-xs mb-6 text-slate-900 tracking-widest uppercase flex items-center gap-2">
+                            <h2 className="font-headline font-bold text-xs mb-6 text-slate-900 tracking-widest uppercase flex items-center gap-2">
                                 <span className="w-1.5 h-1.5 rounded-full bg-accent"></span>
                                 <span>Direct Technical Helpdesk</span>
-                            </h5>
+                            </h2>
                             <div className="flex flex-col gap-5 text-sm">
                                 {/* Emails */}
                                 <div className="flex items-start gap-3.5 group">
