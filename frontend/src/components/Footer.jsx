@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import RevealOnScroll from './motion/RevealOnScroll';
 import { Mail, Phone, MapPin, ExternalLink, ShieldCheck } from 'lucide-react';
+import logo from '../assets/images/logo-96.webp';
 
 const Footer = () => {
     return (
@@ -15,7 +16,7 @@ const Footer = () => {
                     <RevealOnScroll direction="up" delay={0}>
                         <div className="space-y-6">
                             <div className="flex items-center gap-3.5">
-                                <img src="/logo.jpg" alt="SK Enterprise Logo" className="w-14 h-14 rounded-industrial-md object-cover shadow-md bg-white p-1 border border-slate-200" />
+                                <img src={logo} width={96} height={96} loading="lazy" decoding="async" alt="SK Enterprise Logo" className="w-14 h-14 rounded-industrial-md object-cover shadow-md bg-white p-1 border border-slate-200" />
                                 <div>
                                     <p className="font-headline text-xl font-black uppercase tracking-wider text-slate-900">
                                         SK Enterprise

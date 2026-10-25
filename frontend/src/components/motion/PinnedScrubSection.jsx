@@ -263,7 +263,7 @@ const PinnedScrubSection = ({ steps = null, isDark = false, hideHeader = false }
                                     {stage.imageUrl !== undefined && (
                                         <div className="md:col-span-5 aspect-[4/3] rounded-xl overflow-hidden border border-slate-700/80 bg-slate-900/60 shadow-inner">
                                             {stage.imageUrl ? (
-                                                <img src={stage.imageUrl} alt={stage.alt || stage.title} loading="lazy" className="w-full h-full object-cover" />
+                                                <img src={stage.imageUrl} alt={stage.alt || stage.title} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                                             ) : (
                                                 <Skeleton className="w-full h-full !bg-slate-800/80 !rounded-none" />
                                             )}

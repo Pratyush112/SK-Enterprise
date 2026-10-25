@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from '../../lib/gsap';
@@ -5,7 +6,9 @@ import { ChevronDown, ShieldCheck, Award, MapPin } from 'lucide-react';
 import Preloader from '../../components/motion/Preloader';
 import StampBadge from '../../components/ui/StampBadge';
 
-const HERO_IMG = 'https://storage.googleapis.com/sk-enterprise/Website-hero-image/Website%20Image.jpeg';
+import hero640 from '../../assets/images/hero-640.webp';
+import hero1024 from '../../assets/images/hero-1024.webp';
+import hero1600 from '../../assets/images/hero-1600.webp';
 
 const Hero = () => {
   const [isPreloaderDone, setIsPreloaderDone] = useState(false);
@@ -77,9 +80,14 @@ const Hero = () => {
         <div className="absolute inset-0 z-0 overflow-hidden">
           <div ref={bgRef} className="absolute inset-0 w-full h-[120%] -top-[10%]">
             <img 
-              className="w-full h-full object-cover opacity-90 filter contrast-105 saturate-125 transition-opacity duration-1000" 
+              className="w-full h-full object-cover opacity-90" 
               alt="SK Enterprise Industrial Valve Manufacturing Works" 
-              src={HERO_IMG}
+              src={hero1024}
+              srcSet={`${hero640} 640w, ${hero1024} 1024w, ${hero1600} 1600w`}
+              sizes="100vw"
+              width={1600}
+              height={2133}
+              decoding="async"
             />
           </div>
           {/* Clean Cinematic Scrim - Guaranteeing Bright Typography is 100% Visible */}

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight, ShieldCheck } from 'lucide-react';
 import { gsap } from '../lib/gsap';
+import logo from '../assets/images/logo-96.webp';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -89,9 +90,12 @@ const Navbar = () => {
                 >
                     <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-industrial-md bg-white border border-slate-200 p-1.5 flex items-center justify-center shadow-sm group-hover:border-accent transition-colors">
                         <img 
-                            src="/logo.jpg" 
+                            src={logo} 
+                            width={96}
+                            height={96}
                             alt="SK Enterprise" 
                             className="w-full h-full object-contain rounded-industrial-sm" 
+                            decoding="async"
                         />
                     </div>
                     <div className="flex flex-col">
