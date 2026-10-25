@@ -392,6 +392,7 @@ const PartsCards = () => {
                                                     alt={part.Name}
                                                     className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300 drop-shadow-md"
                                                     loading="lazy"
+                                                    decoding="async"
                                                     onError={(e) => {
                                                         e.target.style.display = 'none';
                                                         e.target.nextSibling.style.display = 'block';
@@ -513,6 +514,7 @@ const PartsCards = () => {
                                                         alt={part.Name}
                                                         className="max-w-full max-h-full object-contain rounded"
                                                         loading="lazy"
+                                                        decoding="async"
                                                     />
                                                 </div>
                                             </td>

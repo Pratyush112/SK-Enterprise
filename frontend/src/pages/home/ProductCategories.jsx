@@ -4,12 +4,19 @@ import RevealOnScroll from "../../components/motion/RevealOnScroll";
 import { ArrowRight, Wrench, CheckCircle2, ShieldCheck } from "lucide-react";
 import SEO from "../../components/SEO";
 
+import gates480 from '../../assets/images/category-gates-480.webp';
+import gates800 from '../../assets/images/category-gates-800.webp';
+import gates1200 from '../../assets/images/category-gates-1200.webp';
+import fast480 from '../../assets/images/category-fasteners-480.webp';
+import fast800 from '../../assets/images/category-fasteners-800.webp';
+import fast1200 from '../../assets/images/category-fasteners-1200.webp';
+
 const categories = [
   { 
     name: "Sluice & Penstock Gates", 
     division: "S.K. ENTERPRISE • APPLICATION MARKET",
     path: "products",
-    imgSrc: "https://lh3.googleusercontent.com/aida-public/AB6AXuD1594uho43a3cuCVydJzh008X1-g568knhcOZefes_Rd3-DiSbTi-Jl_aJiDTN7iK4VMuABtzyNRXMh-xmQ32TR4C-DOcAHv0SfxE88pcxCceBXsQ5KZYBeS-5yBdgiECUuspNGKlQqvHdiTboe8l6hZ39hLEzNO0wLsdZ7ga5Pn4O_SGxH7yieGuXNKi6eGbpKNxj5G6ReOm83Mh9LpY3KhuMfMokm0fgnzxNOO8sslFOKEK-Lw0aoQseMfyeAMRkCIYKNRFyu3NJ",
+    img: { src: gates800, srcSet: `${gates480} 480w, ${gates800} 800w, ${gates1200} 1200w` },
     altText: "Heavy duty steel sluice gates in water treatment facility",
     description: "S.K. Enterprise offer many kind of industrial valve utilized in the several application environment against high temperature, high pressure, high corrosive and low temperature or cryogenic application market range from water treatment, power generation, mining, petrochemical, oil and gas with onshore and offshore working condition.",
     specs: [
@@ -23,7 +30,7 @@ const categories = [
     name: "Industrial Fasteners (Nuts & Bolts)", 
     division: "S.K. ENTERPRISE • APPLICATION MARKET",
     path: "parts",
-    imgSrc: "https://lh3.googleusercontent.com/aida-public/AB6AXuAbPCyFRH3D1Q5M0N1M1KRPN2tU609t1lITfRe2oP89QxULoeC2btZVjvY9Ckkkt8qXykD7mayKRR1QIxsgfbp-JU629tvcIBmNP07KJqsVrxnfvd3n4PbEU8ezlJvHe2XZnSZTSI0sOUrjeaOxiBpse8SuLzDxpFg0Cd_vZeRHFCfitiTAwcso0Qzt8zqrN7OCyob7mv-CKQ4Csg_zMVyK1jVc-4GkcHhdA9RDxstwCslzvZOVkmYGP_2bZaP7cCT1OS7SmLeQfz5Z",
+    img: { src: fast800, srcSet: `${fast480} 480w, ${fast800} 800w, ${fast1200} 1200w` },
     altText: "High strength industrial fasteners nuts and bolts",
     description: "S.K. Enterprise offer many kind of industrial valve utilized in the several application environment against high temperature, high pressure, high corrosive and low temperature or cryogenic application market range from water treatment, power generation, mining, petrochemical, oil and gas with onshore and offshore working condition.",
     specs: [
@@ -84,7 +91,13 @@ const ProductCategories = ({ showSEO = true }) => {
                     <img
                       className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 opacity-95 filter contrast-105 saturate-115"
                       alt={category.altText}
-                      src={category.imgSrc}
+                      src={category.img.src}
+                      srcSet={category.img.srcSet}
+                      sizes="(min-width: 1024px) 50vw, 100vw"
+                      width={1200}
+                      height={1200}
+                      loading="lazy"
+                      decoding="async"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent"></div>
                     
