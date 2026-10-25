@@ -169,6 +169,8 @@ const SpecDrawer = ({ isOpen, onClose, item, type = 'product', onRequestQuote })
                                 <img 
                                     src={image} 
                                     alt={title} 
+                                    loading="lazy"
+                                    decoding="async"
                                     className="max-h-full max-w-full object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-300" 
                                 />
                             </div>
