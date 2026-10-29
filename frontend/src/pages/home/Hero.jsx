@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from '../../lib/gsap';
 import { ChevronDown, ShieldCheck, Award, MapPin } from 'lucide-react';
@@ -10,6 +10,9 @@ import hero640 from '../../assets/images/hero-640.webp';
 import hero1024 from '../../assets/images/hero-1024.webp';
 import hero1600 from '../../assets/images/hero-1600.webp';
 
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 const Hero = () => {
   const [isPreloaderDone, setIsPreloaderDone] = useState(false);
   const heroRef = useRef(null);
@@ -17,14 +20,18 @@ const Hero = () => {
   const titleRef = useRef(null);
   const contentRef = useRef(null);
 
-  // GSAP Cinematic Animations & Parallax
-  useEffect(() => {
-    const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
+  // Stable callback: an inline arrow would re-run Preloader's effect on every Hero render
+  const handlePreloaderComplete = useCallback(() => setIsPreloaderDone(true), []);
 
+  // 1) Before first paint: park elements at their start position (transform only, never opacity),
+  //    and set up the parallax on desktop only.
+  useLayoutEffect(() => {
+    if (prefersReducedMotion()) return undefined;
     const ctx = gsap.context(() => {
-      // Background parallax on scroll
-      if (bgRef.current) {
+      gsap.set('.hero-line', { yPercent: 110 });
+      if (contentRef.current) gsap.set(contentRef.current.children, { y: 25 });
+
+      if (bgRef.current && window.matchMedia('(min-width: 768px)').matches) {
         gsap.to(bgRef.current, {
           yPercent: 25,
           scale: 1.08,
@@ -37,40 +44,26 @@ const Hero = () => {
           },
         });
       }
+    }, heroRef);
+    return () => ctx.revert();
+  }, []);
 
-      // Only trigger entrance animation after preloader completes or if disabled
-      if (isPreloaderDone || prefersReducedMotion) {
-        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-        // Title lines reveal
-        if (titleRef.current) {
-          const lines = titleRef.current.querySelectorAll('.hero-line');
-          tl.fromTo(
-            lines,
-            { y: 80, opacity: 0 },
-            { y: 0, opacity: 1, duration: 1.1, stagger: 0.12, delay: 0.1 }
-          );
-        }
-
-        // Content reveal
-        if (contentRef.current) {
-          const items = contentRef.current.children;
-          tl.fromTo(
-            items,
-            { y: 25, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.8, stagger: 0.1 },
-            '-=0.6'
-          );
-        }
+  // 2) When the preloader is finished (or skipped), play the entrance.
+  useEffect(() => {
+    if (!isPreloaderDone || prefersReducedMotion()) return undefined;
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      tl.to('.hero-line', { yPercent: 0, duration: 1.1, stagger: 0.12, delay: 0.1 });
+      if (contentRef.current) {
+        tl.to(contentRef.current.children, { y: 0, duration: 0.8, stagger: 0.1 }, '-=0.6');
       }
     }, heroRef);
-
     return () => ctx.revert();
   }, [isPreloaderDone]);
 
   return (
     <>
-      <Preloader onComplete={() => setIsPreloaderDone(true)} />
+      <Preloader onComplete={handlePreloaderComplete} />
 
       <section 
         ref={heroRef} 
@@ -78,7 +71,7 @@ const Hero = () => {
       >
         {/* Background Parallax Layer with Contrast Scrim */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <div ref={bgRef} className="absolute inset-0 w-full h-[120%] -top-[10%]">
+          <div ref={bgRef} className="absolute inset-0 w-full h-[120%] -top-[10%] md:will-change-transform">
             <img 
               className="w-full h-full object-cover opacity-90" 
               alt="SK Enterprise Industrial Valve Manufacturing Works" 
@@ -91,7 +84,7 @@ const Hero = () => {
             />
           </div>
           {/* Clean Cinematic Scrim - Guaranteeing Bright Typography is 100% Visible */}
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/75 via-slate-900/65 to-slate-900/85 backdrop-blur-[1px]"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/75 via-slate-900/65 to-slate-900/85"></div>
         </div>
 
         {/* Floating AMES Stamp Badge */}
@@ -104,7 +97,7 @@ const Hero = () => {
           
           {/* Eyebrow Badge */}
           <div className="flex flex-col items-center w-full">
-            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/80 border border-accent/40 text-accent font-mono text-xs font-bold uppercase tracking-widest mb-8 backdrop-blur-md shadow-lg">
+            <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/80 border border-accent/40 text-accent font-mono text-xs font-bold uppercase tracking-widest mb-8 md:backdrop-blur-md shadow-lg">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
               <span>ISO 9001 : 2015 Certified Co. • IAS ACCREDITED MSCB-119</span>
             </div>
@@ -132,7 +125,7 @@ const Hero = () => {
 
             {/* Industrial Trust Badges */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-4xl pt-8 border-t border-slate-700/60 text-left">
-              <div className="p-5 rounded-industrial-md bg-slate-900/85 border border-slate-700/60 flex items-start gap-3.5 backdrop-blur-md shadow-xl hover:border-accent transition-all group">
+              <div className="p-5 rounded-industrial-md bg-slate-900/85 border border-slate-700/60 flex items-start gap-3.5 md:backdrop-blur-md shadow-xl hover:border-accent transition-all group">
                 <Award className="w-6 h-6 text-accent shrink-0 mt-0.5" />
                 <div>
                   <p className="text-xs font-mono text-slate-400 uppercase tracking-wider">Certification</p>
@@ -140,7 +133,7 @@ const Hero = () => {
                 </div>
               </div>
 
-              <div className="p-5 rounded-industrial-md bg-slate-900/85 border border-slate-700/60 flex items-start gap-3.5 backdrop-blur-md shadow-xl hover:border-accent transition-all group">
+              <div className="p-5 rounded-industrial-md bg-slate-900/85 border border-slate-700/60 flex items-start gap-3.5 md:backdrop-blur-md shadow-xl hover:border-accent transition-all group">
                 <ShieldCheck className="w-6 h-6 text-accent shrink-0 mt-0.5" />
                 <div>
                   <p className="text-xs font-mono text-slate-400 uppercase tracking-wider">Accreditation</p>
@@ -148,7 +141,7 @@ const Hero = () => {
                 </div>
               </div>
 
-              <div className="p-5 rounded-industrial-md bg-slate-900/85 border border-slate-700/60 flex items-start gap-3.5 backdrop-blur-md shadow-xl hover:border-accent transition-all group">
+              <div className="p-5 rounded-industrial-md bg-slate-900/85 border border-slate-700/60 flex items-start gap-3.5 md:backdrop-blur-md shadow-xl hover:border-accent transition-all group">
                 <MapPin className="w-6 h-6 text-accent shrink-0 mt-0.5" />
                 <div>
                   <p className="text-xs font-mono text-slate-400 uppercase tracking-wider">Products</p>
