@@ -5,62 +5,52 @@ import { gsap, ScrollTrigger } from '../../lib/gsap';
 
 const SmoothScroll = ({ children }) => {
   useEffect(() => {
-    // Check if user prefers reduced motion
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
 
-    // Initialize Lenis smooth scroll
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // expoOut easing
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      smoothTouch: false,
-      touchMultiplier: 2,
-    });
+    // Touch devices scroll natively; do not run a Lenis loop on them
+    const isTouch = window.matchMedia('(pointer: coarse)').matches;
+    let lenis = null;
+    let tickerCallback = null;
 
-    // Connect Lenis to GSAP ScrollTrigger
-    lenis.on('scroll', ScrollTrigger.update);
-
-    // Add Lenis requestAnimationFrame to GSAP ticker
-    const tickerCallback = (time) => {
-      lenis.raf(time * 1000);
-    };
-
-    gsap.ticker.add(tickerCallback);
-
-    // Prevent lag smoothing from interfering with Lenis smooth scroll
-    gsap.ticker.lagSmoothing(0, 0);
-
-    // Refresh ScrollTrigger when images or fonts finish loading or DOM height changes
-    let resizeTimeout;
-    const handleResizeOrLoad = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        ScrollTrigger.refresh();
-      }, 150);
-    };
-
-    window.addEventListener('load', handleResizeOrLoad);
-    if (document.fonts && document.fonts.ready) {
-      document.fonts.ready.then(handleResizeOrLoad);
+    if (!isTouch) {
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,   // replaces the removed `smooth` option
+        syncTouch: false,    // replaces the removed `smoothTouch` option
+      });
+      lenis.on('scroll', ScrollTrigger.update);
+      tickerCallback = (time) => lenis.raf(time * 1000);
+      gsap.ticker.add(tickerCallback);
+      gsap.ticker.lagSmoothing(0, 0);
     }
 
-    const resizeObserver = new ResizeObserver(() => {
-      handleResizeOrLoad();
-    });
+    // ScrollTrigger already refreshes itself on window `load`, so the manual `load` listener is gone.
+    let timer;
+    const refreshSoon = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => ScrollTrigger.refresh(), 250);
+    };
 
-    if (document.body) {
-      resizeObserver.observe(document.body);
-    }
+    if (document.fonts?.ready) document.fonts.ready.then(refreshSoon);
+
+    // Only refresh when the page height really changes. contentRect comes from the observer,
+    // so no layout read is forced inside the callback.
+    let lastHeight = 0;
+    const ro = new ResizeObserver((entries) => {
+      const h = Math.round(entries[0].contentRect.height);
+      if (Math.abs(h - lastHeight) > 2) {
+        lastHeight = h;
+        refreshSoon();
+      }
+    });
+    ro.observe(document.body);
 
     return () => {
-      clearTimeout(resizeTimeout);
-      window.removeEventListener('load', handleResizeOrLoad);
-      resizeObserver.disconnect();
-      gsap.ticker.remove(tickerCallback);
-      lenis.destroy();
+      clearTimeout(timer);
+      ro.disconnect();
+      if (tickerCallback) gsap.ticker.remove(tickerCallback);
+      lenis?.destroy();
     };
   }, []);
 
